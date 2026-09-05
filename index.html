@@ -2,685 +2,2183 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#09090b">
-<title>Lionel Gustav - Qris All Payment</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+
+<meta name="theme-color" content="#050505">
+
+<title>Lionel Gustav — Qris All Payment</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html {
-    scroll-behavior: smooth;
+html{
+    scroll-behavior:smooth;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-    background: #08080b;
-    color: #f5f5f7;
-    min-height: 100vh;
-    overflow-x: hidden;
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+
+    background:#050505;
+    color:#fff;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing:antialiased;
+
+    opacity:0;
+
+    transform:translateY(8px);
+
+    animation:pageEnter .45s ease forwards;
 }
 
-/* BACKGROUND PREMIUM */
 
-body::before {
-    content: "";
-    position: fixed;
-    width: 600px;
-    height: 600px;
-    top: -250px;
-    left: -200px;
-    background: radial-gradient(
-        circle,
-        rgba(255, 174, 0, 0.10),
-        transparent 65%
+/* =========================
+   PAGE ENTER
+========================= */
+
+@keyframes pageEnter{
+
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* =========================
+   PAGE EXIT
+========================= */
+
+body.page-exit{
+
+    animation:pageExit .35s ease forwards;
+
+}
+
+@keyframes pageExit{
+
+    from{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+    to{
+        opacity:0;
+        transform:translateY(-12px);
+    }
+
+}
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root{
+
+    --bg:#050505;
+
+    --panel:#101010;
+
+    --panel2:#171717;
+
+    --line:rgba(255,255,255,.11);
+
+    --line2:rgba(255,255,255,.20);
+
+    --white:#fff;
+
+    --soft:#e5e5e5;
+
+    --muted:#999;
+
+    --dark:#777;
+
+}
+
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.bg{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-2;
+
+    background:
+
+    radial-gradient(
+        circle at 15% 20%,
+        rgba(255,255,255,.045),
+        transparent 27%
+    ),
+
+    radial-gradient(
+        circle at 88% 75%,
+        rgba(255,255,255,.035),
+        transparent 30%
+    ),
+
+    #050505;
+
+}
+
+
+.orb{
+
+    position:absolute;
+
+    width:360px;
+
+    height:360px;
+
+    border-radius:50%;
+
+    filter:blur(90px);
+
+    opacity:.12;
+
+    background:#fff;
+
+}
+
+
+.o1{
+
+    left:-220px;
+
+    top:15%;
+
+    animation:bgMove1 15s ease-in-out infinite alternate;
+
+}
+
+
+.o2{
+
+    right:-220px;
+
+    top:48%;
+
+    animation:bgMove2 18s ease-in-out infinite alternate;
+
+}
+
+
+.o3{
+
+    left:35%;
+
+    bottom:-300px;
+
+    animation:bgMove3 20s ease-in-out infinite alternate;
+
+}
+
+
+@keyframes bgMove1{
+
+    to{
+
+        transform:
+        translate(190px,100px)
+        scale(1.25);
+
+    }
+
+}
+
+
+@keyframes bgMove2{
+
+    to{
+
+        transform:
+        translate(-150px,-90px)
+        scale(1.2);
+
+    }
+
+}
+
+
+@keyframes bgMove3{
+
+    to{
+
+        transform:
+        translate(90px,-110px)
+        scale(1.15);
+
+    }
+
+}
+
+
+/* =========================
+   NOISE
+========================= */
+
+body:after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:50;
+
+    pointer-events:none;
+
+    opacity:.025;
+
+    background-image:url(
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
     );
-    filter: blur(20px);
-    animation: glow1 12s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: -2;
+
 }
 
-body::after {
-    content: "";
-    position: fixed;
-    width: 650px;
-    height: 650px;
-    right: -280px;
-    bottom: -250px;
-    background: radial-gradient(
-        circle,
-        rgba(255, 75, 75, 0.08),
-        transparent 65%
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+
+    height:88px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:30;
+
+    border-bottom:1px solid var(--line);
+
+    background:rgba(5,5,5,.78);
+
+    backdrop-filter:blur(24px);
+
+    -webkit-backdrop-filter:blur(24px);
+
+}
+
+
+.header-in{
+
+    width:min(
+        1100px,
+        calc(100% - 40px)
     );
-    filter: blur(30px);
-    animation: glow2 15s ease-in-out infinite alternate;
-    pointer-events: none;
-    z-index: -2;
+
+    height:100%;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
 }
 
-@keyframes glow1 {
-    from {
-        transform: translate(0, 0) scale(1);
-    }
-    to {
-        transform: translate(130px, 100px) scale(1.2);
-    }
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    color:#fff;
+
+    text-decoration:none;
+
 }
 
-@keyframes glow2 {
-    from {
-        transform: translate(0, 0) scale(1);
-    }
-    to {
-        transform: translate(-100px, -80px) scale(1.25);
-    }
+
+.logo{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:15px;
+
+    display:grid;
+
+    place-items:center;
+
+    background:#fff;
+
+    color:#050505;
+
+    font-size:24px;
+
+    font-weight:900;
+
+    box-shadow:
+        0 12px 40px
+        rgba(255,255,255,.08);
+
 }
 
-/* HEADER */
 
-.header {
-    height: 112px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    background: rgba(17,17,21,0.82);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 48px;
-    position: sticky;
-    top: 0;
-    z-index: 20;
+.name{
+
+    font-size:22px;
+
+    font-weight:850;
+
+    letter-spacing:-.6px;
+
 }
 
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+
+.sub{
+
+    margin-top:2px;
+
+    color:#777;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
 }
 
-.logo {
-    width: 60px;
-    height: 60px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #ffb300, #ff4d4d);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    font-weight: 900;
-    color: white;
-    box-shadow: 0 10px 35px rgba(255, 120, 30, 0.22);
+
+.tools{
+
+    display:flex;
+
+    gap:10px;
+
 }
 
-.brand-text h1 {
-    font-size: 27px;
-    font-weight: 800;
-    letter-spacing: -1px;
+
+.icon{
+
+    width:48px;
+
+    height:48px;
+
+    border:1px solid var(--line);
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    color:#ddd;
+
+    background:#111;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:
+
+        transform .2s ease,
+
+        background .2s ease,
+
+        border-color .2s ease;
+
 }
 
-.brand-text span {
-    display: block;
-    color: #888892;
-    font-size: 13px;
-    margin-top: 2px;
+
+/* =========================
+   ICON PRESS
+========================= */
+
+.icon:active{
+
+    transform:scale(.88);
+
+    background:#222;
+
+    border-color:rgba(255,255,255,.35);
+
 }
 
-.header-tools {
-    height: 60px;
-    min-width: 150px;
-    padding: 0 20px;
-    border-radius: 32px;
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(255,255,255,0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-}
 
-.tool {
-    font-size: 23px;
-    color: #c9c9d0;
-}
+/* =========================
+   CONTAINER
+========================= */
 
-/* MAIN */
+.container{
 
-.container {
-    width: min(100% - 48px, 1000px);
-    margin: auto;
-}
-
-/* HERO */
-
-.hero {
-    text-align: center;
-    padding: 76px 0 35px;
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 11px 24px;
-    border: 1px solid rgba(255, 179, 0, 0.28);
-    border-radius: 30px;
-    background: rgba(255, 179, 0, 0.04);
-    color: #ffc83d;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #ffb000;
-    box-shadow: 0 0 15px rgba(255,176,0,.7);
-}
-
-.hero h2 {
-    margin-top: 34px;
-    font-size: clamp(45px, 8vw, 76px);
-    line-height: 0.98;
-    letter-spacing: -4px;
-    font-weight: 850;
-}
-
-.hero h2 .gradient {
-    display: block;
-    background: linear-gradient(
-        90deg,
-        #ffb300,
-        #ff7a38,
-        #ff3f55
+    width:min(
+        1000px,
+        calc(100% - 40px)
     );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+
+    margin:auto;
+
 }
 
-.description {
-    max-width: 720px;
-    margin: 35px auto 0;
-    color: #9b9ba6;
-    font-size: 19px;
-    line-height: 1.65;
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+
+    text-align:center;
+
+    padding:76px 0 30px;
+
 }
 
-/* SEARCH */
 
-.search-box {
-    margin: 48px auto 24px;
-    height: 84px;
-    border-radius: 25px;
-    border: 1px solid rgba(255,255,255,0.10);
-    background: rgba(25,25,29,0.82);
-    display: flex;
-    align-items: center;
-    padding: 0 28px;
-    box-shadow: inset 0 1px rgba(255,255,255,0.025);
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:11px 21px;
+
+    border:1px solid var(--line2);
+
+    border-radius:999px;
+
+    color:#eee;
+
+    background:#0d0d0d;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
 }
 
-.search-icon {
-    font-size: 29px;
-    color: #858591;
-    margin-right: 20px;
+
+.dot{
+
+    width:9px;
+
+    height:9px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    box-shadow:
+        0 0 15px
+        rgba(255,255,255,.7);
+
+    animation:pulse 2s infinite;
+
 }
 
-.search-box input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 20px;
+
+@keyframes pulse{
+
+    50%{
+
+        opacity:.35;
+
+        transform:scale(.78);
+
+    }
+
 }
 
-.search-box input::placeholder {
-    color: #8d8d97;
+
+.hero h1{
+
+    margin-top:32px;
+
+    font-size:clamp(
+        48px,
+        8vw,
+        78px
+    );
+
+    line-height:.98;
+
+    letter-spacing:-4px;
+
+    font-weight:900;
+
 }
 
-/* FEATURE BUTTONS */
 
-.features {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 58px;
+.gradient{
+
+    display:block;
+
+    color:#fff;
+
 }
 
-.feature {
-    height: 58px;
-    padding: 0 25px;
-    border-radius: 30px;
-    border: 1px solid rgba(255,255,255,0.09);
-    background: rgba(20,20,24,0.86);
-    color: #d6d6db;
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    font-weight: 700;
-    letter-spacing: .5px;
+
+.desc{
+
+    max-width:760px;
+
+    margin:31px auto 0;
+
+    color:#999;
+
+    font-size:18px;
+
+    line-height:1.72;
+
 }
 
-.feature-icon {
-    font-size: 18px;
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-wrap{
+
+    position:relative;
+
+    margin:42px auto 18px;
+
 }
 
-/* QRIS */
 
-.section-title {
-    margin-bottom: 24px;
+.search{
+
+    width:100%;
+
+    height:70px;
+
+    padding:
+        0 60px 0 58px;
+
+    border:1px solid var(--line2);
+
+    border-radius:22px;
+
+    background:#111;
+
+    color:#fff;
+
+    outline:0;
+
+    font-size:18px;
+
+    box-shadow:
+        0 18px 50px
+        rgba(0,0,0,.25);
+
+    transition:
+        border-color .2s ease,
+        transform .2s ease;
+
 }
 
-.section-title h3 {
-    font-size: 27px;
-    font-weight: 800;
+
+.search:focus{
+
+    border-color:#fff;
+
+    transform:scale(1.005);
+
 }
 
-.section-title p {
-    color: #777780;
-    margin-top: 7px;
+
+.search::placeholder{
+
+    color:#777;
+
 }
 
-.qris-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+
+.search-icon{
+
+    position:absolute;
+
+    left:23px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:27px;
+
+    color:#888;
+
 }
 
-.qris-card {
-    position: relative;
-    min-height: 190px;
-    padding: 27px;
-    border-radius: 25px;
-    border: 1px solid rgba(255,255,255,0.09);
+
+.clear{
+
+    position:absolute;
+
+    right:15px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:40px;
+
+    height:40px;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#222;
+
+    color:#ccc;
+
+    display:none;
+
+    cursor:pointer;
+
+    transition:transform .2s ease;
+
+}
+
+
+.clear:active{
+
+    transform:
+        translateY(-50%)
+        scale(.82);
+
+}
+
+
+/* =========================
+   FEATURES
+========================= */
+
+.features{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:11px;
+
+    margin-bottom:58px;
+
+}
+
+
+.feature{
+
+    min-height:53px;
+
+    padding:0 20px;
+
+    border:1px solid var(--line);
+
+    border-radius:999px;
+
+    background:#101010;
+
+    color:#ddd;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:.6px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+    transition:
+
+        transform .18s ease,
+
+        background .18s ease,
+
+        border-color .18s ease;
+
+}
+
+
+.feature:hover{
+
+    border-color:
+        rgba(255,255,255,.28);
+
+}
+
+
+.feature:active{
+
+    transform:scale(.94);
+
+    background:#1b1b1b;
+
+    border-color:#fff;
+
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section-head{
+
+    display:flex;
+
+    align-items:end;
+
+    justify-content:space-between;
+
+    margin-bottom:20px;
+
+}
+
+
+.section-title{
+
+    font-size:28px;
+
+    font-weight:850;
+
+    letter-spacing:-.8px;
+
+}
+
+
+.section-sub{
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-size:13px;
+
+}
+
+
+.count{
+
+    color:#777;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:16px;
+
+}
+
+
+/* =========================
+   QRIS CARD
+========================= */
+
+.card{
+
+    position:relative;
+
+    min-height:205px;
+
+    padding:27px;
+
+    overflow:hidden;
+
+    border:1px solid var(--line);
+
+    border-radius:25px;
+
     background:
         linear-gradient(
             145deg,
-            rgba(32,32,37,.94),
-            rgba(17,17,20,.96)
+            #1b1b1b,
+            #0d0d0d
         );
-    overflow: hidden;
-    transition: .25s ease;
+
+    box-shadow:
+        0 18px 45px
+        rgba(0,0,0,.3);
+
+    cursor:pointer;
+
+    user-select:none;
+
+    transition:
+
+        transform .25s ease,
+
+        border-color .25s ease,
+
+        box-shadow .25s ease;
+
 }
 
-.qris-card::before {
-    content: "";
-    position: absolute;
-    width: 170px;
-    height: 170px;
-    right: -80px;
-    top: -80px;
-    background: radial-gradient(
-        circle,
-        rgba(255, 174, 0, .13),
-        transparent 70%
-    );
+
+.card:before{
+
+    content:"";
+
+    position:absolute;
+
+    width:230px;
+
+    height:230px;
+
+    right:-130px;
+
+    top:-135px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.07),
+            transparent 68%
+        );
+
 }
 
-.qris-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255,179,0,.30);
-    box-shadow: 0 18px 45px rgba(0,0,0,.35);
+
+.card:after{
+
+    content:"";
+
+    position:absolute;
+
+    left:-100px;
+
+    bottom:-160px;
+
+    width:250px;
+
+    height:250px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.035),
+            transparent 68%
+        );
+
 }
 
-.qris-number {
-    color: #777780;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:
+        rgba(255,255,255,.28);
+
+    box-shadow:
+        0 25px 60px
+        rgba(0,0,0,.45);
+
 }
 
-.qris-name {
-    margin-top: 13px;
-    font-size: 25px;
-    font-weight: 800;
+
+.card:active{
+
+    transform:
+        scale(.975);
+
+    border-color:#fff;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,.6);
+
 }
 
-.qris-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 25px;
-    padding: 8px 13px;
-    border-radius: 20px;
-    background: rgba(40, 200, 100, .08);
-    border: 1px solid rgba(40,200,100,.14);
-    color: #9ee9b8;
-    font-size: 12px;
-    font-weight: 700;
+
+.num{
+
+    color:#666;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:1.5px;
+
 }
 
-.green-dot {
-    width: 8px;
-    height: 8px;
-    background: #35d66d;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(53,214,109,.6);
+
+.qname{
+
+    margin-top:13px;
+
+    font-size:25px;
+
+    font-weight:850;
+
 }
 
-.open-btn {
-    position: absolute;
-    right: 24px;
-    bottom: 25px;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.07);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 20px;
+
+.info{
+
+    margin-top:9px;
+
+    color:#777;
+
+    font-size:12px;
+
 }
 
-/* FOOTER */
 
-.footer {
-    text-align: center;
-    color: #62626b;
-    font-size: 13px;
-    padding: 65px 0 35px;
+.ready{
+
+    position:absolute;
+
+    left:27px;
+
+    bottom:27px;
+
+    padding:8px 12px;
+
+    border:1px solid var(--line);
+
+    border-radius:999px;
+
+    background:#161616;
+
+    color:#eee;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    letter-spacing:.7px;
+
 }
 
-/* MOBILE */
 
-@media (max-width: 650px) {
+.ready i{
 
-    .header {
-        height: 92px;
-        padding: 0 20px;
-    }
+    display:inline-block;
 
-    .logo {
-        width: 50px;
-        height: 50px;
-        border-radius: 14px;
-        font-size: 23px;
-    }
+    width:8px;
 
-    .brand-text h1 {
-        font-size: 21px;
-    }
+    height:8px;
 
-    .brand-text span {
-        font-size: 11px;
-    }
+    border-radius:50%;
 
-    .header-tools {
-        min-width: auto;
-        width: 92px;
-        height: 50px;
-        padding: 0 15px;
-        gap: 16px;
-    }
+    background:#fff;
 
-    .tool {
-        font-size: 19px;
-    }
+    box-shadow:
+        0 0 10px
+        rgba(255,255,255,.8);
 
-    .container {
-        width: min(100% - 30px, 1000px);
-    }
+    margin-right:8px;
 
-    .hero {
-        padding-top: 55px;
-    }
-
-    .status {
-        font-size: 11px;
-        padding: 10px 17px;
-    }
-
-    .hero h2 {
-        font-size: 47px;
-        letter-spacing: -2.5px;
-        margin-top: 27px;
-    }
-
-    .description {
-        font-size: 15px;
-        line-height: 1.65;
-        margin-top: 27px;
-    }
-
-    .search-box {
-        height: 66px;
-        margin-top: 35px;
-        padding: 0 20px;
-        border-radius: 20px;
-    }
-
-    .search-box input {
-        font-size: 16px;
-    }
-
-    .search-icon {
-        font-size: 23px;
-        margin-right: 14px;
-    }
-
-    .features {
-        gap: 10px;
-        margin-bottom: 45px;
-    }
-
-    .feature {
-        height: 52px;
-        padding: 0 17px;
-        font-size: 12px;
-    }
-
-    .qris-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
-    }
-
-    .qris-card {
-        min-height: 165px;
-    }
-
-    .qris-name {
-        font-size: 22px;
-    }
 }
+
+
+.open{
+
+    position:absolute;
+
+    right:25px;
+
+    bottom:24px;
+
+    width:45px;
+
+    height:45px;
+
+    display:grid;
+
+    place-items:center;
+
+    border:1px solid var(--line);
+
+    border-radius:50%;
+
+    background:#161616;
+
+    color:#fff;
+
+    font-size:25px;
+
+    transition:
+
+        transform .2s ease,
+
+        background .2s ease;
+
+}
+
+
+.card:active .open{
+
+    transform:scale(.85);
+
+    background:#292929;
+
+}
+
+
+/* =========================
+   NONE
+========================= */
+
+.none{
+
+    display:none;
+
+    padding:45px 20px;
+
+    text-align:center;
+
+    border:1px dashed var(--line2);
+
+    border-radius:22px;
+
+    color:#777;
+
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info-panel{
+
+    margin-top:18px;
+
+    padding:24px;
+
+    border:1px solid var(--line);
+
+    border-radius:24px;
+
+    background:#101010;
+
+}
+
+
+.info-title{
+
+    font-size:15px;
+
+    font-weight:800;
+
+}
+
+
+.info-text{
+
+    margin-top:8px;
+
+    color:#777;
+
+    font-size:13px;
+
+    line-height:1.65;
+
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+    padding:68px 0 40px;
+
+    text-align:center;
+
+    color:#555;
+
+    font-size:12px;
+
+}
+
+
+.footer strong{
+
+    color:#aaa;
+
+}
+
+
+/* =========================
+   RIPPLE
+========================= */
+
+.ripple{
+
+    position:absolute;
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.25);
+
+    transform:scale(0);
+
+    animation:
+        rippleEffect .55s ease-out;
+
+    pointer-events:none;
+
+}
+
+
+@keyframes rippleEffect{
+
+    0%{
+
+        transform:scale(0);
+
+        opacity:.7;
+
+    }
+
+    100%{
+
+        transform:scale(25);
+
+        opacity:0;
+
+    }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .header{
+
+        height:82px;
+
+    }
+
+
+    .header-in{
+
+        width:
+            calc(100% - 28px);
+
+    }
+
+
+    .logo{
+
+        width:46px;
+
+        height:46px;
+
+        border-radius:14px;
+
+        font-size:21px;
+
+    }
+
+
+    .name{
+
+        font-size:18px;
+
+    }
+
+
+    .sub{
+
+        font-size:8px;
+
+    }
+
+
+    .icon{
+
+        width:44px;
+
+        height:44px;
+
+    }
+
+
+    .container{
+
+        width:
+            calc(100% - 28px);
+
+    }
+
+
+    .hero{
+
+        padding-top:55px;
+
+    }
+
+
+    .status{
+
+        padding:10px 16px;
+
+        font-size:10px;
+
+    }
+
+
+    .hero h1{
+
+        margin-top:27px;
+
+        font-size:48px;
+
+        letter-spacing:-2.8px;
+
+    }
+
+
+    .desc{
+
+        margin-top:25px;
+
+        font-size:14px;
+
+        line-height:1.7;
+
+    }
+
+
+    .search-wrap{
+
+        margin-top:32px;
+
+    }
+
+
+    .search{
+
+        height:62px;
+
+        padding-left:54px;
+
+        font-size:15px;
+
+        border-radius:19px;
+
+    }
+
+
+    .search-icon{
+
+        left:20px;
+
+        font-size:23px;
+
+    }
+
+
+    .features{
+
+        gap:8px;
+
+        margin-bottom:45px;
+
+    }
+
+
+    .feature{
+
+        min-height:48px;
+
+        padding:0 15px;
+
+        font-size:10px;
+
+    }
+
+
+    .section-title{
+
+        font-size:23px;
+
+    }
+
+
+    .count{
+
+        font-size:10px;
+
+    }
+
+
+    .grid{
+
+        grid-template-columns:1fr;
+
+        gap:13px;
+
+    }
+
+
+    .card{
+
+        min-height:176px;
+
+        padding:23px;
+
+        border-radius:22px;
+
+    }
+
+
+    .qname{
+
+        font-size:22px;
+
+    }
+
+
+    .ready{
+
+        left:23px;
+
+        bottom:22px;
+
+    }
+
+
+    .open{
+
+        right:21px;
+
+        bottom:20px;
+
+    }
+
+
+    .info-panel{
+
+        padding:20px;
+
+    }
+
+}
+
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none!important;
+
+        transition:none!important;
+
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
+
+
+<!-- BACKGROUND -->
+
+<div class="bg">
+
+    <div class="orb o1"></div>
+
+    <div class="orb o2"></div>
+
+    <div class="orb o3"></div>
+
+</div>
+
+
+
+<!-- HEADER -->
 
 <header class="header">
 
-    <div class="brand">
-        <div class="logo">⚡</div>
+    <div class="header-in">
 
-        <div class="brand-text">
-            <h1>Lionel Gustav</h1>
-            <span>Qris All Payment</span>
+
+        <a
+            class="brand"
+            href="index.html"
+        >
+
+            <div class="logo">
+                ⚡
+            </div>
+
+
+            <div>
+
+                <div class="name">
+                    Lionel Gustav
+                </div>
+
+                <div class="sub">
+                    Qris All Payment
+                </div>
+
+            </div>
+
+        </a>
+
+
+
+        <div class="tools">
+
+            <button
+                class="icon"
+                id="topSearch"
+                type="button"
+            >
+                ⌕
+            </button>
+
+
+            <button
+                class="icon"
+                id="profile"
+                type="button"
+            >
+                ◉
+            </button>
+
         </div>
-    </div>
 
-    <div class="header-tools">
-        <div class="tool">⌕</div>
-        <div class="tool">◉</div>
+
     </div>
 
 </header>
 
 
+
+<!-- MAIN -->
+
 <main class="container">
+
+
+    <!-- HERO -->
 
     <section class="hero">
 
+
         <div class="status">
-            <span class="status-dot"></span>
+
+            <span class="dot"></span>
+
             AUTO-PROSES 24 JAM
+
         </div>
 
-        <h2>
-            Gustav Archive
-            <span class="gradient">Qris All Payment</span>
-        </h2>
 
-        <p class="description">
-            Web ini bertujuan untuk cek transaksi qris yang dipakai
-            own/asis gustav, menu cv saldo sedang dalam tahap pembuatan.
+        <h1>
+
+            Gustav Archive
+
+            <span class="gradient">
+                Qris All Payment
+            </span>
+
+        </h1>
+
+
+        <p class="desc">
+
+            Web ini bertujuan untuk cek transaksi qris
+            yang dipakai own/asis gustav,
+            menu cv saldo sedang dalam tahap pembuatan.
+
         </p>
+
 
     </section>
 
 
+
     <!-- SEARCH -->
 
-    <div class="search-box">
-        <span class="search-icon">⌕</span>
+    <section
+        class="search-wrap"
+        id="searchSection"
+    >
+
+        <span class="search-icon">
+            ⌕
+        </span>
+
+
         <input
-            type="text"
-            id="searchInput"
+
+            id="search"
+
+            class="search"
+
+            type="search"
+
             placeholder="Cari Qris"
+
             autocomplete="off"
+
         >
-    </div>
+
+
+        <button
+            class="clear"
+            id="clear"
+            type="button"
+        >
+            ×
+        </button>
+
+    </section>
+
 
 
     <!-- FEATURES -->
 
-    <div class="features">
+    <section class="features">
+
 
         <div class="feature">
-            <span class="feature-icon">▦</span>
+
+            ▦ &nbsp;
+
             BAYAR QRIS
+
         </div>
 
+
         <div class="feature">
-            <span class="feature-icon">⚡</span>
+
+            ⚡ &nbsp;
+
             BUKTI TF NO DELAY
+
         </div>
+
 
         <div class="feature">
-            <span class="feature-icon">♢</span>
+
+            ♢ &nbsp;
+
             TRANSAKSI NO FAKE
+
         </div>
 
-    </div>
+
+    </section>
+
 
 
     <!-- QRIS -->
 
-    <div class="section-title">
-        <h3>Daftar QRIS</h3>
-        <p>Pilih QRIS yang ingin kamu cek</p>
-    </div>
+    <section>
 
 
-    <div class="qris-grid" id="qrisGrid">
+        <div class="section-head">
 
-        <div class="qris-card" data-name="QRIS GUSTAV">
-            <div class="qris-number">01 / QRIS</div>
-            <div class="qris-name">QRIS GUSTAV</div>
 
-            <div class="qris-status">
-                <span class="green-dot"></span>
-                READY
+            <div>
+
+                <h2 class="section-title">
+                    Daftar QRIS
+                </h2>
+
+
+                <p class="section-sub">
+                    Pilih QRIS yang ingin kamu cek
+                </p>
+
             </div>
 
-            <div class="open-btn">›</div>
+
+            <div
+                class="count"
+                id="count"
+            >
+                5 QRIS
+            </div>
+
+
         </div>
 
 
-        <div class="qris-card" data-name="QRIS LEA">
-            <div class="qris-number">02 / QRIS</div>
-            <div class="qris-name">QRIS LEA</div>
 
-            <div class="qris-status">
-                <span class="green-dot"></span>
-                READY
-            </div>
+        <div
+            class="grid"
+            id="grid"
+        >
 
-            <div class="open-btn">›</div>
+
+            <article
+                class="card"
+                data-name="qris gustav"
+                data-id="gustav"
+                tabindex="0"
+            >
+
+                <div class="num">
+                    01 / QRIS
+                </div>
+
+                <div class="qname">
+                    QRIS GUSTAV
+                </div>
+
+                <div class="info">
+                    Cek transaksi & riwayat
+                </div>
+
+                <div class="ready">
+                    <i></i>
+                    READY
+                </div>
+
+                <div class="open">
+                    ›
+                </div>
+
+            </article>
+
+
+
+            <article
+                class="card"
+                data-name="qris lea"
+                data-id="lea"
+                tabindex="0"
+            >
+
+                <div class="num">
+                    02 / QRIS
+                </div>
+
+                <div class="qname">
+                    QRIS LEA
+                </div>
+
+                <div class="info">
+                    Cek transaksi & riwayat
+                </div>
+
+                <div class="ready">
+                    <i></i>
+                    READY
+                </div>
+
+                <div class="open">
+                    ›
+                </div>
+
+            </article>
+
+
+
+            <article
+                class="card"
+                data-name="qris noir"
+                data-id="noir"
+                tabindex="0"
+            >
+
+                <div class="num">
+                    03 / QRIS
+                </div>
+
+                <div class="qname">
+                    QRIS NOIR
+                </div>
+
+                <div class="info">
+                    Cek transaksi & riwayat
+                </div>
+
+                <div class="ready">
+                    <i></i>
+                    READY
+                </div>
+
+                <div class="open">
+                    ›
+                </div>
+
+            </article>
+
+
+
+            <article
+                class="card"
+                data-name="qris abil"
+                data-id="abil"
+                tabindex="0"
+            >
+
+                <div class="num">
+                    04 / QRIS
+                </div>
+
+                <div class="qname">
+                    QRIS ABIL
+                </div>
+
+                <div class="info">
+                    Cek transaksi & riwayat
+                </div>
+
+                <div class="ready">
+                    <i></i>
+                    READY
+                </div>
+
+                <div class="open">
+                    ›
+                </div>
+
+            </article>
+
+
+
+            <article
+                class="card"
+                data-name="qris pido"
+                data-id="pido"
+                tabindex="0"
+            >
+
+                <div class="num">
+                    05 / QRIS
+                </div>
+
+                <div class="qname">
+                    QRIS PIDO
+                </div>
+
+                <div class="info">
+                    Cek transaksi & riwayat
+                </div>
+
+                <div class="ready">
+                    <i></i>
+                    READY
+                </div>
+
+                <div class="open">
+                    ›
+                </div>
+
+            </article>
+
+
         </div>
 
 
-        <div class="qris-card" data-name="QRIS NOIR">
-            <div class="qris-number">03 / QRIS</div>
-            <div class="qris-name">QRIS NOIR</div>
-
-            <div class="qris-status">
-                <span class="green-dot"></span>
-                READY
-            </div>
-
-            <div class="open-btn">›</div>
+        <div
+            class="none"
+            id="none"
+        >
+            QRIS yang kamu cari tidak ditemukan.
         </div>
 
 
-        <div class="qris-card" data-name="QRIS ABIL">
-            <div class="qris-number">04 / QRIS</div>
-            <div class="qris-name">QRIS ABIL</div>
+    </section>
 
-            <div class="qris-status">
-                <span class="green-dot"></span>
-                READY
-            </div>
 
-            <div class="open-btn">›</div>
+
+    <!-- INFO -->
+
+    <section class="info-panel">
+
+        <div class="info-title">
+            Informasi
         </div>
 
 
-        <div class="qris-card" data-name="QRIS PIDO">
-            <div class="qris-number">05 / QRIS</div>
-            <div class="qris-name">QRIS PIDO</div>
+        <div class="info-text">
 
-            <div class="qris-status">
-                <span class="green-dot"></span>
-                READY
-            </div>
+            Gunakan menu QRIS di atas
+            untuk melihat transaksi.
+            Sistem API dan pengecekan transaksi
+            dapat disambungkan pada tahap berikutnya.
 
-            <div class="open-btn">›</div>
         </div>
 
-    </div>
+    </section>
 
+
+
+    <!-- FOOTER -->
 
     <footer class="footer">
-        © 2026 Lionel Gustav • Qris All Payment
+
+        © 2026
+
+        <strong>
+            Lionel Gustav
+        </strong>
+
+        · Qris All Payment
+
     </footer>
+
 
 </main>
 
 
+
 <script>
 
-/* SEARCH QRIS */
+/* =========================
+   ELEMENTS
+========================= */
 
-const searchInput = document.getElementById("searchInput");
-const cards = document.querySelectorAll(".qris-card");
+const cards =
+    [...document.querySelectorAll(".card")];
 
-searchInput.addEventListener("input", function () {
+const search =
+    document.getElementById("search");
 
-    const keyword = this.value.toLowerCase().trim();
+const clear =
+    document.getElementById("clear");
+
+const count =
+    document.getElementById("count");
+
+const none =
+    document.getElementById("none");
+
+
+/* =========================
+   SEARCH FILTER
+========================= */
+
+function filter(){
+
+    const q =
+        search.value
+        .toLowerCase()
+        .trim();
+
+    let n = 0;
+
 
     cards.forEach(card => {
 
-        const name = card.dataset.name.toLowerCase();
+        const ok =
+            card.dataset.name
+            .includes(q);
 
-        if (name.includes(keyword)) {
-            card.style.display = "";
-        } else {
-            card.style.display = "none";
+
+        card.style.display =
+            ok ? "" : "none";
+
+
+        if(ok){
+            n++;
         }
 
     });
 
+
+    count.textContent =
+        n + " QRIS";
+
+
+    none.style.display =
+        n ? "none" : "block";
+
+
+    clear.style.display =
+        q ? "grid" : "none";
+
+}
+
+
+search.addEventListener(
+    "input",
+    filter
+);
+
+
+/* =========================
+   CLEAR SEARCH
+========================= */
+
+clear.onclick = function(){
+
+    search.value = "";
+
+    filter();
+
+    search.focus();
+
+};
+
+
+/* =========================
+   TOP SEARCH
+========================= */
+
+document
+.getElementById("topSearch")
+.onclick = function(){
+
+    document
+        .getElementById("searchSection")
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+
+    setTimeout(
+        () => search.focus(),
+        350
+    );
+
+};
+
+
+/* =========================
+   PROFILE
+========================= */
+
+document
+.getElementById("profile")
+.onclick = function(){
+
+    alert(
+        "Lionel Gustav\n\n" +
+        "Qris All Payment"
+    );
+
+};
+
+
+/* =========================
+   OPEN QRIS
+========================= */
+
+function openQris(id){
+
+    /* Tambahkan animasi keluar */
+
+    document.body
+        .classList
+        .add("page-exit");
+
+
+    /* Tunggu animasi selesai */
+
+    setTimeout(function(){
+
+        window.location.href =
+            "qris.html?id=" +
+            encodeURIComponent(id);
+
+    },350);
+
+}
+
+
+/* =========================
+   RIPPLE
+========================= */
+
+function createRipple(event, target){
+
+    const ripple =
+        document.createElement("span");
+
+
+    ripple.classList.add(
+        "ripple"
+    );
+
+
+    const rect =
+        target.getBoundingClientRect();
+
+
+    const x =
+        event.clientX -
+        rect.left;
+
+
+    const y =
+        event.clientY -
+        rect.top;
+
+
+    ripple.style.left =
+        x + "px";
+
+
+    ripple.style.top =
+        y + "px";
+
+
+    target.style.position =
+        "relative";
+
+
+    target.style.overflow =
+        "hidden";
+
+
+    target.appendChild(
+        ripple
+    );
+
+
+    setTimeout(function(){
+
+        ripple.remove();
+
+    },600);
+
+}
+
+
+/* =========================
+   QRIS CLICK
+========================= */
+
+cards.forEach(card => {
+
+
+    card.addEventListener(
+        "click",
+        function(event){
+
+            createRipple(
+                event,
+                card
+            );
+
+
+            const id =
+                card.dataset.id;
+
+
+            setTimeout(function(){
+
+                openQris(id);
+
+            },100);
+
+        }
+    );
+
+
+    /* Keyboard */
+
+    card.addEventListener(
+        "keydown",
+        function(event){
+
+            if(
+                event.key === "Enter" ||
+                event.key === " "
+            ){
+
+                event.preventDefault();
+
+                openQris(
+                    card.dataset.id
+                );
+
+            }
+
+        }
+    );
+
+
 });
+
 
 </script>
 
