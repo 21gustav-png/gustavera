@@ -241,6 +241,7 @@
     }
 
     @keyframes transactionIn {
+
       from {
         opacity: 0;
         transform: translateY(-8px) scale(.98);
@@ -250,6 +251,7 @@
         opacity: 1;
         transform: translateY(0) scale(1);
       }
+
     }
 
     .transaction-top {
@@ -337,6 +339,7 @@
     }
 
     @keyframes pulse {
+
       0%,100% {
         opacity: .4;
         transform: scale(.8);
@@ -346,6 +349,7 @@
         opacity: 1;
         transform: scale(1);
       }
+
     }
 
     .footer {
@@ -570,7 +574,7 @@
 
       <button
         class="refresh"
-        onclick="loadTransactions()"
+        onclick="loadTransactions(true)"
       >
         ↻ Refresh
       </button>
@@ -691,6 +695,24 @@ function getTransactionId(tx) {
 
 /*
 =====================================
+ESCAPE HTML
+=====================================
+*/
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+=====================================
 RENDER TRANSAKSI
 =====================================
 */
@@ -735,7 +757,6 @@ function renderTransactions(items) {
       const time =
         tx.paidAt ||
         tx.createdAt ||
-        tx.expiredAt ||
         "";
 
       const transactionId =
@@ -756,7 +777,9 @@ function renderTransactions(items) {
             </div>
 
             <div class="paid">
-              ${escapeHTML(String(status).toUpperCase())}
+              ${escapeHTML(
+                String(status).toUpperCase()
+              )}
             </div>
 
           </div>
@@ -788,40 +811,39 @@ function renderTransactions(items) {
 
 /*
 =====================================
-ESCAPE HTML
+LOAD RIWAYAT
 =====================================
 */
 
-function escapeHTML(value) {
+let loadingTransactions = false;
 
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+async function loadTransactions(manual = false) {
 
-}
+  if (loadingTransactions) {
+    return;
+  }
 
-
-/*
-=====================================
-LOAD RIWAYAT AWAL
-=====================================
-*/
-
-async function loadTransactions() {
+  loadingTransactions = true;
 
   const list =
     document.getElementById(
       "transactionList"
     );
 
-  list.innerHTML = `
-    <div class="loading">
-      Memuat transaksi...
-    </div>
-  `;
+  const status =
+    document.getElementById(
+      "realtimeStatus"
+    );
+
+  if (manual) {
+
+    list.innerHTML = `
+      <div class="loading">
+        Memuat transaksi...
+      </div>
+    `;
+
+  }
 
   try {
 
@@ -830,6 +852,7 @@ async function loadTransactions() {
         BACKEND_URL +
         "/api/transaksi",
         {
+          method: "GET",
           cache: "no-store"
         }
       );
@@ -851,16 +874,37 @@ async function loadTransactions() {
 
     renderTransactions(items);
 
+    status.textContent =
+      "Otomatis memperbarui";
+
+    return items;
+
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Load transaksi error:",
+      error
+    );
 
-    list.innerHTML = `
-      <div class="error">
-        Gagal mengambil riwayat transaksi.<br>
-        Silakan coba refresh kembali.
-      </div>
-    `;
+    if (manual || !lastTransactionIds.size) {
+
+      list.innerHTML = `
+        <div class="error">
+          Gagal mengambil riwayat transaksi.<br>
+          Silakan coba refresh kembali.
+        </div>
+      `;
+
+    }
+
+    status.textContent =
+      "Menunggu koneksi...";
+
+    return null;
+
+  } finally {
+
+    loadingTransactions = false;
 
   }
 
@@ -869,7 +913,110 @@ async function loadTransactions() {
 
 /*
 =====================================
-TAMBAHKAN TRANSAKSI REALTIME
+ID TRANSAKSI TERAKHIR
+=====================================
+*/
+
+let lastTransactionIds =
+  new Set();
+
+
+/*
+=====================================
+CEK TRANSAKSI BARU
+=====================================
+*/
+
+async function checkNewTransactions() {
+
+  const items =
+    await loadTransactions(false);
+
+  if (!items) {
+    return;
+  }
+
+  const currentIds =
+    new Set(
+      items
+        .map(tx =>
+          getTransactionId(tx)
+        )
+        .filter(Boolean)
+    );
+
+
+  /*
+  Jangan anggap transaksi lama
+  sebagai transaksi baru ketika
+  halaman pertama kali dibuka.
+  */
+
+  if (lastTransactionIds.size === 0) {
+
+    lastTransactionIds =
+      currentIds;
+
+    return;
+
+  }
+
+
+  /*
+  Cari transaksi yang belum ada
+  */
+
+  const newTransactions =
+    items.filter(tx => {
+
+      const id =
+        getTransactionId(tx);
+
+      return (
+        id &&
+        !lastTransactionIds.has(id)
+      );
+
+    });
+
+
+  /*
+  Kalau ada transaksi baru,
+  tampilkan notifikasi sederhana.
+  */
+
+  if (newTransactions.length > 0) {
+
+    console.log(
+      "Transaksi baru:",
+      newTransactions
+    );
+
+    newTransactions
+      .slice()
+      .reverse()
+      .forEach(tx => {
+
+        addRealtimeTransaction(tx);
+
+      });
+
+  }
+
+
+  /*
+  Simpan daftar ID terbaru
+  */
+
+  lastTransactionIds =
+    currentIds;
+
+}
+
+
+/*
+=====================================
+TAMBAHKAN TRANSAKSI BARU
 =====================================
 */
 
@@ -879,9 +1026,14 @@ function addRealtimeTransaction(tx) {
     return;
   }
 
+  const status =
+    String(
+      tx.status || ""
+    ).toLowerCase();
+
   if (
-    String(tx.status || "")
-      .toLowerCase() !== "paid"
+    status &&
+    status !== "paid"
   ) {
     return;
   }
@@ -893,6 +1045,11 @@ function addRealtimeTransaction(tx) {
     return;
   }
 
+
+  /*
+  Cegah duplikat
+  */
+
   const existing =
     document.querySelector(
       `[data-transaction-id="${CSS.escape(transactionId)}"]`
@@ -902,17 +1059,26 @@ function addRealtimeTransaction(tx) {
     return;
   }
 
+
   const list =
     document.getElementById(
       "transactionList"
     );
 
+
+  /*
+  Hapus pesan kosong
+  */
+
   const empty =
-    list.querySelector(".empty");
+    list.querySelector(
+      ".empty"
+    );
 
   if (empty) {
     list.innerHTML = "";
   }
+
 
   const amount =
     tx.amount ??
@@ -930,14 +1096,18 @@ function addRealtimeTransaction(tx) {
     tx.createdAt ||
     "";
 
+
   const item =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
 
   item.className =
     "transaction";
 
   item.dataset.transactionId =
     transactionId;
+
 
   item.innerHTML = `
 
@@ -971,115 +1141,8 @@ function addRealtimeTransaction(tx) {
 
   `;
 
+
   list.prepend(item);
-
-}
-
-
-/*
-=====================================
-REALTIME SSE
-=====================================
-*/
-
-let events = null;
-
-function connectRealtime() {
-
-  const status =
-    document.getElementById(
-      "realtimeStatus"
-    );
-
-  if (events) {
-    events.close();
-  }
-
-  events =
-    new EventSource(
-      BACKEND_URL +
-      "/api/events"
-    );
-
-  events.onopen = () => {
-
-    status.textContent =
-      "Realtime aktif";
-
-  };
-
-  events.onmessage = event => {
-
-    try {
-
-      const data =
-        JSON.parse(event.data);
-
-      /*
-      SERVER TERHUBUNG
-      */
-
-      if (data.type === "connected") {
-
-        status.textContent =
-          "Realtime aktif";
-
-        return;
-
-      }
-
-      /*
-      TRANSAKSI BARU
-      */
-
-      if (
-        data.type === "new_transactions" &&
-        Array.isArray(data.transactions)
-      ) {
-
-        data.transactions
-          .slice()
-          .reverse()
-          .forEach(tx => {
-
-            addRealtimeTransaction(tx);
-
-          });
-
-        return;
-
-      }
-
-      /*
-      KOMPATIBILITAS EVENT LAMA
-      */
-
-      if (
-        String(data.status || "")
-          .toLowerCase() === "paid"
-      ) {
-
-        addRealtimeTransaction(data);
-
-      }
-
-    } catch (error) {
-
-      console.error(
-        "Realtime data error:",
-        error
-      );
-
-    }
-
-  };
-
-  events.onerror = () => {
-
-    status.textContent =
-      "Menghubungkan kembali...";
-
-  };
 
 }
 
@@ -1093,7 +1156,9 @@ DOWNLOAD QR
 function downloadQR() {
 
   const link =
-    document.createElement("a");
+    document.createElement(
+      "a"
+    );
 
   link.href =
     "qris-gustav.png";
@@ -1101,7 +1166,9 @@ function downloadQR() {
   link.download =
     "QRIS-GUSTAV-STORE.png";
 
-  document.body.appendChild(link);
+  document.body.appendChild(
+    link
+  );
 
   link.click();
 
@@ -1124,6 +1191,11 @@ async function shareQR() {
       window.location.href
     ).href;
 
+
+  /*
+  Share file
+  */
+
   if (
     navigator.share &&
     navigator.canShare
@@ -1132,7 +1204,9 @@ async function shareQR() {
     try {
 
       const response =
-        await fetch(imageUrl);
+        await fetch(
+          imageUrl
+        );
 
       const blob =
         await response.blob();
@@ -1145,6 +1219,7 @@ async function shareQR() {
             type: blob.type
           }
         );
+
 
       if (
         navigator.canShare({
@@ -1171,11 +1246,19 @@ async function shareQR() {
 
     } catch (error) {
 
-      console.log(error);
+      console.log(
+        "Share file error:",
+        error
+      );
 
     }
 
   }
+
+
+  /*
+  Share link
+  */
 
   if (navigator.share) {
 
@@ -1198,11 +1281,15 @@ async function shareQR() {
 
     } catch (error) {
 
-      console.log(error);
+      console.log(
+        "Share link error:",
+        error
+      );
 
     }
 
   }
+
 
   alert(
     "Fitur bagikan tidak tersedia di browser ini."
@@ -1217,9 +1304,36 @@ START
 =====================================
 */
 
+
+/*
+Load transaksi pertama
+*/
+
 loadTransactions();
 
-connectRealtime();
+
+/*
+Cek transaksi baru setiap 15 detik.
+
+Ini polling ringan:
+1 request / 15 detik.
+*/
+
+setInterval(
+  checkNewTransactions,
+  15000
+);
+
+
+/*
+Status awal
+*/
+
+document.getElementById(
+  "realtimeStatus"
+).textContent =
+  "Otomatis memperbarui";
+
 
 </script>
 
