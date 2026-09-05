@@ -2,20 +2,11 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="theme-color" content="#050008">
-
-<title>Lionel Gustav — Qris All Payment</title>
+<title>Lionel Gustav - Qris All Payment</title>
 
 <style>
-
-/* =====================================================
-   RESET
-===================================================== */
-
 *{
     margin:0;
     padding:0;
@@ -30,24 +21,14 @@ html{
 body{
     min-height:100vh;
     overflow-x:hidden;
-
-    background:#050505;
+    background:#050507;
     color:#fff;
-
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
+    font-family:-apple-system,BlinkMacSystemFont,
+    "SF Pro Display","Segoe UI",Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
-
     opacity:0;
     transform:translateY(10px);
-
-    animation:pageIn .55s ease forwards;
+    animation:pageIn .5s ease forwards;
 }
 
 @keyframes pageIn{
@@ -64,241 +45,163 @@ body.exit{
 @keyframes pageOut{
     to{
         opacity:0;
-        transform:translateY(-12px);
+        transform:translateY(-10px);
     }
 }
 
 
-/* =====================================================
-   MOVING BACKGROUND
-===================================================== */
+/* =========================
+   BACKGROUND
+========================= */
 
 #network{
     position:fixed;
     inset:0;
-
     width:100%;
     height:100%;
-
     z-index:-5;
-
     pointer-events:none;
-
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(122,35,180,.15),
-            transparent 38%
-        ),
-        #050505;
 }
 
-
-/* =====================================================
-   PURPLE GLOW
-===================================================== */
-
-.glow{
+.background-glow{
     position:fixed;
-
-    width:380px;
-    height:380px;
-
+    width:350px;
+    height:350px;
     border-radius:50%;
-
-    background:#8b2be2;
-
-    filter:blur(150px);
-
+    filter:blur(130px);
+    background:#8d35d6;
     opacity:.10;
-
     pointer-events:none;
-
     z-index:-4;
 }
 
-.glow.one{
-    top:-170px;
-    left:-180px;
-
-    animation:
-        glowOne 12s ease-in-out infinite alternate;
+.glow1{
+    top:-150px;
+    left:-150px;
+    animation:moveGlow1 12s ease-in-out infinite alternate;
 }
 
-.glow.two{
-    right:-200px;
+.glow2{
+    right:-180px;
     bottom:-150px;
-
-    animation:
-        glowTwo 15s ease-in-out infinite alternate;
+    animation:moveGlow2 15s ease-in-out infinite alternate;
 }
 
-@keyframes glowOne{
-
+@keyframes moveGlow1{
     from{
         transform:translate(0,0);
     }
-
     to{
-        transform:translate(180px,160px);
+        transform:translate(170px,160px);
     }
-
 }
 
-@keyframes glowTwo{
-
+@keyframes moveGlow2{
     from{
         transform:translate(0,0);
     }
-
     to{
-        transform:translate(-180px,-140px);
+        transform:translate(-170px,-130px);
     }
-
 }
 
 
-/* =====================================================
+/* =========================
    HEADER
-===================================================== */
+========================= */
 
 .header{
-    position:relative;
-
-    height:105px;
-
-    border-bottom:1px solid
-        rgba(255,255,255,.09);
-
-    background:
-        rgba(8,8,11,.82);
-
+    height:100px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    background:rgba(7,7,10,.82);
     backdrop-filter:blur(20px);
     -webkit-backdrop-filter:blur(20px);
-
-    z-index:20;
+    position:relative;
+    z-index:10;
 }
 
 .header-inner{
-    width:min(
-        1100px,
-        calc(100% - 35px)
-    );
-
+    width:min(1050px,calc(100% - 30px));
     height:100%;
-
     margin:auto;
 
     display:flex;
-
     align-items:center;
-
     justify-content:space-between;
 }
 
-
-/* BRAND */
-
 .brand{
     display:flex;
-
     align-items:center;
-
-    gap:14px;
+    gap:13px;
 }
 
 .logo{
-    width:54px;
-    height:54px;
+    width:50px;
+    height:50px;
 
-    border-radius:16px;
+    border-radius:15px;
 
     display:flex;
-
     align-items:center;
     justify-content:center;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #b96cff
-        );
+    background:linear-gradient(
+        135deg,
+        #fff,
+        #a944e8
+    );
 
-    color:#09000e;
+    color:#090009;
 
-    font-size:26px;
-
+    font-size:24px;
     font-weight:900;
 
     box-shadow:
-        0 0 30px
-        rgba(159,70,255,.22);
+        0 0 25px rgba(169,68,232,.22);
 }
 
 .brand-name{
-    font-size:23px;
-
-    font-weight:850;
-
-    letter-spacing:-.7px;
+    font-size:21px;
+    font-weight:900;
 }
 
 .brand-sub{
     margin-top:3px;
-
-    font-size:9px;
-
-    letter-spacing:1.8px;
-
     color:#777;
-
+    font-size:8px;
+    letter-spacing:1.8px;
     text-transform:uppercase;
 }
 
-
-/* HEADER BUTTON */
-
 .header-actions{
     display:flex;
+    gap:3px;
 
-    align-items:center;
-
-    gap:4px;
-
-    padding:6px;
-
-    border:1px solid
-        rgba(255,255,255,.12);
+    padding:5px;
 
     background:#17171c;
 
-    border-radius:50px;
+    border:1px solid rgba(255,255,255,.10);
 
-    box-shadow:
-        0 0 25px
-        rgba(120,30,180,.08);
+    border-radius:50px;
 }
 
 .header-btn{
-    width:46px;
-    height:46px;
+    width:43px;
+    height:43px;
 
     border:0;
-
     border-radius:50%;
 
     background:transparent;
-
     color:#ddd;
 
-    font-size:23px;
+    font-size:22px;
 
     cursor:pointer;
 
-    transition:
-        transform .2s ease,
-        background .2s ease;
+    transition:.2s;
 }
 
 .header-btn:hover{
@@ -306,123 +209,93 @@ body.exit{
 }
 
 .header-btn:active{
-    transform:scale(.84);
+    transform:scale(.85);
 }
 
 
-/* =====================================================
-   MAIN
-===================================================== */
+/* =========================
+   CONTAINER
+========================= */
 
 .container{
-    width:min(
-        1050px,
-        calc(100% - 35px)
-    );
-
+    width:min(1050px,calc(100% - 30px));
     margin:auto;
-
-    padding-bottom:70px;
 }
 
 
-/* =====================================================
+/* =========================
    HERO
-===================================================== */
+========================= */
 
 .hero{
     text-align:center;
-
-    padding:
-        75px 0 35px;
+    padding:65px 0 25px;
 }
 
 .status{
     display:inline-flex;
-
     align-items:center;
+    gap:9px;
 
-    gap:10px;
+    padding:10px 19px;
 
-    padding:
-        11px 21px;
-
-    border:
-        1px solid
-        rgba(180,85,255,.45);
+    border:1px solid rgba(174,75,245,.45);
 
     border-radius:50px;
 
-    background:
-        rgba(73,18,100,.16);
+    background:rgba(80,20,110,.14);
 
-    color:#dca9ff;
+    color:#d9a0ff;
 
-    font-size:12px;
-
+    font-size:11px;
     font-weight:800;
-
-    letter-spacing:1.4px;
-
-    box-shadow:
-        0 0 30px
-        rgba(145,43,220,.09);
+    letter-spacing:1.2px;
 }
 
 .status-dot{
-    width:9px;
-    height:9px;
+    width:8px;
+    height:8px;
 
     border-radius:50%;
 
-    background:#b85cff;
+    background:#b654f4;
 
     box-shadow:
-        0 0 14px
-        rgba(190,80,255,.9);
+        0 0 13px #b654f4;
 
-    animation:
-        statusPulse 1.5s infinite;
+    animation:pulse 1.5s infinite;
 }
 
-@keyframes statusPulse{
-
+@keyframes pulse{
     50%{
         opacity:.35;
-        transform:scale(.72);
+        transform:scale(.7);
     }
-
 }
 
-
-/* TITLE */
-
 .hero h1{
-    margin-top:31px;
+    margin-top:28px;
 
-    font-size:
-        clamp(46px,8vw,76px);
+    font-size:clamp(43px,7vw,70px);
 
-    line-height:.98;
+    line-height:1;
 
     font-weight:950;
 
-    letter-spacing:-4px;
+    letter-spacing:-3px;
 }
 
 .hero h1 span{
     display:block;
+    margin-top:8px;
 
-    margin-top:10px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            #c56cff,
-            #8d35d6,
-            #fff
-        );
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #bd5cff,
+        #8734c4,
+        #fff
+    );
 
     background-size:250% auto;
 
@@ -431,89 +304,65 @@ body.exit{
 
     color:transparent;
 
-    animation:
-        purpleText 6s linear infinite;
+    animation:textMove 6s linear infinite;
 }
 
-@keyframes purpleText{
-
+@keyframes textMove{
     to{
-        background-position:
-            250% center;
+        background-position:250% center;
     }
-
 }
-
-
-/* DESCRIPTION */
 
 .description{
-    max-width:760px;
+    max-width:720px;
+    margin:25px auto 0;
 
-    margin:
-        29px auto 0;
+    color:#9b9ba7;
 
-    color:#a2a2af;
-
-    font-size:17px;
-
+    font-size:15px;
     line-height:1.7;
 }
 
 
-/* =====================================================
+/* =========================
    SEARCH
-===================================================== */
+========================= */
 
-.search-wrap{
-    position:relative;
-
+.search-area{
     max-width:850px;
-
-    margin:
-        40px auto 24px;
+    margin:30px auto 20px;
+    position:relative;
 }
 
 .search{
     width:100%;
+    height:61px;
 
-    height:68px;
+    border:1px solid rgba(255,255,255,.12);
 
-    padding:
-        0 60px;
+    border-radius:20px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.13);
-
-    border-radius:23px;
-
-    outline:none;
-
-    background:
-        rgba(20,20,25,.86);
+    background:rgba(20,20,25,.88);
 
     color:#fff;
 
-    font-size:17px;
+    outline:none;
+
+    padding:0 55px;
+
+    font-size:15px;
 
     backdrop-filter:blur(15px);
 
-    transition:
-        border-color .2s,
-        box-shadow .2s,
-        transform .2s;
+    transition:.25s;
 }
 
 .search:focus{
-    border-color:
-        rgba(177,79,255,.65);
+    border-color:rgba(180,75,255,.65);
 
     box-shadow:
-        0 0 0 4px
-        rgba(145,40,220,.08),
-        0 0 35px
-        rgba(145,40,220,.08);
+        0 0 0 4px rgba(150,50,220,.08),
+        0 0 30px rgba(150,50,220,.08);
 }
 
 .search::placeholder{
@@ -523,81 +372,58 @@ body.exit{
 .search-icon{
     position:absolute;
 
-    left:22px;
+    left:19px;
     top:50%;
 
-    transform:
-        translateY(-50%);
+    transform:translateY(-50%);
 
     color:#aaa;
 
-    font-size:26px;
-
-    pointer-events:none;
+    font-size:23px;
 }
 
 
-/* =====================================================
-   FEATURE BUTTONS
-===================================================== */
+/* =========================
+   FEATURES
+========================= */
 
 .features{
     max-width:850px;
-
     margin:auto;
 
     display:flex;
-
     flex-wrap:wrap;
-
-    gap:11px;
+    gap:9px;
 }
 
 .feature{
     display:flex;
-
     align-items:center;
+    gap:8px;
 
-    gap:10px;
+    padding:0 15px;
 
-    min-height:51px;
+    height:45px;
 
-    padding:
-        0 19px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.11);
 
     border-radius:50px;
 
-    background:
-        rgba(15,15,19,.9);
+    background:rgba(15,15,19,.9);
 
     color:#ddd;
 
-    font-size:11px;
-
+    font-size:10px;
     font-weight:800;
-
-    letter-spacing:.7px;
+    letter-spacing:.5px;
 
     cursor:pointer;
 
-    transition:
-        transform .2s ease,
-        border-color .2s ease,
-        box-shadow .2s ease;
+    transition:.2s;
 }
 
 .feature:hover{
-    border-color:
-        rgba(180,90,255,.5);
-
-    box-shadow:
-        0 0 20px
-        rgba(150,50,220,.08);
-
+    border-color:rgba(180,80,255,.5);
     transform:translateY(-2px);
 }
 
@@ -606,227 +432,218 @@ body.exit{
 }
 
 .feature-icon{
-    color:#c265ff;
-
-    font-size:17px;
+    color:#bd61ff;
+    font-size:15px;
 }
 
 
-/* =====================================================
+/* =========================
    QRIS SECTION
-===================================================== */
+========================= */
 
 .qris-section{
-    margin-top:58px;
+    margin-top:45px;
+    padding-bottom:60px;
 }
 
 .section-head{
     display:flex;
-
     align-items:end;
-
     justify-content:space-between;
 
-    margin-bottom:19px;
+    margin-bottom:17px;
 }
 
 .section-title{
-    font-size:27px;
-
+    font-size:24px;
     font-weight:900;
-
-    letter-spacing:-.8px;
 }
 
 .section-subtitle{
-    margin-top:5px;
-
-    color:#6e6e79;
-
-    font-size:13px;
+    margin-top:4px;
+    color:#70707a;
+    font-size:11px;
 }
 
 .total{
-    color:#777780;
-
-    font-size:12px;
-
+    color:#777;
+    font-size:11px;
     font-weight:700;
 }
 
 
-/* =====================================================
-   QRIS GRID
-===================================================== */
+/* =================================================
+   3 KOLOM QRIS
+================================================= */
 
 .qris-grid{
+
     display:grid;
 
     grid-template-columns:
-        repeat(2,1fr);
+        repeat(3, minmax(0,1fr));
 
-    gap:17px;
+    gap:12px;
 }
 
 
-/* =====================================================
-   QRIS CARD
-===================================================== */
+/* =========================
+   QRIS CARD KECIL
+========================= */
 
 .qris-card{
+
     position:relative;
 
-    min-height:275px;
+    min-width:0;
 
-    padding:20px;
-
-    overflow:hidden;
+    padding:10px;
 
     border:
         1px solid
         rgba(255,255,255,.12);
 
-    border-radius:28px;
+    border-radius:19px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(30,30,36,.95),
-            rgba(10,8,14,.96)
+            rgba(27,27,33,.96),
+            rgba(9,8,13,.97)
         );
 
     cursor:pointer;
 
-    transform:translateZ(0);
+    overflow:hidden;
 
     transition:
-        transform .25s ease,
-        border-color .25s ease,
-        box-shadow .25s ease;
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+
+    transform:translateZ(0);
 }
-
-.qris-card:hover{
-    transform:
-        translateY(-5px)
-        translateZ(0);
-
-    border-color:
-        rgba(190,92,255,.55);
-
-    box-shadow:
-        0 20px 60px
-        rgba(0,0,0,.5),
-        0 0 30px
-        rgba(130,40,200,.10);
-}
-
-.qris-card:active{
-    transform:
-        scale(.965)
-        translateZ(0);
-
-    border-color:
-        rgba(208,135,255,.9);
-}
-
-
-/* PURPLE LIGHT */
 
 .qris-card::before{
+
     content:"";
 
     position:absolute;
 
-    width:260px;
-    height:260px;
+    width:120px;
+    height:120px;
 
-    right:-150px;
-    top:-140px;
+    right:-70px;
+    top:-65px;
 
     border-radius:50%;
 
     background:
         radial-gradient(
             circle,
-            rgba(175,60,255,.20),
-            transparent 68%
+            rgba(177,65,255,.24),
+            transparent 70%
         );
 
     pointer-events:none;
 }
 
+.qris-card:hover{
 
-/* =====================================================
+    transform:
+        translateY(-4px)
+        translateZ(0);
+
+    border-color:
+        rgba(190,88,255,.6);
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,.45),
+        0 0 22px rgba(140,40,210,.10);
+}
+
+.qris-card:active{
+
+    transform:
+        scale(.94)
+        translateZ(0);
+
+    border-color:#c778ff;
+}
+
+
+/* =========================
    QR PREVIEW
-===================================================== */
+========================= */
 
 .qr-preview{
+
     position:relative;
 
     width:100%;
-    height:155px;
 
-    border-radius:22px;
+    aspect-ratio:1 / 1;
+
+    border-radius:14px;
 
     background:
         radial-gradient(
-            circle at center,
-            #1a0c24,
-            #09090d 70%
+            circle,
+            #1d0d29,
+            #09090d 72%
         );
 
     border:
         1px solid
-        rgba(255,255,255,.09);
+        rgba(255,255,255,.08);
 
     display:flex;
 
     align-items:center;
-
     justify-content:center;
 
     overflow:hidden;
 }
 
 
-/* FAKE QR */
+/* =========================
+   QR CODE
+========================= */
 
 .fake-qr{
-    width:105px;
-    height:105px;
 
-    padding:9px;
+    width:64%;
+    aspect-ratio:1;
+
+    padding:6px;
 
     display:grid;
 
     grid-template-columns:
         repeat(9,1fr);
 
-    gap:3px;
+    gap:2px;
 
     background:#fff;
 
-    border-radius:9px;
+    border-radius:6px;
 
     box-shadow:
-        0 0 30px
-        rgba(176,80,255,.18);
+        0 0 18px
+        rgba(180,75,255,.20);
 }
 
 .fake-qr i{
-    display:block;
-
     background:#050505;
-
     border-radius:1px;
 }
 
-.fake-qr i:nth-child(2n){
-    background:#111;
+.fake-qr i:nth-child(3n){
+    background:#151515;
 }
 
 .fake-qr i:nth-child(5n){
-    background:transparent;
+    background:#fff;
 }
 
 .fake-qr i:nth-child(7n){
@@ -834,208 +651,186 @@ body.exit{
 }
 
 
-/* QR LABEL */
+/* =========================
+   LABEL
+========================= */
 
 .qr-label{
+
     position:absolute;
 
-    top:13px;
-    right:13px;
+    top:7px;
+    left:7px;
 
-    padding:
-        8px 13px;
+    padding:5px 7px;
 
     border:
         1px solid
-        rgba(183,90,255,.4);
+        rgba(184,91,255,.42);
 
-    border-radius:13px;
+    border-radius:8px;
 
     background:
-        rgba(20,8,28,.88);
+        rgba(18,6,25,.90);
 
-    color:#d39aff;
+    color:#d19aff;
 
-    font-size:10px;
+    font-size:7px;
 
     font-weight:900;
-
-    letter-spacing:.8px;
 }
 
 
-/* =====================================================
-   QRIS CARD TEXT
-===================================================== */
+/* =========================
+   NAME
+========================= */
 
 .qris-name{
-    margin-top:15px;
 
-    font-size:21px;
+    margin-top:10px;
+
+    font-size:12px;
 
     font-weight:900;
 
-    letter-spacing:-.4px;
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    letter-spacing:-.2px;
 }
 
 .qris-desc{
-    margin-top:5px;
 
-    color:#72727d;
+    margin-top:3px;
 
-    font-size:12px;
+    color:#686872;
+
+    font-size:8px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
 }
 
 
-/* READY */
+/* =========================
+   READY
+========================= */
 
 .ready{
+
     display:inline-flex;
 
     align-items:center;
 
-    gap:8px;
+    gap:5px;
 
-    margin-top:13px;
+    margin-top:8px;
 
-    padding:
-        8px 12px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.1);
-
-    border-radius:50px;
-
-    background:#0d0d11;
-
-    color:#ddd;
-
-    font-size:10px;
-
-    font-weight:900;
-
-    letter-spacing:.6px;
-}
-
-.ready-dot{
-    width:8px;
-    height:8px;
-
-    border-radius:50%;
-
-    background:#a955e8;
-
-    box-shadow:
-        0 0 10px
-        rgba(185,82,255,.8);
-
-    animation:
-        readyPulse 1.6s infinite;
-}
-
-@keyframes readyPulse{
-
-    50%{
-        box-shadow:
-            0 0 3px
-            rgba(185,82,255,.3);
-    }
-
-}
-
-
-/* =====================================================
-   OPEN BUTTON
-===================================================== */
-
-.open-btn{
-    position:absolute;
-
-    right:19px;
-    bottom:18px;
-
-    width:43px;
-    height:43px;
-
-    border-radius:50%;
-
-    border:
-        1px solid
-        rgba(255,255,255,.13);
-
-    background:#17171c;
-
-    color:#fff;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    font-size:23px;
-
-    transition:
-        transform .25s ease,
-        background .25s ease;
-}
-
-.qris-card:hover .open-btn{
-    background:#281331;
-
-    transform:
-        translateX(4px);
-
-    border-color:
-        rgba(188,86,255,.5);
-}
-
-
-/* =====================================================
-   NO RESULT
-===================================================== */
-
-.no-result{
-    display:none;
-
-    padding:45px 20px;
-
-    margin-top:15px;
-
-    text-align:center;
-
-    color:#777;
-
-    border:
-        1px dashed
-        rgba(255,255,255,.15);
-
-    border-radius:23px;
-}
-
-
-/* =====================================================
-   INFO
-===================================================== */
-
-.info{
-    margin-top:18px;
-
-    padding:22px;
+    padding:5px 7px;
 
     border:
         1px solid
         rgba(255,255,255,.09);
 
-    border-radius:21px;
+    border-radius:30px;
+
+    background:#0d0d11;
+
+    color:#aaa;
+
+    font-size:7px;
+
+    font-weight:900;
+}
+
+.ready-dot{
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#b657f2;
+
+    box-shadow:
+        0 0 8px
+        rgba(181,82,242,.8);
+}
+
+
+/* =========================
+   ARROW
+========================= */
+
+.open-btn{
+
+    position:absolute;
+
+    right:8px;
+    bottom:10px;
+
+    width:25px;
+    height:25px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#17171c;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    color:#fff;
+
+    font-size:13px;
+
+    transition:.2s;
+}
+
+.qris-card:hover .open-btn{
+
+    background:#2a1235;
+
+    border-color:
+        rgba(190,90,255,.5);
+
+    transform:translateX(3px);
+}
+
+
+/* =========================
+   INFO
+========================= */
+
+.info{
+
+    margin-top:15px;
+
+    padding:17px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:17px;
 
     background:
         rgba(14,14,18,.82);
 
-    color:#70707b;
+    color:#666670;
 
-    font-size:12px;
+    font-size:10px;
 
     line-height:1.7;
 }
@@ -1045,232 +840,203 @@ body.exit{
 }
 
 
-/* =====================================================
+/* =========================
    FOOTER
-===================================================== */
+========================= */
 
 .footer{
-    padding:
-        60px 0 25px;
+
+    padding:35px 0 25px;
 
     text-align:center;
 
-    color:#4e4e57;
+    color:#45454d;
 
-    font-size:11px;
+    font-size:9px;
 }
 
 
-/* =====================================================
+/* =========================
    RIPPLE
-===================================================== */
+========================= */
 
 .ripple{
+
     position:absolute;
 
-    width:10px;
-    height:10px;
+    width:8px;
+    height:8px;
 
     border-radius:50%;
 
     background:
-        rgba(197,113,255,.28);
+        rgba(197,100,255,.35);
 
     transform:scale(0);
 
     pointer-events:none;
 
-    animation:
-        rippleEffect .55s
-        cubic-bezier(.2,.7,.2,1)
-        forwards;
+    animation:ripple .55s ease-out forwards;
 }
 
-@keyframes rippleEffect{
+@keyframes ripple{
 
     to{
-        transform:scale(30);
-
+        transform:scale(25);
         opacity:0;
     }
-
 }
 
 
-/* =====================================================
+/* =========================
    MOBILE
-===================================================== */
+========================= */
 
-@media(max-width:700px){
+@media(max-width:600px){
 
     .header{
-        height:92px;
+        height:90px;
+    }
+
+    .container{
+        width:calc(100% - 22px);
     }
 
     .header-inner{
-        width:
-            calc(100% - 25px);
-    }
-
-    .logo{
-        width:48px;
-        height:48px;
-
-        border-radius:14px;
-
-        font-size:23px;
+        width:calc(100% - 22px);
     }
 
     .brand-name{
-        font-size:20px;
+        font-size:18px;
     }
 
     .brand-sub{
         font-size:7px;
     }
 
-    .header-actions{
-        padding:4px;
+    .logo{
+        width:45px;
+        height:45px;
+        font-size:21px;
     }
 
     .header-btn{
-        width:42px;
-        height:42px;
-
-        font-size:20px;
+        width:40px;
+        height:40px;
     }
-
-
-    .container{
-        width:
-            calc(100% - 25px);
-    }
-
 
     .hero{
-        padding-top:53px;
-    }
-
-    .status{
-        padding:
-            10px 16px;
-
-        font-size:10px;
+        padding-top:48px;
     }
 
     .hero h1{
-        margin-top:28px;
-
-        font-size:47px;
-
-        letter-spacing:-3px;
+        font-size:42px;
+        letter-spacing:-2.5px;
     }
 
     .description{
-        margin-top:24px;
-
-        font-size:14px;
-
-        line-height:1.72;
+        font-size:13px;
     }
-
-
-    .search-wrap{
-        margin-top:32px;
-    }
-
-    .search{
-        height:62px;
-
-        padding:
-            0 52px;
-
-        border-radius:20px;
-
-        font-size:15px;
-    }
-
-    .search-icon{
-        left:19px;
-
-        font-size:23px;
-    }
-
 
     .features{
+        gap:7px;
+    }
+
+    .feature{
+        height:42px;
+        padding:0 11px;
+        font-size:8px;
+    }
+
+    /*
+       TETAP 3 KOLOM DI HP
+    */
+
+    .qris-grid{
+        grid-template-columns:
+            repeat(3,1fr);
+
         gap:8px;
     }
 
-    .feature{
-        min-height:47px;
-
-        padding:
-            0 14px;
-
-        font-size:9px;
-    }
-
-    .feature-icon{
-        font-size:15px;
-    }
-
-
-    .qris-section{
-        margin-top:45px;
-    }
-
-    .section-title{
-        font-size:23px;
-    }
-
-    .section-subtitle{
-        font-size:11px;
-    }
-
-    .qris-grid{
-        grid-template-columns:1fr;
-
-        gap:14px;
-    }
-
     .qris-card{
-        min-height:280px;
-
-        border-radius:24px;
+        padding:7px;
+        border-radius:14px;
     }
 
     .qr-preview{
-        height:155px;
+        border-radius:10px;
+    }
+
+    .qris-name{
+        margin-top:7px;
+        font-size:9px;
+    }
+
+    .qris-desc{
+        font-size:6px;
+    }
+
+    .ready{
+        padding:4px 5px;
+        margin-top:6px;
+        font-size:6px;
+    }
+
+    .ready-dot{
+        width:5px;
+        height:5px;
+    }
+
+    .open-btn{
+        width:21px;
+        height:21px;
+        right:6px;
+        bottom:7px;
+        font-size:10px;
+    }
+
+    .qr-label{
+        font-size:5px;
+        padding:4px 5px;
     }
 
 }
 
 
-/* =====================================================
-   VERY SMALL SCREEN
-===================================================== */
+/* =========================
+   VERY SMALL PHONE
+========================= */
 
-@media(max-width:380px){
+@media(max-width:370px){
 
-    .brand-name{
-        font-size:18px;
+    .qris-grid{
+        gap:6px;
     }
 
-    .hero h1{
-        font-size:41px;
+    .qris-card{
+        padding:6px;
+        border-radius:12px;
     }
 
-    .feature{
-        padding:
-            0 11px;
+    .qris-name{
+        font-size:8px;
+    }
+
+    .qris-desc{
+        display:none;
+    }
+
+    .ready{
+        font-size:5px;
     }
 
 }
 
 
-/* =====================================================
+/* =========================
    REDUCED MOTION
-===================================================== */
+========================= */
 
 @media(prefers-reduced-motion:reduce){
 
@@ -1279,31 +1045,26 @@ body.exit{
     *::after{
 
         animation:none!important;
-
         transition:none!important;
 
     }
 
 }
-
 </style>
 </head>
 
 
 <body>
 
-
-<!-- MOVING NETWORK BACKGROUND -->
-
 <canvas id="network"></canvas>
 
-<div class="glow one"></div>
-<div class="glow two"></div>
+<div class="background-glow glow1"></div>
+<div class="background-glow glow2"></div>
 
 
-<!-- =================================================
+<!-- =========================
      HEADER
-================================================= -->
+========================= -->
 
 <header class="header">
 
@@ -1316,15 +1077,13 @@ body.exit{
             </div>
 
             <div>
-
                 <div class="brand-name">
                     Lionel Gustav
                 </div>
 
                 <div class="brand-sub">
-                    Qris All Payment
+                    QRIS ALL PAYMENT
                 </div>
-
             </div>
 
         </div>
@@ -1335,7 +1094,6 @@ body.exit{
             <button
                 class="header-btn"
                 id="searchButton"
-                type="button"
             >
                 ⌕
             </button>
@@ -1343,7 +1101,6 @@ body.exit{
             <button
                 class="header-btn"
                 id="profileButton"
-                type="button"
             >
                 ◉
             </button>
@@ -1355,10 +1112,9 @@ body.exit{
 </header>
 
 
-
-<!-- =================================================
+<!-- =========================
      MAIN
-================================================= -->
+========================= -->
 
 <main class="container">
 
@@ -1398,11 +1154,10 @@ body.exit{
     </section>
 
 
-
     <!-- SEARCH -->
 
     <div
-        class="search-wrap"
+        class="search-area"
         id="searchArea"
     >
 
@@ -1411,9 +1166,9 @@ body.exit{
         </span>
 
         <input
+            type="search"
             class="search"
             id="search"
-            type="search"
             placeholder="Cari Qris..."
             autocomplete="off"
         >
@@ -1421,11 +1176,9 @@ body.exit{
     </div>
 
 
-
     <!-- FEATURES -->
 
     <div class="features">
-
 
         <div class="feature">
 
@@ -1459,29 +1212,26 @@ body.exit{
 
         </div>
 
-
     </div>
 
 
-
-    <!-- =================================================
-         QRIS
-    ================================================= -->
+    <!-- =========================
+         MENU QRIS
+    ========================= -->
 
     <section class="qris-section">
-
 
         <div class="section-head">
 
             <div>
 
-                <h2 class="section-title">
+                <div class="section-title">
                     Menu QRIS
-                </h2>
+                </div>
 
-                <p class="section-subtitle">
+                <div class="section-subtitle">
                     Pilih QRIS untuk melihat transaksi
-                </p>
+                </div>
 
             </div>
 
@@ -1489,12 +1239,21 @@ body.exit{
                 class="total"
                 id="total"
             >
-                5 QRIS
+                6 QRIS
             </div>
 
         </div>
 
 
+        <!--
+            URUTAN:
+
+            BARIS 1
+            GUSTAV | NOIR | PIDO
+
+            BARIS 2
+            LEA    | ABIL | GUSTAV
+        -->
 
         <div
             class="qris-grid"
@@ -1502,7 +1261,7 @@ body.exit{
         >
 
 
-            <!-- QRIS GUSTAV -->
+            <!-- 1. GUSTAV -->
 
             <article
                 class="qris-card"
@@ -1513,11 +1272,10 @@ body.exit{
                 <div class="qr-preview">
 
                     <div class="qr-label">
-                        QRIS 01
+                        01
                     </div>
 
                     <div class="fake-qr">
-
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
@@ -1553,29 +1311,22 @@ body.exit{
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
-
                     </div>
 
                 </div>
-
 
                 <div class="qris-name">
                     QRIS GUSTAV
                 </div>
 
                 <div class="qris-desc">
-                    Cek transaksi & riwayat QRIS
+                    Cek transaksi
                 </div>
-
 
                 <div class="ready">
-
                     <span class="ready-dot"></span>
-
                     READY
-
                 </div>
-
 
                 <div class="open-btn">
                     →
@@ -1584,91 +1335,7 @@ body.exit{
             </article>
 
 
-
-            <!-- QRIS LEA -->
-
-            <article
-                class="qris-card"
-                data-name="qris lea"
-                data-id="lea"
-            >
-
-                <div class="qr-preview">
-
-                    <div class="qr-label">
-                        QRIS 02
-                    </div>
-
-                    <div class="fake-qr">
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                    </div>
-
-                </div>
-
-
-                <div class="qris-name">
-                    QRIS LEA
-                </div>
-
-                <div class="qris-desc">
-                    Cek transaksi & riwayat QRIS
-                </div>
-
-
-                <div class="ready">
-
-                    <span class="ready-dot"></span>
-
-                    READY
-
-                </div>
-
-
-                <div class="open-btn">
-                    →
-                </div>
-
-            </article>
-
-
-
-            <!-- QRIS NOIR -->
+            <!-- 2. NOIR -->
 
             <article
                 class="qris-card"
@@ -1679,11 +1346,10 @@ body.exit{
                 <div class="qr-preview">
 
                     <div class="qr-label">
-                        QRIS 03
+                        02
                     </div>
 
                     <div class="fake-qr">
-
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
@@ -1719,29 +1385,22 @@ body.exit{
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
-
                     </div>
 
                 </div>
-
 
                 <div class="qris-name">
                     QRIS NOIR
                 </div>
 
                 <div class="qris-desc">
-                    Cek transaksi & riwayat QRIS
+                    Cek transaksi
                 </div>
-
 
                 <div class="ready">
-
                     <span class="ready-dot"></span>
-
                     READY
-
                 </div>
-
 
                 <div class="open-btn">
                     →
@@ -1750,91 +1409,7 @@ body.exit{
             </article>
 
 
-
-            <!-- QRIS ABIL -->
-
-            <article
-                class="qris-card"
-                data-name="qris abil"
-                data-id="abil"
-            >
-
-                <div class="qr-preview">
-
-                    <div class="qr-label">
-                        QRIS 04
-                    </div>
-
-                    <div class="fake-qr">
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-                        <i></i><i></i><i></i>
-
-                    </div>
-
-                </div>
-
-
-                <div class="qris-name">
-                    QRIS ABIL
-                </div>
-
-                <div class="qris-desc">
-                    Cek transaksi & riwayat QRIS
-                </div>
-
-
-                <div class="ready">
-
-                    <span class="ready-dot"></span>
-
-                    READY
-
-                </div>
-
-
-                <div class="open-btn">
-                    →
-                </div>
-
-            </article>
-
-
-
-            <!-- QRIS PIDO -->
+            <!-- 3. PIDO -->
 
             <article
                 class="qris-card"
@@ -1845,11 +1420,10 @@ body.exit{
                 <div class="qr-preview">
 
                     <div class="qr-label">
-                        QRIS 05
+                        03
                     </div>
 
                     <div class="fake-qr">
-
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
@@ -1885,29 +1459,244 @@ body.exit{
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
                         <i></i><i></i><i></i>
-
                     </div>
 
                 </div>
-
 
                 <div class="qris-name">
                     QRIS PIDO
                 </div>
 
                 <div class="qris-desc">
-                    Cek transaksi & riwayat QRIS
+                    Cek transaksi
                 </div>
-
 
                 <div class="ready">
-
                     <span class="ready-dot"></span>
-
                     READY
+                </div>
+
+                <div class="open-btn">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- 4. LEA -->
+
+            <article
+                class="qris-card"
+                data-name="qris lea"
+                data-id="lea"
+            >
+
+                <div class="qr-preview">
+
+                    <div class="qr-label">
+                        04
+                    </div>
+
+                    <div class="fake-qr">
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                    </div>
 
                 </div>
 
+                <div class="qris-name">
+                    QRIS LEA
+                </div>
+
+                <div class="qris-desc">
+                    Cek transaksi
+                </div>
+
+                <div class="ready">
+                    <span class="ready-dot"></span>
+                    READY
+                </div>
+
+                <div class="open-btn">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- 5. ABIL -->
+
+            <article
+                class="qris-card"
+                data-name="qris abil"
+                data-id="abil"
+            >
+
+                <div class="qr-preview">
+
+                    <div class="qr-label">
+                        05
+                    </div>
+
+                    <div class="fake-qr">
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                    </div>
+
+                </div>
+
+                <div class="qris-name">
+                    QRIS ABIL
+                </div>
+
+                <div class="qris-desc">
+                    Cek transaksi
+                </div>
+
+                <div class="ready">
+                    <span class="ready-dot"></span>
+                    READY
+                </div>
+
+                <div class="open-btn">
+                    →
+                </div>
+
+            </article>
+
+
+            <!-- 6. GUSTAV -->
+
+            <article
+                class="qris-card"
+                data-name="qris gustav"
+                data-id="gustav"
+            >
+
+                <div class="qr-preview">
+
+                    <div class="qr-label">
+                        06
+                    </div>
+
+                    <div class="fake-qr">
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                        <i></i><i></i><i></i>
+                    </div>
+
+                </div>
+
+                <div class="qris-name">
+                    QRIS GUSTAV
+                </div>
+
+                <div class="qris-desc">
+                    Cek transaksi
+                </div>
+
+                <div class="ready">
+                    <span class="ready-dot"></span>
+                    READY
+                </div>
 
                 <div class="open-btn">
                     →
@@ -1919,25 +1708,14 @@ body.exit{
         </div>
 
 
-        <div
-            class="no-result"
-            id="noResult"
-        >
-            QRIS tidak ditemukan.
-        </div>
-
-
         <div class="info">
 
             <strong>Informasi</strong><br>
 
-            Pilih salah satu menu QRIS untuk
-            membuka halaman detail dan melihat
-            transaksi. Integrasi API dapat ditambahkan
-            setelah tampilan website selesai.
+            Pilih salah satu QRIS untuk membuka
+            halaman detail dan melihat transaksi.
 
         </div>
-
 
     </section>
 
@@ -1954,9 +1732,9 @@ body.exit{
 
 <script>
 
-/* =====================================================
+/* =========================
    SEARCH
-===================================================== */
+========================= */
 
 const search =
     document.getElementById("search");
@@ -1966,9 +1744,6 @@ const cards =
 
 const total =
     document.getElementById("total");
-
-const noResult =
-    document.getElementById("noResult");
 
 
 search.addEventListener(
@@ -1980,14 +1755,12 @@ search.addEventListener(
             .toLowerCase()
             .trim();
 
-        let visible = 0;
-
+        let count = 0;
 
         cards.forEach(card => {
 
             const name =
                 card.dataset.name;
-
 
             if(
                 name.includes(keyword)
@@ -1995,7 +1768,7 @@ search.addEventListener(
 
                 card.style.display = "";
 
-                visible++;
+                count++;
 
             }else{
 
@@ -2005,23 +1778,16 @@ search.addEventListener(
 
         });
 
-
         total.textContent =
-            visible + " QRIS";
-
-
-        noResult.style.display =
-            visible === 0
-            ? "block"
-            : "none";
+            count + " QRIS";
 
     }
 );
 
 
-/* =====================================================
-   HEADER SEARCH
-===================================================== */
+/* =========================
+   SEARCH BUTTON
+========================= */
 
 document
 .getElementById("searchButton")
@@ -2036,7 +1802,6 @@ document
             block:"center"
         });
 
-
         setTimeout(
             () => search.focus(),
             400
@@ -2046,9 +1811,9 @@ document
 );
 
 
-/* =====================================================
+/* =========================
    PROFILE
-===================================================== */
+========================= */
 
 document
 .getElementById("profileButton")
@@ -2065,16 +1830,15 @@ document
 );
 
 
-/* =====================================================
-   QRIS BUTTON
-   DENGAN TRANSISI
-===================================================== */
+/* =========================
+   QRIS CLICK
+========================= */
 
 cards.forEach(card => {
 
     card.addEventListener(
         "click",
-        function(event){
+        function(e){
 
             /* RIPPLE */
 
@@ -2084,42 +1848,34 @@ cards.forEach(card => {
             ripple.className =
                 "ripple";
 
-
             const rect =
                 card.getBoundingClientRect();
 
-
             ripple.style.left =
-                (
-                    event.clientX -
-                    rect.left
-                ) + "px";
-
+                (e.clientX - rect.left)
+                + "px";
 
             ripple.style.top =
-                (
-                    event.clientY -
-                    rect.top
-                ) + "px";
-
+                (e.clientY - rect.top)
+                + "px";
 
             card.appendChild(ripple);
 
 
-            /* ID QRIS */
+            /* ID */
 
             const id =
                 card.dataset.id;
 
 
-            /* TRANSISI KELUAR */
+            /* EXIT ANIMATION */
 
             document.body.classList.add(
                 "exit"
             );
 
 
-            /* PINDAH HALAMAN */
+            /* GO TO QRIS */
 
             setTimeout(
                 function(){
@@ -2138,40 +1894,30 @@ cards.forEach(card => {
 });
 
 
-/* =====================================================
+/* =========================
    MOVING NETWORK
-   OPTIMIZED FOR HIGH REFRESH RATE
-===================================================== */
+========================= */
 
 const canvas =
     document.getElementById("network");
 
 const ctx =
-    canvas.getContext("2d", {
-        alpha:true
-    });
+    canvas.getContext("2d");
 
 
 let width;
 let height;
-let dpr;
 
 let points = [];
 
-const POINT_COUNT =
+
+const pointCount =
     window.innerWidth < 600
-    ? 38
+    ? 35
     : 65;
 
 
-function resizeCanvas(){
-
-    dpr =
-        Math.min(
-            window.devicePixelRatio || 1,
-            2
-        );
-
+function resize(){
 
     width =
         window.innerWidth;
@@ -2179,6 +1925,11 @@ function resizeCanvas(){
     height =
         window.innerHeight;
 
+    const dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
 
     canvas.width =
         width * dpr;
@@ -2186,13 +1937,11 @@ function resizeCanvas(){
     canvas.height =
         height * dpr;
 
-
     canvas.style.width =
         width + "px";
 
     canvas.style.height =
         height + "px";
-
 
     ctx.setTransform(
         dpr,
@@ -2202,28 +1951,16 @@ function resizeCanvas(){
         0,
         0
     );
-
 }
 
-
-resizeCanvas();
-
-window.addEventListener(
-    "resize",
-    resizeCanvas
-);
-
-
-/* CREATE POINTS */
 
 function createPoints(){
 
     points = [];
 
-
     for(
-        let i = 0;
-        i < POINT_COUNT;
+        let i=0;
+        i<pointCount;
         i++
     ){
 
@@ -2236,16 +1973,13 @@ function createPoints(){
                 Math.random() * height,
 
             vx:
-                (Math.random()-.5)
-                * .22,
+                (Math.random()-.5)*.20,
 
             vy:
-                (Math.random()-.5)
-                * .22,
+                (Math.random()-.5)*.20,
 
             r:
-                Math.random()*1.7
-                + .6
+                Math.random()*1.5+.5
 
         });
 
@@ -2254,12 +1988,7 @@ function createPoints(){
 }
 
 
-createPoints();
-
-
-/* DRAW NETWORK */
-
-function drawNetwork(){
+function draw(){
 
     ctx.clearRect(
         0,
@@ -2271,15 +2000,7 @@ function drawNetwork(){
 
     /* MOVE */
 
-    for(
-        let i=0;
-        i<points.length;
-        i++
-    ){
-
-        const p =
-            points[i];
-
+    points.forEach(p => {
 
         p.x += p.vx;
         p.y += p.vy;
@@ -2300,10 +2021,10 @@ function drawNetwork(){
             p.vy *= -1;
         }
 
-    }
+    });
 
 
-    /* CONNECTIONS */
+    /* LINES */
 
     for(
         let i=0;
@@ -2311,19 +2032,17 @@ function drawNetwork(){
         i++
     ){
 
-        const a =
-            points[i];
-
-
         for(
             let j=i+1;
             j<points.length;
             j++
         ){
 
+            const a =
+                points[i];
+
             const b =
                 points[j];
-
 
             const dx =
                 a.x-b.x;
@@ -2331,56 +2050,46 @@ function drawNetwork(){
             const dy =
                 a.y-b.y;
 
-
             const distance =
                 Math.sqrt(
-                    dx*dx +
-                    dy*dy
+                    dx*dx+dy*dy
                 );
 
-
-            const maxDistance =
+            const max =
                 width < 600
                 ? 125
                 : 155;
 
 
             if(
-                distance <
-                maxDistance
+                distance < max
             ){
 
                 const opacity =
-                    (1 -
-                    distance /
-                    maxDistance)
-                    * .30;
+                    (
+                        1 -
+                        distance/max
+                    ) * .27;
 
 
                 ctx.beginPath();
-
 
                 ctx.moveTo(
                     a.x,
                     a.y
                 );
 
-
                 ctx.lineTo(
                     b.x,
                     b.y
                 );
 
-
                 ctx.strokeStyle =
-                    "rgba(174,76,255," +
+                    "rgba(176,75,255," +
                     opacity +
                     ")";
 
-
-                ctx.lineWidth =
-                    .7;
-
+                ctx.lineWidth = .7;
 
                 ctx.stroke();
 
@@ -2393,18 +2102,9 @@ function drawNetwork(){
 
     /* POINTS */
 
-    for(
-        let i=0;
-        i<points.length;
-        i++
-    ){
-
-        const p =
-            points[i];
-
+    points.forEach(p => {
 
         ctx.beginPath();
-
 
         ctx.arc(
             p.x,
@@ -2414,55 +2114,38 @@ function drawNetwork(){
             Math.PI*2
         );
 
-
         ctx.fillStyle =
-            "rgba(202,117,255,.72)";
+            "rgba(198,112,255,.75)";
 
-
-        ctx.shadowBlur =
-            8;
-
+        ctx.shadowBlur = 8;
 
         ctx.shadowColor =
-            "rgba(168,65,255,.7)";
-
+            "rgba(175,65,255,.65)";
 
         ctx.fill();
 
-
         ctx.shadowBlur = 0;
 
-    }
+    });
 
 
-    requestAnimationFrame(
-        drawNetwork
-    );
+    requestAnimationFrame(draw);
 
 }
 
 
-drawNetwork();
+resize();
 
+createPoints();
 
-/* =====================================================
-   RECREATE BACKGROUND AFTER ROTATION
-===================================================== */
+draw();
+
 
 window.addEventListener(
-    "orientationchange",
+    "resize",
     function(){
 
-        setTimeout(
-            function(){
-
-                resizeCanvas();
-
-                createPoints();
-
-            },
-            300
-        );
+        resize();
 
     }
 );
