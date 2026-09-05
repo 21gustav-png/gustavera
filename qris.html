@@ -11,7 +11,6 @@
 
   <title>QRIS - Lionel Gustav</title>
 
-
   <style>
 
     * {
@@ -32,335 +31,216 @@
       overflow-x: hidden;
     }
 
-
     body::before {
       content: "";
-
       position: fixed;
-
       width: 500px;
       height: 500px;
-
       background: #8b5cf6;
-
       filter: blur(180px);
-
       opacity: .12;
-
       top: -200px;
       left: -150px;
-
       pointer-events: none;
-
       z-index: -1;
     }
-
 
     body::after {
       content: "";
-
       position: fixed;
-
       width: 450px;
       height: 450px;
-
       background: #a855f7;
-
       filter: blur(180px);
-
       opacity: .10;
-
       bottom: -200px;
       right: -150px;
-
       pointer-events: none;
-
       z-index: -1;
     }
-
 
     .container {
       width: 100%;
       max-width: 520px;
-
       margin: auto;
-
       padding: 18px;
     }
-
 
     .top {
       display: flex;
       align-items: center;
-
       gap: 12px;
-
       margin-bottom: 20px;
     }
-
 
     .back {
       width: 42px;
       height: 42px;
-
       border-radius: 14px;
-
       border: 1px solid #29212f;
-
       background: #0d0b10;
-
       color: white;
-
       font-size: 20px;
-
       cursor: pointer;
-
       transition: .2s;
     }
-
 
     .back:active {
       transform: scale(.92);
     }
-
 
     .title {
       font-size: 21px;
       font-weight: 800;
     }
 
-
     .subtitle {
       color: #9b93a5;
-
       font-size: 12px;
-
       margin-top: 3px;
     }
 
-
     .qr-card {
       background: rgba(13,11,16,.92);
-
       border: 1px solid #29212f;
-
       border-radius: 24px;
-
       padding: 20px;
-
       text-align: center;
-
-      box-shadow:
-        0 15px 50px rgba(0,0,0,.35);
+      box-shadow: 0 15px 50px rgba(0,0,0,.35);
     }
-
 
     .merchant {
       font-size: 19px;
       font-weight: 800;
-
       margin-bottom: 5px;
     }
 
-
     .merchant-sub {
       color: #aaa2b1;
-
       font-size: 13px;
-
       margin-bottom: 18px;
     }
 
-
     .qr-wrapper {
       background: white;
-
       padding: 12px;
-
       border-radius: 18px;
-
       width: min(100%,330px);
-
       margin: auto;
     }
 
-
     .qr-wrapper img {
       display: block;
-
       width: 100%;
-
       height: auto;
-
       border-radius: 8px;
     }
 
-
     .buttons {
       display: grid;
-
       grid-template-columns: 1fr 1fr;
-
       gap: 10px;
-
       margin-top: 15px;
     }
 
-
     button.action {
       border: 1px solid #32273d;
-
       background: #17121d;
-
       color: white;
-
       border-radius: 14px;
-
       padding: 13px;
-
       font-size: 13px;
-
       font-weight: 700;
-
       cursor: pointer;
-
       transition: .18s;
     }
-
 
     button.action:active {
       transform: scale(.96);
     }
 
-
     .info {
       margin-top: 15px;
-
       display: grid;
-
       gap: 10px;
     }
 
-
     .info-box {
       background: #0d0b10;
-
       border: 1px solid #29212f;
-
       border-radius: 16px;
-
       padding: 14px;
     }
 
-
     .info-label {
       color: #8e8797;
-
       font-size: 11px;
-
       margin-bottom: 5px;
     }
 
-
     .info-value {
       font-size: 14px;
-
       font-weight: 700;
-
       word-break: break-word;
     }
-
 
     .section {
       margin-top: 18px;
     }
 
-
     .section-title {
       font-size: 17px;
-
       font-weight: 800;
-
       margin-bottom: 10px;
     }
 
-
     .instruction {
       background: #0d0b10;
-
       border: 1px solid #29212f;
-
       border-radius: 18px;
-
       padding: 15px;
     }
 
-
     .instruction div {
       display: flex;
-
       gap: 10px;
-
       margin-bottom: 12px;
-
       color: #c4bdca;
-
       font-size: 13px;
-
       line-height: 1.5;
     }
-
 
     .instruction div:last-child {
       margin-bottom: 0;
     }
 
-
     .number {
       min-width: 25px;
-
       height: 25px;
-
       border-radius: 50%;
-
       background: #8b5cf6;
-
       display: flex;
-
       justify-content: center;
-
       align-items: center;
-
       font-size: 11px;
-
       font-weight: 800;
-
       color: white;
     }
 
-
     .transaction-list {
       display: grid;
-
       gap: 10px;
     }
 
-
     .transaction {
       background: #0d0b10;
-
       border: 1px solid #29212f;
-
       border-radius: 17px;
-
       padding: 14px;
-
       animation: transactionIn .35s ease;
     }
 
-
     @keyframes transactionIn {
-
       from {
         opacity: 0;
         transform: translateY(-8px) scale(.98);
@@ -370,152 +250,93 @@
         opacity: 1;
         transform: translateY(0) scale(1);
       }
-
     }
-
 
     .transaction-top {
       display: flex;
-
       justify-content: space-between;
-
       align-items: center;
-
       gap: 10px;
     }
 
-
     .amount {
       font-size: 16px;
-
       font-weight: 800;
     }
-
 
     .paid {
       background: rgba(34,197,94,.12);
-
       color: #4ade80;
-
-      border:
-        1px solid rgba(74,222,128,.2);
-
+      border: 1px solid rgba(74,222,128,.2);
       border-radius: 8px;
-
       padding: 5px 8px;
-
       font-size: 10px;
-
       font-weight: 800;
     }
 
-
     .transaction-info {
       margin-top: 9px;
-
       color: #96909d;
-
       font-size: 11px;
-
       line-height: 1.6;
     }
 
-
     .empty {
       background: #0d0b10;
-
       border: 1px dashed #302736;
-
       border-radius: 17px;
-
       padding: 25px 15px;
-
       text-align: center;
-
       color: #77707f;
-
       font-size: 13px;
     }
-
 
     .loading {
       text-align: center;
-
       color: #8f8798;
-
       font-size: 13px;
-
       padding: 20px;
     }
 
-
     .error {
       background: rgba(239,68,68,.08);
-
-      border:
-        1px solid rgba(239,68,68,.18);
-
+      border: 1px solid rgba(239,68,68,.18);
       border-radius: 15px;
-
       padding: 14px;
-
       color: #fca5a5;
-
       font-size: 12px;
-
       text-align: center;
     }
 
-
     .refresh {
       margin-left: auto;
-
       border: 0;
-
       background: transparent;
-
       color: #a78bfa;
-
       font-size: 12px;
-
       cursor: pointer;
     }
 
-
     .realtime {
       display: flex;
-
       align-items: center;
-
       justify-content: center;
-
       gap: 7px;
-
       margin-top: 10px;
-
       color: #77707f;
-
       font-size: 10px;
     }
-
 
     .realtime-dot {
       width: 7px;
       height: 7px;
-
       border-radius: 50%;
-
       background: #4ade80;
-
-      box-shadow:
-        0 0 10px rgba(74,222,128,.8);
-
+      box-shadow: 0 0 10px rgba(74,222,128,.8);
       animation: pulse 1.5s infinite;
     }
 
-
     @keyframes pulse {
-
       0%,100% {
         opacity: .4;
         transform: scale(.8);
@@ -525,20 +346,14 @@
         opacity: 1;
         transform: scale(1);
       }
-
     }
-
 
     .footer {
       text-align: center;
-
       color: #5f5965;
-
       font-size: 10px;
-
       padding: 25px 0 10px;
     }
-
 
     @media (max-width:380px) {
 
@@ -556,12 +371,9 @@
 
 </head>
 
-
 <body>
 
-
 <div class="container">
-
 
   <!-- HEADER -->
 
@@ -573,7 +385,6 @@
     >
       ‹
     </button>
-
 
     <div>
 
@@ -598,11 +409,9 @@
       GUSTAV STORE
     </div>
 
-
     <div class="merchant-sub">
       Scan QRIS untuk melakukan pembayaran
     </div>
-
 
     <div class="qr-wrapper">
 
@@ -613,7 +422,6 @@
 
     </div>
 
-
     <div class="buttons">
 
       <button
@@ -622,7 +430,6 @@
       >
         Download QR
       </button>
-
 
       <button
         class="action"
@@ -640,7 +447,6 @@
 
   <div class="info">
 
-
     <div class="info-box">
 
       <div class="info-label">
@@ -652,7 +458,6 @@
       </div>
 
     </div>
-
 
     <div class="info-box">
 
@@ -666,7 +471,6 @@
 
     </div>
 
-
     <div class="info-box">
 
       <div class="info-label">
@@ -679,7 +483,6 @@
 
     </div>
 
-
   </div>
 
 
@@ -691,9 +494,7 @@
       Cara Pembayaran
     </div>
 
-
     <div class="instruction">
-
 
       <div>
 
@@ -707,7 +508,6 @@
 
       </div>
 
-
       <div>
 
         <span class="number">
@@ -719,7 +519,6 @@
         </span>
 
       </div>
-
 
       <div>
 
@@ -733,7 +532,6 @@
 
       </div>
 
-
       <div>
 
         <span class="number">
@@ -746,7 +544,6 @@
 
       </div>
 
-
     </div>
 
   </div>
@@ -755,7 +552,6 @@
   <!-- TRANSACTIONS -->
 
   <div class="section">
-
 
     <div
       style="
@@ -772,7 +568,6 @@
         Riwayat Transaksi
       </div>
 
-
       <button
         class="refresh"
         onclick="loadTransactions()"
@@ -781,7 +576,6 @@
       </button>
 
     </div>
-
 
     <div
       id="transactionList"
@@ -794,17 +588,15 @@
 
     </div>
 
-
     <div class="realtime">
 
       <span class="realtime-dot"></span>
 
       <span id="realtimeStatus">
-        Realtime aktif
+        Menghubungkan...
       </span>
 
     </div>
-
 
   </div>
 
@@ -815,12 +607,10 @@
     Lionel Gustav • Gustav Archive
   </div>
 
-
 </div>
 
 
 <script>
-
 
 /*
 =====================================
@@ -864,15 +654,12 @@ function formatDate(value) {
     return "-";
   }
 
-
   const date =
     new Date(value);
-
 
   if (isNaN(date.getTime())) {
     return value;
   }
-
 
   return date.toLocaleString(
     "id-ID",
@@ -880,6 +667,23 @@ function formatDate(value) {
       dateStyle: "medium",
       timeStyle: "short"
     }
+  );
+
+}
+
+
+/*
+=====================================
+TRANSACTION ID
+=====================================
+*/
+
+function getTransactionId(tx) {
+
+  return String(
+    tx?.transactionId ||
+    tx?.id ||
+    ""
   );
 
 }
@@ -898,7 +702,6 @@ function renderTransactions(items) {
       "transactionList"
     );
 
-
   if (!items || items.length === 0) {
 
     list.innerHTML = `
@@ -911,7 +714,6 @@ function renderTransactions(items) {
 
   }
 
-
   list.innerHTML =
     items.map(tx => {
 
@@ -921,17 +723,14 @@ function renderTransactions(items) {
         tx.originalAmount ??
         0;
 
-
       const status =
         tx.status ||
         "paid";
-
 
       const appName =
         tx.appName ||
         tx.packageName ||
         "QRIS";
-
 
       const time =
         tx.paidAt ||
@@ -939,15 +738,16 @@ function renderTransactions(items) {
         tx.expiredAt ||
         "";
 
-
       const transactionId =
-        tx.transactionId ||
+        getTransactionId(tx) ||
         "-";
-
 
       return `
 
-        <div class="transaction">
+        <div
+          class="transaction"
+          data-transaction-id="${escapeHTML(transactionId)}"
+        >
 
           <div class="transaction-top">
 
@@ -955,28 +755,24 @@ function renderTransactions(items) {
               ${rupiah(amount)}
             </div>
 
-
             <div class="paid">
-              ${String(status).toUpperCase()}
+              ${escapeHTML(String(status).toUpperCase())}
             </div>
 
           </div>
 
-
           <div class="transaction-info">
 
             <div>
-              📱 ${appName}
+              📱 ${escapeHTML(appName)}
             </div>
-
 
             <div>
               🕐 ${formatDate(time)}
             </div>
 
-
             <div>
-              ID: ${transactionId}
+              ID: ${escapeHTML(transactionId)}
             </div>
 
           </div>
@@ -986,6 +782,24 @@ function renderTransactions(items) {
       `;
 
     }).join("");
+
+}
+
+
+/*
+=====================================
+ESCAPE HTML
+=====================================
+*/
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
@@ -1003,26 +817,25 @@ async function loadTransactions() {
       "transactionList"
     );
 
-
   list.innerHTML = `
     <div class="loading">
       Memuat transaksi...
     </div>
   `;
 
-
   try {
 
     const response =
       await fetch(
         BACKEND_URL +
-        "/api/transaksi"
+        "/api/transaksi",
+        {
+          cache: "no-store"
+        }
       );
-
 
     const result =
       await response.json();
-
 
     if (!response.ok) {
 
@@ -1033,18 +846,14 @@ async function loadTransactions() {
 
     }
 
-
     const items =
       result?.data?.items || [];
 
-
     renderTransactions(items);
-
 
   } catch (error) {
 
     console.error(error);
-
 
     list.innerHTML = `
       <div class="error">
@@ -1066,41 +875,37 @@ TAMBAHKAN TRANSAKSI REALTIME
 
 function addRealtimeTransaction(tx) {
 
-  if (
-    !tx ||
-    String(tx.status).toLowerCase() !== "paid"
-  ) {
-
+  if (!tx) {
     return;
-
   }
 
+  if (
+    String(tx.status || "")
+      .toLowerCase() !== "paid"
+  ) {
+    return;
+  }
 
-  const list =
-    document.getElementById(
-      "transactionList"
-    );
+  const transactionId =
+    getTransactionId(tx);
 
-
-  /*
-  Hindari transaksi yang sama
-  muncul dua kali.
-  */
+  if (!transactionId) {
+    return;
+  }
 
   const existing =
     document.querySelector(
-      `[data-transaction-id="${tx.transactionId}"]`
+      `[data-transaction-id="${CSS.escape(transactionId)}"]`
     );
-
 
   if (existing) {
     return;
   }
 
-
-  /*
-  Hapus pesan kosong/loading
-  */
+  const list =
+    document.getElementById(
+      "transactionList"
+    );
 
   const empty =
     list.querySelector(".empty");
@@ -1109,42 +914,30 @@ function addRealtimeTransaction(tx) {
     list.innerHTML = "";
   }
 
-
   const amount =
     tx.amount ??
     tx.totalAmount ??
     tx.originalAmount ??
     0;
 
-
   const appName =
     tx.appName ||
     tx.packageName ||
     "QRIS";
-
 
   const time =
     tx.paidAt ||
     tx.createdAt ||
     "";
 
-
-  const transactionId =
-    tx.transactionId ||
-    "-";
-
-
   const item =
     document.createElement("div");
-
 
   item.className =
     "transaction";
 
-
   item.dataset.transactionId =
     transactionId;
-
 
   item.innerHTML = `
 
@@ -1160,11 +953,10 @@ function addRealtimeTransaction(tx) {
 
     </div>
 
-
     <div class="transaction-info">
 
       <div>
-        📱 ${appName}
+        📱 ${escapeHTML(appName)}
       </div>
 
       <div>
@@ -1172,17 +964,12 @@ function addRealtimeTransaction(tx) {
       </div>
 
       <div>
-        ID: ${transactionId}
+        ID: ${escapeHTML(transactionId)}
       </div>
 
     </div>
 
   `;
-
-
-  /*
-  Transaksi terbaru di paling atas
-  */
 
   list.prepend(item);
 
@@ -1195,6 +982,8 @@ REALTIME SSE
 =====================================
 */
 
+let events = null;
+
 function connectRealtime() {
 
   const status =
@@ -1202,17 +991,15 @@ function connectRealtime() {
       "realtimeStatus"
     );
 
+  if (events) {
+    events.close();
+  }
 
-  const events =
+  events =
     new EventSource(
       BACKEND_URL +
       "/api/events"
     );
-
-
-  /*
-  TERHUBUNG
-  */
 
   events.onopen = () => {
 
@@ -1221,11 +1008,6 @@ function connectRealtime() {
 
   };
 
-
-  /*
-  EVENT DARI CASAKU
-  */
-
   events.onmessage = event => {
 
     try {
@@ -1233,9 +1015,8 @@ function connectRealtime() {
       const data =
         JSON.parse(event.data);
 
-
       /*
-      Event koneksi
+      SERVER TERHUBUNG
       */
 
       if (data.type === "connected") {
@@ -1247,20 +1028,40 @@ function connectRealtime() {
 
       }
 
-
       /*
-      Pembayaran masuk
+      TRANSAKSI BARU
       */
 
       if (
-        String(data.status).toLowerCase() ===
-        "paid"
+        data.type === "new_transactions" &&
+        Array.isArray(data.transactions)
+      ) {
+
+        data.transactions
+          .slice()
+          .reverse()
+          .forEach(tx => {
+
+            addRealtimeTransaction(tx);
+
+          });
+
+        return;
+
+      }
+
+      /*
+      KOMPATIBILITAS EVENT LAMA
+      */
+
+      if (
+        String(data.status || "")
+          .toLowerCase() === "paid"
       ) {
 
         addRealtimeTransaction(data);
 
       }
-
 
     } catch (error) {
 
@@ -1272,11 +1073,6 @@ function connectRealtime() {
     }
 
   };
-
-
-  /*
-  KONEKSI TERPUTUS
-  */
 
   events.onerror = () => {
 
@@ -1299,14 +1095,11 @@ function downloadQR() {
   const link =
     document.createElement("a");
 
-
   link.href =
     "qris-gustav.png";
 
-
   link.download =
     "QRIS-GUSTAV-STORE.png";
-
 
   document.body.appendChild(link);
 
@@ -1331,7 +1124,6 @@ async function shareQR() {
       window.location.href
     ).href;
 
-
   if (
     navigator.share &&
     navigator.canShare
@@ -1342,10 +1134,8 @@ async function shareQR() {
       const response =
         await fetch(imageUrl);
 
-
       const blob =
         await response.blob();
-
 
       const file =
         new File(
@@ -1355,7 +1145,6 @@ async function shareQR() {
             type: blob.type
           }
         );
-
 
       if (
         navigator.canShare({
@@ -1376,7 +1165,6 @@ async function shareQR() {
 
         });
 
-
         return;
 
       }
@@ -1388,7 +1176,6 @@ async function shareQR() {
     }
 
   }
-
 
   if (navigator.share) {
 
@@ -1407,7 +1194,6 @@ async function shareQR() {
 
       });
 
-
       return;
 
     } catch (error) {
@@ -1417,7 +1203,6 @@ async function shareQR() {
     }
 
   }
-
 
   alert(
     "Fitur bagikan tidak tersedia di browser ini."
@@ -1437,7 +1222,6 @@ loadTransactions();
 connectRealtime();
 
 </script>
-
 
 </body>
 </html>
