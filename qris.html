@@ -422,6 +422,8 @@
       <img
         src="qris-gustav.png"
         alt="QRIS GUSTAV STORE"
+        width="330"
+        height="333"
       >
 
     </div>
@@ -597,7 +599,7 @@
       <span class="realtime-dot"></span>
 
       <span id="realtimeStatus">
-        Menghubungkan...
+        Sistem siap
       </span>
 
     </div>
@@ -811,11 +813,22 @@ function renderTransactions(items) {
 
 /*
 =====================================
-LOAD RIWAYAT
+STATE
 =====================================
 */
 
-let loadingTransactions = false;
+let lastTransactionIds =
+  new Set();
+
+let loadingTransactions =
+  false;
+
+
+/*
+=====================================
+LOAD TRANSAKSI
+=====================================
+*/
 
 async function loadTransactions(manual = false) {
 
@@ -835,6 +848,12 @@ async function loadTransactions(manual = false) {
       "realtimeStatus"
     );
 
+
+  /*
+  Kalau tombol Refresh ditekan,
+  tampilkan loading.
+  */
+
   if (manual) {
 
     list.innerHTML = `
@@ -845,6 +864,25 @@ async function loadTransactions(manual = false) {
 
   }
 
+
+  /*
+  PENTING:
+  Request backend dibuat timeout.
+  Kalau backend lambat, halaman
+  tidak akan ikut menunggu.
+  */
+
+  const controller =
+    new AbortController();
+
+  const timeout =
+    setTimeout(() => {
+
+      controller.abort();
+
+    }, 8000);
+
+
   try {
 
     const response =
@@ -853,54 +891,87 @@ async function loadTransactions(manual = false) {
         "/api/transaksi",
         {
           method: "GET",
-          cache: "no-store"
+          cache: "no-store",
+          signal: controller.signal
         }
       );
 
-    const result =
-      await response.json();
+
+    clearTimeout(timeout);
+
 
     if (!response.ok) {
 
       throw new Error(
-        result.message ||
-        "Gagal mengambil transaksi"
+        "HTTP " + response.status
       );
 
     }
 
+
+    const result =
+      await response.json();
+
+
     const items =
       result?.data?.items || [];
 
+
+    /*
+    Update tampilan riwayat.
+    */
+
     renderTransactions(items);
+
+
+    /*
+    Simpan ID transaksi.
+    */
+
+    lastTransactionIds =
+      new Set(
+        items
+          .map(tx =>
+            getTransactionId(tx)
+          )
+          .filter(Boolean)
+      );
+
 
     status.textContent =
       "Otomatis memperbarui";
 
-    return items;
 
   } catch (error) {
 
-    console.error(
-      "Load transaksi error:",
-      error
+    clearTimeout(timeout);
+
+    console.log(
+      "Backend belum tersedia:",
+      error.message
     );
 
-    if (manual || !lastTransactionIds.size) {
+
+    /*
+    Jangan mengganggu halaman QRIS.
+    */
+
+    if (manual) {
 
       list.innerHTML = `
         <div class="error">
-          Gagal mengambil riwayat transaksi.<br>
-          Silakan coba refresh kembali.
+          Riwayat transaksi belum dapat dimuat.
+          <br>
+          Silakan coba lagi.
         </div>
       `;
 
     }
 
+
     status.textContent =
       "Menunggu koneksi...";
 
-    return null;
 
   } finally {
 
@@ -913,103 +984,123 @@ async function loadTransactions(manual = false) {
 
 /*
 =====================================
-ID TRANSAKSI TERAKHIR
-=====================================
-*/
-
-let lastTransactionIds =
-  new Set();
-
-
-/*
-=====================================
 CEK TRANSAKSI BARU
 =====================================
 */
 
 async function checkNewTransactions() {
 
-  const items =
-    await loadTransactions(false);
+  const controller =
+    new AbortController();
 
-  if (!items) {
-    return;
-  }
+  const timeout =
+    setTimeout(() => {
 
-  const currentIds =
-    new Set(
-      items
-        .map(tx =>
-          getTransactionId(tx)
-        )
-        .filter(Boolean)
-    );
+      controller.abort();
+
+    }, 8000);
 
 
-  /*
-  Jangan anggap transaksi lama
-  sebagai transaksi baru ketika
-  halaman pertama kali dibuka.
-  */
+  try {
 
-  if (lastTransactionIds.size === 0) {
+    const response =
+      await fetch(
+        BACKEND_URL +
+        "/api/transaksi",
+        {
+          method: "GET",
+          cache: "no-store",
+          signal: controller.signal
+        }
+      );
+
+
+    clearTimeout(timeout);
+
+
+    if (!response.ok) {
+      return;
+    }
+
+
+    const result =
+      await response.json();
+
+
+    const items =
+      result?.data?.items || [];
+
+
+    const currentIds =
+      new Set(
+        items
+          .map(tx =>
+            getTransactionId(tx)
+          )
+          .filter(Boolean)
+      );
+
+
+    /*
+    Cari transaksi baru.
+    */
+
+    if (lastTransactionIds.size > 0) {
+
+      const newTransactions =
+        items.filter(tx => {
+
+          const id =
+            getTransactionId(tx);
+
+          return (
+            id &&
+            !lastTransactionIds.has(id)
+          );
+
+        });
+
+
+      if (
+        newTransactions.length > 0
+      ) {
+
+        newTransactions
+          .slice()
+          .reverse()
+          .forEach(tx => {
+
+            addRealtimeTransaction(tx);
+
+          });
+
+      }
+
+    }
+
 
     lastTransactionIds =
       currentIds;
 
-    return;
 
-  }
-
-
-  /*
-  Cari transaksi yang belum ada
-  */
-
-  const newTransactions =
-    items.filter(tx => {
-
-      const id =
-        getTransactionId(tx);
-
-      return (
-        id &&
-        !lastTransactionIds.has(id)
-      );
-
-    });
+    document.getElementById(
+      "realtimeStatus"
+    ).textContent =
+      "Otomatis memperbarui";
 
 
-  /*
-  Kalau ada transaksi baru,
-  tampilkan notifikasi sederhana.
-  */
-
-  if (newTransactions.length > 0) {
+  } catch (error) {
 
     console.log(
-      "Transaksi baru:",
-      newTransactions
+      "Polling:",
+      error.message
     );
 
-    newTransactions
-      .slice()
-      .reverse()
-      .forEach(tx => {
+  } finally {
 
-        addRealtimeTransaction(tx);
-
-      });
+    clearTimeout(timeout);
 
   }
-
-
-  /*
-  Simpan daftar ID terbaru
-  */
-
-  lastTransactionIds =
-    currentIds;
 
 }
 
@@ -1026,10 +1117,12 @@ function addRealtimeTransaction(tx) {
     return;
   }
 
+
   const status =
     String(
       tx.status || ""
     ).toLowerCase();
+
 
   if (
     status &&
@@ -1038,8 +1131,10 @@ function addRealtimeTransaction(tx) {
     return;
   }
 
+
   const transactionId =
     getTransactionId(tx);
+
 
   if (!transactionId) {
     return;
@@ -1047,13 +1142,14 @@ function addRealtimeTransaction(tx) {
 
 
   /*
-  Cegah duplikat
+  Cegah duplikat.
   */
 
   const existing =
     document.querySelector(
       `[data-transaction-id="${CSS.escape(transactionId)}"]`
     );
+
 
   if (existing) {
     return;
@@ -1066,14 +1162,11 @@ function addRealtimeTransaction(tx) {
     );
 
 
-  /*
-  Hapus pesan kosong
-  */
-
   const empty =
     list.querySelector(
       ".empty"
     );
+
 
   if (empty) {
     list.innerHTML = "";
@@ -1086,10 +1179,12 @@ function addRealtimeTransaction(tx) {
     tx.originalAmount ??
     0;
 
+
   const appName =
     tx.appName ||
     tx.packageName ||
     "QRIS";
+
 
   const time =
     tx.paidAt ||
@@ -1102,8 +1197,10 @@ function addRealtimeTransaction(tx) {
       "div"
     );
 
+
   item.className =
     "transaction";
+
 
   item.dataset.transactionId =
     transactionId;
@@ -1192,10 +1289,6 @@ async function shareQR() {
     ).href;
 
 
-  /*
-  Share file
-  */
-
   if (
     navigator.share &&
     navigator.canShare
@@ -1204,12 +1297,11 @@ async function shareQR() {
     try {
 
       const response =
-        await fetch(
-          imageUrl
-        );
+        await fetch(imageUrl);
 
       const blob =
         await response.blob();
+
 
       const file =
         new File(
@@ -1247,7 +1339,7 @@ async function shareQR() {
     } catch (error) {
 
       console.log(
-        "Share file error:",
+        "Share file:",
         error
       );
 
@@ -1255,10 +1347,6 @@ async function shareQR() {
 
   }
 
-
-  /*
-  Share link
-  */
 
   if (navigator.share) {
 
@@ -1282,7 +1370,7 @@ async function shareQR() {
     } catch (error) {
 
       console.log(
-        "Share link error:",
+        "Share:",
         error
       );
 
@@ -1300,39 +1388,53 @@ async function shareQR() {
 
 /*
 =====================================
-START
+START CEPAT
 =====================================
 */
 
-
 /*
-Load transaksi pertama
+JANGAN menunggu backend
+untuk menampilkan halaman.
+
+Halaman HTML + QR sudah tampil
+terlebih dahulu.
 */
-
-loadTransactions();
-
-
-/*
-Cek transaksi baru setiap 15 detik.
-
-Ini polling ringan:
-1 request / 15 detik.
-*/
-
-setInterval(
-  checkNewTransactions,
-  15000
-);
 
 
 /*
-Status awal
+Request pertama dijalankan
+setelah browser selesai
+menampilkan halaman.
 */
 
-document.getElementById(
-  "realtimeStatus"
-).textContent =
-  "Otomatis memperbarui";
+if ("requestIdleCallback" in window) {
+
+  requestIdleCallback(() => {
+
+    loadTransactions();
+
+  });
+
+} else {
+
+  setTimeout(() => {
+
+    loadTransactions();
+
+  }, 100);
+
+}
+
+
+/*
+Polling setiap 15 detik.
+*/
+
+setInterval(() => {
+
+  checkNewTransactions();
+
+}, 15000);
 
 
 </script>
