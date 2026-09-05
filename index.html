@@ -2,684 +2,676 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050507">
 
-<title>QRIS GUSTAV</title>
+<title>Gustav Archive — Qris All Payment</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+:root {
+    --bg: #050507;
+    --card: rgba(18, 18, 24, 0.78);
+    --border: rgba(255,255,255,.09);
+    --white: #f7f7fa;
+    --gray: #9a9aa7;
+    --purple: #9b6cff;
+    --purple-soft: rgba(155,108,255,.12);
+    --ease: cubic-bezier(.22,1,.36,1);
 }
 
-html{
-    scroll-behavior:smooth;
+* {
+    box-sizing: border-box;
 }
 
-body{
-    min-height:100vh;
-    background:#050507;
-    color:#f5f5f7;
-    font-family:Arial,Helvetica,sans-serif;
-    overflow-x:hidden;
-    opacity:0;
-    animation:pageIn .55s ease forwards;
+html {
+    scroll-behavior: smooth;
 }
 
-body.page-exit{
-    animation:pageOut .35s ease forwards;
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--white);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    overflow-x: hidden;
 }
 
-@keyframes pageIn{
-    to{
-        opacity:1;
-    }
+/* =========================
+   BACKGROUND
+========================= */
+
+.network {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    background: #050507;
 }
 
-@keyframes pageOut{
-    to{
-        opacity:0;
-        transform:translateY(-12px);
-    }
+.network::before {
+    content: "";
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    left: -140px;
+    top: 15%;
+    border-radius: 50%;
+    background: #7041d9;
+    filter: blur(100px);
+    opacity: .12;
+    animation: glowOne 14s ease-in-out infinite;
 }
 
-/* BACKGROUND */
-
-#network{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:-3;
-    background:#050507;
+.network::after {
+    content: "";
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    right: -170px;
+    bottom: 5%;
+    border-radius: 50%;
+    background: #5c35bb;
+    filter: blur(110px);
+    opacity: .10;
+    animation: glowTwo 17s ease-in-out infinite;
 }
 
-.bg-glow{
-    position:fixed;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    background:rgba(125,70,255,.10);
-    filter:blur(100px);
-    top:15%;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:-2;
-    pointer-events:none;
-}
+.grid {
+    position: absolute;
+    inset: -30%;
+    opacity: .10;
 
-.bg-glow.two{
-    width:300px;
-    height:300px;
-    top:auto;
-    bottom:-100px;
-    left:10%;
-    background:rgba(170,90,255,.07);
-}
-
-/* HEADER */
-
-.header{
-    width:100%;
-    padding:18px 16px 0;
-    position:relative;
-    z-index:10;
-}
-
-.header-box{
-    width:100%;
-    max-width:900px;
-    margin:auto;
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    padding:12px 14px;
-
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:20px;
-
-    background:rgba(13,13,18,.76);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    box-shadow:
-        0 10px 40px rgba(0,0,0,.35),
-        inset 0 1px rgba(255,255,255,.04);
-}
-
-.back{
-    width:44px;
-    height:44px;
-
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:14px;
-
-    background:#111116;
-    color:#fff;
-
-    font-size:22px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:
-        transform .2s ease,
-        background .2s ease;
-}
-
-.back:active{
-    transform:scale(.92);
-}
-
-.header-title{
-    flex:1;
-    min-width:0;
-}
-
-.header-title strong{
-    display:block;
-    font-size:16px;
-    letter-spacing:.3px;
-}
-
-.header-title span{
-    display:block;
-    margin-top:3px;
-    color:#85858f;
-    font-size:12px;
-}
-
-/* MAIN */
-
-main{
-    width:100%;
-    max-width:900px;
-    margin:auto;
-    padding:28px 16px 60px;
-}
-
-/* HERO */
-
-.hero{
-    text-align:center;
-    padding:15px 0 25px;
-}
-
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-
-    padding:8px 13px;
-
-    border:1px solid rgba(180,130,255,.20);
-    border-radius:999px;
-
-    background:rgba(115,65,255,.08);
-
-    color:#c9b4ff;
-
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.badge-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#9b70ff;
-    box-shadow:0 0 12px #9b70ff;
-}
-
-.hero h1{
-    margin-top:18px;
-
-    font-size:clamp(32px,8vw,58px);
-    line-height:1;
-
-    letter-spacing:-2px;
-}
-
-.hero p{
-    max-width:550px;
-    margin:13px auto 0;
-
-    color:#8e8e98;
-    font-size:14px;
-    line-height:1.7;
-}
-
-/* QR CARD */
-
-.qr-card{
-    width:100%;
-    max-width:520px;
-    margin:10px auto 0;
-
-    padding:18px;
-
-    border:1px solid rgba(255,255,255,.11);
-    border-radius:28px;
-
-    background:
+    background-image:
         linear-gradient(
-            145deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.018)
+            rgba(155,108,255,.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(155,108,255,.08) 1px,
+            transparent 1px
         );
 
+    background-size: 80px 80px;
+
+    transform:
+        perspective(700px)
+        rotateX(60deg)
+        translateY(25%);
+}
+
+.nodes {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.38) 1px,
+            transparent 1.5px
+        );
+
+    background-size: 74px 74px;
+
+    opacity: .08;
+
+    animation: nodeMove 22s linear infinite;
+}
+
+@keyframes glowOne {
+    50% {
+        transform: translate(80px, 35px);
+    }
+}
+
+@keyframes glowTwo {
+    50% {
+        transform: translate(-60px, -45px);
+    }
+}
+
+@keyframes nodeMove {
+    to {
+        transform: translate(37px,37px);
+    }
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+    width: min(960px, calc(100% - 28px));
+    margin: auto;
+}
+
+.page {
+    animation: pageEnter .65s var(--ease);
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    height: 76px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.logo {
+    width: 37px;
+    height: 37px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.035);
+
     box-shadow:
-        0 30px 80px rgba(0,0,0,.42),
-        inset 0 1px rgba(255,255,255,.04);
-
-    position:relative;
-    overflow:hidden;
+        0 0 25px rgba(155,108,255,.12);
 }
 
-.qr-card::before{
-    content:"";
-    position:absolute;
-    width:240px;
-    height:240px;
-    border-radius:50%;
+.logo-dot {
+    width: 12px;
+    height: 12px;
 
-    background:rgba(130,75,255,.10);
-    filter:blur(70px);
+    border-radius: 4px;
 
-    top:-100px;
-    left:50%;
-    transform:translateX(-50%);
-}
-
-.store-name{
-    position:relative;
-    text-align:center;
-
-    font-size:21px;
-    font-weight:800;
-
-    letter-spacing:.5px;
-}
-
-.store-sub{
-    position:relative;
-    margin-top:5px;
-
-    text-align:center;
-
-    color:#777780;
-    font-size:12px;
-}
-
-/* QR */
-
-.qr-wrapper{
-    position:relative;
-
-    width:min(78vw,360px);
-    aspect-ratio:1;
-
-    margin:25px auto 18px;
-
-    padding:13px;
-
-    background:#fff;
-    border-radius:18px;
+    background: var(--purple);
 
     box-shadow:
-        0 0 0 1px rgba(255,255,255,.2),
-        0 20px 55px rgba(0,0,0,.45);
+        0 0 18px rgba(155,108,255,.65);
 }
 
-.qr-wrapper img{
-    display:block;
+.brand-name {
+    font-size: 14px;
+    font-weight: 750;
+}
 
-    width:100%;
-    height:100%;
+.brand-sub {
+    margin-top: 2px;
+    color: var(--gray);
+    font-size: 11px;
+}
 
-    object-fit:contain;
+.profile {
+    width: 40px;
+    height: 40px;
 
-    border-radius:7px;
+    border-radius: 50%;
+
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,.035);
+
+    color: #ddd;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        transform .22s var(--ease),
+        background .22s,
+        border-color .22s;
+}
+
+.profile:hover {
+    border-color: rgba(155,108,255,.35);
+    background: var(--purple-soft);
+}
+
+.profile:active {
+    transform: scale(.88);
+}
+
+/* =========================
+   HERO
+========================= */
+
+main {
+    padding: 48px 0 70px;
+}
+
+.eyebrow {
+    color: #858491;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    margin-bottom: 14px;
+}
+
+h1 {
+    margin: 0;
+
+    font-size: clamp(40px, 8vw, 72px);
+    line-height: .98;
+
+    letter-spacing: -.055em;
+    font-weight: 800;
+}
+
+.hero-sub {
+    margin-top: 15px;
+
+    color: #b7b6c1;
+    font-size: 16px;
+}
+
+.description {
+    max-width: 690px;
+
+    margin: 15px 0 28px;
+
+    color: #8e8d99;
+
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search {
+    position: relative;
+    margin-bottom: 28px;
+}
+
+.search-icon {
+    position: absolute;
+
+    left: 16px;
+    top: 50%;
+
+    width: 18px;
+
+    transform: translateY(-50%);
+
+    color: #777;
+}
+
+.search input {
+    width: 100%;
+    height: 52px;
+
+    padding: 0 17px 0 45px;
+
+    border-radius: 15px;
+
+    border: 1px solid var(--border);
+
+    outline: none;
+
+    background: rgba(15,15,20,.75);
+
+    color: white;
+
+    font: inherit;
+    font-size: 14px;
+
+    transition:
+        border-color .25s,
+        box-shadow .25s;
+}
+
+.search input::placeholder {
+    color: #6e6e79;
+}
+
+.search input:focus {
+    border-color: rgba(155,108,255,.45);
+
+    box-shadow:
+        0 0 0 4px rgba(155,108,255,.06);
+}
+
+/* =========================
+   FEATURES
+========================= */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 9px;
+
+    margin-bottom: 34px;
+}
+
+.feature {
+    padding: 13px 8px;
+
+    text-align: center;
+
+    border-radius: 13px;
+
+    border: 1px solid var(--border);
+
+    background: rgba(255,255,255,.025);
+
+    color: #d8d7df;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: .01em;
+}
+
+/* =========================
+   QRIS LIST
+========================= */
+
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 13px;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.counter {
+    color: #70707c;
+    font-size: 10px;
 }
 
 /*
-    GANTI src QR DI BAWAH DENGAN FILE QRIS ASLI KAMU.
-
-    Contoh:
-    qris-gustav.jpg
-
-    Letakkan file tersebut satu folder
-    dengan qris.html.
+   SELALU 3 KOLOM
 */
+.qris-grid {
+    display: grid;
 
-.qr-label{
-    text-align:center;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-    color:#74747e;
-
-    font-size:11px;
-    line-height:1.5;
+    gap: 9px;
 }
 
-/* STATUS */
+/* =========================
+   QRIS CARD
+========================= */
 
-.status{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
+.qris-card {
+    position: relative;
 
-    margin-top:17px;
+    min-width: 0;
 
-    color:#c7b8ff;
+    padding: 15px 12px 14px;
 
-    font-size:12px;
-    font-weight:700;
-}
+    border-radius: 16px;
 
-.status-dot{
-    width:8px;
-    height:8px;
+    border: 1px solid var(--border);
 
-    border-radius:50%;
-
-    background:#9b70ff;
+    background:
+        linear-gradient(
+            rgba(20,20,27,.72),
+            rgba(10,10,14,.82)
+        );
 
     box-shadow:
-        0 0 12px rgba(155,112,255,.9);
+        0 10px 30px rgba(0,0,0,.20);
 
-    animation:pulse 1.7s infinite;
-}
+    cursor: pointer;
 
-@keyframes pulse{
-    50%{
-        opacity:.35;
-        transform:scale(.7);
-    }
-}
+    overflow: hidden;
 
-/* BUTTONS */
+    color: white;
 
-.actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-
-    gap:10px;
-
-    margin-top:20px;
-}
-
-.btn{
-    min-height:50px;
-
-    border-radius:15px;
-
-    border:1px solid rgba(255,255,255,.11);
-
-    background:#111116;
-
-    color:#f5f5f7;
-
-    font-size:13px;
-    font-weight:700;
-
-    cursor:pointer;
+    text-align: left;
 
     transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease;
+        transform .22s var(--ease),
+        border-color .22s,
+        box-shadow .22s;
+
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
 }
 
-.btn:active{
-    transform:scale(.96);
+.qris-card:hover {
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(155,108,255,.28);
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.28),
+        0 0 25px rgba(125,72,230,.06);
 }
 
-.btn.primary{
-    background:#f5f5f7;
-    color:#09090b;
+.qris-card:active {
+    transform: scale(.96);
 }
 
-.btn:hover{
-    border-color:rgba(170,120,255,.4);
+.qris-card::after {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 50% 0,
+            rgba(155,108,255,.12),
+            transparent 55%
+        );
+
+    pointer-events: none;
 }
 
-/* INFO */
+.q-icon {
+    width: 32px;
+    height: 32px;
 
-.info{
-    width:100%;
-    max-width:720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    margin:20px auto 0;
+    border-radius: 10px;
 
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
+    border: 1px solid rgba(155,108,255,.18);
 
-    gap:10px;
+    background: rgba(155,108,255,.07);
+
+    color: #b99cff;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    margin-bottom: 11px;
 }
 
-.info-box{
-    padding:17px;
+.q-name {
+    display: block;
 
-    border-radius:18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-    border:1px solid rgba(255,255,255,.08);
-
-    background:rgba(15,15,20,.72);
+    font-size: 12px;
+    font-weight: 750;
 }
 
-.info-label{
-    color:#70707a;
+.q-status {
+    display: block;
 
-    font-size:10px;
-    font-weight:800;
+    margin-top: 5px;
 
-    letter-spacing:1px;
-    text-transform:uppercase;
+    color: #858591;
+
+    font-size: 10px;
 }
 
-.info-value{
-    margin-top:7px;
+.q-arrow {
+    position: absolute;
 
-    font-size:14px;
-    font-weight:700;
+    right: 11px;
+    bottom: 12px;
+
+    color: #777;
+
+    font-size: 14px;
 }
 
-/* HOW TO */
+/* =========================
+   RIPPLE
+========================= */
 
-.section{
-    margin-top:35px;
+.ripple {
+    position: absolute;
+
+    border-radius: 50%;
+
+    transform: scale(0);
+
+    background: rgba(170,130,255,.22);
+
+    pointer-events: none;
+
+    animation: ripple .55s ease-out;
 }
 
-.section-title{
-    margin-bottom:13px;
-
-    font-size:17px;
-    font-weight:800;
-}
-
-.steps{
-    display:grid;
-    gap:9px;
-}
-
-.step{
-    display:flex;
-    align-items:flex-start;
-    gap:13px;
-
-    padding:15px;
-
-    border:1px solid rgba(255,255,255,.07);
-    border-radius:17px;
-
-    background:rgba(14,14,19,.65);
-}
-
-.step-number{
-    flex:none;
-
-    width:31px;
-    height:31px;
-
-    border-radius:10px;
-
-    background:rgba(130,80,255,.13);
-
-    border:1px solid rgba(150,100,255,.18);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#c9b4ff;
-
-    font-size:12px;
-    font-weight:800;
-}
-
-.step strong{
-    display:block;
-
-    font-size:13px;
-}
-
-.step p{
-    margin-top:4px;
-
-    color:#777781;
-
-    font-size:12px;
-    line-height:1.55;
-}
-
-/* TRANSACTIONS */
-
-.transactions{
-    margin-top:35px;
-}
-
-.transaction-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    margin-bottom:13px;
-}
-
-.transaction-count{
-    color:#777781;
-    font-size:12px;
-}
-
-.empty{
-    padding:28px 18px;
-
-    text-align:center;
-
-    border:1px dashed rgba(255,255,255,.11);
-    border-radius:20px;
-
-    background:rgba(15,15,20,.5);
-}
-
-.empty-icon{
-    width:45px;
-    height:45px;
-
-    margin:0 auto 12px;
-
-    border-radius:14px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(130,80,255,.08);
-
-    color:#bba1ff;
-
-    font-size:21px;
-}
-
-.empty strong{
-    display:block;
-    font-size:14px;
-}
-
-.empty p{
-    margin-top:5px;
-
-    color:#6e6e78;
-
-    font-size:12px;
-    line-height:1.5;
-}
-
-/* FOOTER */
-
-footer{
-    padding:20px 0 0;
-
-    text-align:center;
-
-    color:#55555e;
-
-    font-size:10px;
-    line-height:1.6;
-}
-
-/* RIPPLE */
-
-.ripple{
-    position:absolute;
-
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.18);
-
-    transform:scale(0);
-
-    animation:ripple .55s ease-out;
-
-    pointer-events:none;
-}
-
-@keyframes ripple{
-    to{
-        transform:scale(25);
-        opacity:0;
+@keyframes ripple {
+    to {
+        transform: scale(5);
+        opacity: 0;
     }
 }
 
-/* MOBILE */
+.empty {
+    grid-column: 1 / -1;
 
-@media(max-width:600px){
+    padding: 30px;
 
-    main{
-        padding-left:13px;
-        padding-right:13px;
+    text-align: center;
+
+    color: #777;
+
+    border: 1px dashed var(--border);
+
+    border-radius: 15px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding-bottom: 30px;
+
+    text-align: center;
+
+    color: #555;
+
+    font-size: 10px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 520px) {
+
+    .container {
+        width: calc(100% - 24px);
     }
 
-    .header{
-        padding-left:10px;
-        padding-right:10px;
+    header {
+        height: 66px;
     }
 
-    .header-box{
-        border-radius:18px;
+    main {
+        padding-top: 36px;
     }
 
-    .hero h1{
-        font-size:38px;
+    .features {
+        gap: 7px;
     }
 
-    .qr-card{
-        border-radius:24px;
-        padding:15px;
+    .feature {
+        padding: 12px 4px;
+        font-size: 9px;
     }
 
-    .qr-wrapper{
-        width:min(82vw,350px);
+    /*
+       Tetap 3 kolom di HP
+    */
+    .qris-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 7px;
     }
 
-    .info{
-        grid-template-columns:1fr 1fr;
+    .qris-card {
+        padding: 12px 8px;
+
+        border-radius: 14px;
+    }
+
+    .q-icon {
+        width: 28px;
+        height: 28px;
+
+        margin-bottom: 8px;
+    }
+
+    .q-name {
+        font-size: 10px;
+    }
+
+    .q-status {
+        font-size: 8px;
+    }
+
+    .q-arrow {
+        display: none;
     }
 }
 
-@media(max-width:380px){
-
-    .actions{
-        grid-template-columns:1fr;
-    }
-
-    .info{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion: reduce) {
 
     *,
     *::before,
-    *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        scroll-behavior:auto !important;
+    *::after {
+        animation: none !important;
+        transition: none !important;
     }
 }
 </style>
@@ -687,817 +679,470 @@ footer{
 
 <body>
 
-<canvas id="network"></canvas>
+<div class="network">
+    <div class="grid"></div>
+    <div class="nodes"></div>
+</div>
 
-<div class="bg-glow"></div>
-<div class="bg-glow two"></div>
+<div class="page">
 
-<header class="header">
+<div class="container">
 
-    <div class="header-box">
+<header>
 
-        <button
-            class="back"
-            id="backBtn"
-            aria-label="Kembali">
-            ←
-        </button>
+    <div class="brand">
 
-        <div class="header-title">
-            <strong id="headerName">
-                QRIS GUSTAV
-            </strong>
+        <div class="logo">
+            <div class="logo-dot"></div>
+        </div>
 
-            <span>
+        <div>
+            <div class="brand-name">
+                Lionel Gustav
+            </div>
+
+            <div class="brand-sub">
                 Qris All Payment
-            </span>
+            </div>
         </div>
 
     </div>
+
+    <button
+        class="profile"
+        id="profileButton"
+        aria-label="Profile"
+    >
+
+        <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+        >
+
+            <circle
+                cx="12"
+                cy="8"
+                r="3.5"
+            />
+
+            <path
+                d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5"
+            />
+
+        </svg>
+
+    </button>
 
 </header>
 
 
 <main>
 
-    <!-- HERO -->
+    <div class="eyebrow">
+        Private Archive
+    </div>
 
-    <section class="hero">
+    <h1>
+        Gustav Archive
+    </h1>
 
-        <div class="badge">
-            <span class="badge-dot"></span>
-            QRIS AKTIF
+    <div class="hero-sub">
+        Qris All Payment
+    </div>
+
+    <p class="description">
+        Web ini bertujuan untuk cek transaksi qris yang dipakai own/asis gustav, menu cv saldo sedang dalam tahap pembuatan.
+    </p>
+
+
+    <!-- SEARCH -->
+
+    <div class="search">
+
+        <svg
+            class="search-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+        >
+
+            <circle
+                cx="11"
+                cy="11"
+                r="6.5"
+            />
+
+            <path
+                d="m16 16 5 5"
+            />
+
+        </svg>
+
+        <input
+            id="search"
+            type="search"
+            placeholder="Cari Qris"
+            autocomplete="off"
+        >
+
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+        <div class="feature">
+            BAYAR QRIS
         </div>
 
-        <h1 id="pageTitle">
-            QRIS GUSTAV
-        </h1>
-
-        <p>
-            Scan QRIS ini menggunakan DANA,
-            GoPay, OVO, ShopeePay, mobile banking,
-            atau aplikasi pembayaran lain yang mendukung QRIS.
-        </p>
-
-    </section>
-
-
-    <!-- QR -->
-
-    <section class="qr-card">
-
-        <div class="store-name" id="storeName">
-            GUSTAV STORE
+        <div class="feature">
+            BUKTI TF NO DELAY
         </div>
 
-        <div class="store-sub">
-            QRIS • ALL PAYMENT
+        <div class="feature">
+            TRANSAKSI NO FAKE
         </div>
 
-
-        <div class="qr-wrapper">
-
-            <!--
-                QRIS ASLI GUSTAV
-
-                Simpan gambar QRIS kamu sebagai:
-                qris-gustav.jpg
-
-                lalu pastikan satu folder dengan
-                qris.html.
-            -->
-
-            <img
-                id="qrImage"
-                src="qris-gustav.jpg"
-                alt="QRIS GUSTAV STORE"
-                draggable="false">
-
-        </div>
+    </div>
 
 
-        <div class="qr-label">
-            Satu QRIS untuk semua pembayaran
-        </div>
-
-
-        <div class="status">
-
-            <span class="status-dot"></span>
-
-            QRIS READY
-
-        </div>
-
-
-        <div class="actions">
-
-            <button
-                class="btn primary"
-                id="downloadBtn">
-
-                ↓ &nbsp; SIMPAN QRIS
-
-            </button>
-
-            <button
-                class="btn"
-                id="shareBtn">
-
-                ↗ &nbsp; BAGIKAN
-
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- INFO -->
-
-    <section class="info">
-
-        <div class="info-box">
-
-            <div class="info-label">
-                Merchant
-            </div>
-
-            <div class="info-value">
-                GUSTAV STORE
-            </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-            <div class="info-label">
-                Provider
-            </div>
-
-            <div class="info-value">
-                DANA
-            </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-            <div class="info-label">
-                Metode
-            </div>
-
-            <div class="info-value">
-                QRIS
-            </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-            <div class="info-label">
-                Nominal
-            </div>
-
-            <div class="info-value">
-                Bebas
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- CARA BAYAR -->
-
-    <section class="section">
+    <div class="section-head">
 
         <div class="section-title">
-            Cara Pembayaran
+            Daftar QRIS
         </div>
 
+        <div
+            class="counter"
+            id="counter"
+        ></div>
 
-        <div class="steps">
-
-            <div class="step">
-
-                <div class="step-number">
-                    01
-                </div>
-
-                <div>
-
-                    <strong>
-                        Simpan atau screenshot QRIS
-                    </strong>
-
-                    <p>
-                        Kamu bisa menyimpan gambar QRIS
-                        kemudian membukanya dari galeri
-                        saat melakukan pembayaran.
-                    </p>
-
-                </div>
-
-            </div>
+    </div>
 
 
-            <div class="step">
+    <!-- QRIS -->
 
-                <div class="step-number">
-                    02
-                </div>
-
-                <div>
-
-                    <strong>
-                        Buka DANA / e-wallet / m-banking
-                    </strong>
-
-                    <p>
-                        Pilih fitur Scan atau QRIS
-                        pada aplikasi pembayaran kamu.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    03
-                </div>
-
-                <div>
-
-                    <strong>
-                        Scan QRIS GUSTAV STORE
-                    </strong>
-
-                    <p>
-                        Arahkan scanner ke QRIS
-                        yang ditampilkan di halaman ini.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    04
-                </div>
-
-                <div>
-
-                    <strong>
-                        Masukkan nominal sendiri
-                    </strong>
-
-                    <p>
-                        Masukkan nominal pembayaran
-                        sesuai jumlah yang ingin kamu transfer.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    05
-                </div>
-
-                <div>
-
-                    <strong>
-                        Selesaikan pembayaran
-                    </strong>
-
-                    <p>
-                        Setelah pembayaran berhasil,
-                        sistem monitoring akan mendeteksi
-                        transaksi yang masuk.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- RIWAYAT -->
-
-    <section class="transactions">
-
-        <div class="transaction-header">
-
-            <div class="section-title">
-                Riwayat Transaksi
-            </div>
-
-            <div
-                class="transaction-count"
-                id="transactionCount">
-
-                0 transaksi
-
-            </div>
-
-        </div>
-
-
-        <div class="empty" id="emptyTransaction">
-
-            <div class="empty-icon">
-                ₿
-            </div>
-
-            <strong>
-                Belum ada transaksi
-            </strong>
-
-            <p>
-                Transaksi yang sudah terdeteksi
-                akan muncul di sini.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <footer>
-
-        GUSTAV STORE • QRIS ALL PAYMENT<br>
-
-        Sistem monitoring pembayaran
-
-    </footer>
+    <div
+        class="qris-grid"
+        id="qrisGrid"
+    ></div>
 
 </main>
 
 
+<footer>
+    Gustav Archive · Qris All Payment
+</footer>
+
+</div>
+
+</div>
+
+
 <script>
 
-/* =====================================================
-   DATA QRIS
-===================================================== */
+/*
+==================================================
+DATA QRIS
+==================================================
+*/
 
-const qrisData = {
+const qrisData = [
 
-    gustav:{
-        name:"QRIS GUSTAV",
-        store:"GUSTAV STORE",
-        provider:"DANA",
-        image:"qris-gustav.jpg"
+    {
+        id: "gustav",
+        name: "QRIS GUSTAV"
     },
 
-    noir:{
-        name:"QRIS NOIR",
-        store:"NOIR STORE",
-        provider:"DANA",
-        image:"qris-noir.jpg"
+    {
+        id: "noir",
+        name: "QRIS NOIR"
     },
 
-    pido:{
-        name:"QRIS PIDO",
-        store:"PIDO STORE",
-        provider:"DANA",
-        image:"qris-pido.jpg"
+    {
+        id: "pido",
+        name: "QRIS PIDO"
     },
 
-    lea:{
-        name:"QRIS LEA",
-        store:"LEA STORE",
-        provider:"DANA",
-        image:"qris-lea.jpg"
+    {
+        id: "lea",
+        name: "QRIS LEA"
     },
 
-    abil:{
-        name:"QRIS ABIL",
-        store:"ABIL STORE",
-        provider:"DANA",
-        image:"qris-abil.jpg"
+    {
+        id: "abil",
+        name: "QRIS ABIL"
+    },
+
+    {
+        id: "gustav2",
+        name: "QRIS GUSTAV"
     }
 
-};
+];
 
 
-/* =====================================================
-   BACA ?id=...
-===================================================== */
+/*
+==================================================
+ELEMENT
+==================================================
+*/
 
-const params = new URLSearchParams(
-    window.location.search
-);
+const grid =
+    document.getElementById("qrisGrid");
 
-const id = params.get("id") || "gustav";
+const search =
+    document.getElementById("search");
 
-const current =
-    qrisData[id] || qrisData.gustav;
-
-
-/* =====================================================
-   UPDATE HALAMAN
-===================================================== */
-
-document.title =
-    current.name + " — Gustav Archive";
-
-document.getElementById("headerName")
-    .textContent = current.name;
-
-document.getElementById("pageTitle")
-    .textContent = current.name;
-
-document.getElementById("storeName")
-    .textContent = current.store;
-
-document.querySelector(".info-box:nth-child(2) .info-value")
-    .textContent = current.provider;
-
-document.getElementById("qrImage")
-    .src = current.image;
-
-document.getElementById("qrImage")
-    .alt = current.name;
+const counter =
+    document.getElementById("counter");
 
 
-/* =====================================================
-   BACK
-===================================================== */
+/*
+==================================================
+RENDER CARD
+==================================================
+*/
 
-document.getElementById("backBtn")
-.addEventListener("click",()=>{
+function renderQris(keyword = "") {
 
-    document.body.classList.add("page-exit");
+    const query =
+        keyword.trim().toLowerCase();
 
-    setTimeout(()=>{
+    const filtered =
+        qrisData.filter(item => {
 
-        window.location.href = "index.html";
-
-    },350);
-
-});
-
-
-/* =====================================================
-   DOWNLOAD QR
-===================================================== */
-
-document.getElementById("downloadBtn")
-.addEventListener("click",async()=>{
-
-    const image =
-        document.getElementById("qrImage");
-
-    try{
-
-        const response =
-            await fetch(image.src);
-
-        const blob =
-            await response.blob();
-
-        const url =
-            URL.createObjectURL(blob);
-
-        const a =
-            document.createElement("a");
-
-        a.href = url;
-
-        a.download =
-            current.name
-            .toLowerCase()
-            .replaceAll(" ","-")
-            + ".jpg";
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        a.remove();
-
-        URL.revokeObjectURL(url);
-
-    }catch(error){
-
-        /*
-            Jika browser memblokir download,
-            buka gambar langsung.
-        */
-
-        window.open(image.src,"_blank");
-
-    }
-
-});
-
-
-/* =====================================================
-   SHARE
-===================================================== */
-
-document.getElementById("shareBtn")
-.addEventListener("click",async()=>{
-
-    const shareData = {
-
-        title:current.name,
-
-        text:
-            "QRIS " +
-            current.store,
-
-        url:window.location.href
-
-    };
-
-    if(
-        navigator.share &&
-        navigator.canShare &&
-        navigator.canShare(shareData)
-    ){
-
-        try{
-
-            await navigator.share(shareData);
-
-        }catch(error){
-
-            // user membatalkan share
-
-        }
-
-    }else{
-
-        try{
-
-            await navigator.clipboard
-                .writeText(window.location.href);
-
-            alert(
-                "Link QRIS berhasil disalin."
+            return (
+                item.name
+                    .toLowerCase()
+                    .includes(query)
+                ||
+                item.id
+                    .toLowerCase()
+                    .includes(query)
             );
 
-        }catch(error){
+        });
 
-            alert(
-                "Link halaman QRIS:\n" +
-                window.location.href
-            );
 
-        }
+    counter.textContent =
+        filtered.length + " QRIS";
 
+
+    if (filtered.length === 0) {
+
+        grid.innerHTML = `
+            <div class="empty">
+                QRIS tidak ditemukan.
+            </div>
+        `;
+
+        return;
     }
 
-});
+
+    grid.innerHTML =
+        filtered.map(item => {
+
+            return `
+
+                <button
+                    class="qris-card"
+                    data-id="${item.id}"
+                >
+
+                    <span class="q-icon">
+                        Q
+                    </span>
+
+                    <span class="q-name">
+                        ${item.name}
+                    </span>
+
+                    <span class="q-status">
+                        READY · STATIC
+                    </span>
+
+                    <span class="q-arrow">
+                        ↗
+                    </span>
+
+                </button>
+
+            `;
+
+        }).join("");
+
+}
 
 
-/* =====================================================
-   RIPPLE BUTTON
-===================================================== */
+/*
+==================================================
+RIPPLE
+==================================================
+*/
 
-document.addEventListener("click",(event)=>{
+function createRipple(event) {
 
-    const target =
-        event.target.closest(
-            ".btn,.back"
-        );
+    const card =
+        event.currentTarget;
 
-    if(!target)return;
+    const rect =
+        card.getBoundingClientRect();
 
     const ripple =
         document.createElement("span");
 
-    ripple.className="ripple";
+    const size =
+        Math.max(
+            rect.width,
+            rect.height
+        );
 
-    const rect =
-        target.getBoundingClientRect();
+
+    ripple.className =
+        "ripple";
+
+    ripple.style.width =
+        size + "px";
+
+    ripple.style.height =
+        size + "px";
 
     ripple.style.left =
-        (event.clientX - rect.left) + "px";
+        event.clientX -
+        rect.left -
+        size / 2 +
+        "px";
 
     ripple.style.top =
-        (event.clientY - rect.top) + "px";
+        event.clientY -
+        rect.top -
+        size / 2 +
+        "px";
 
-    target.style.position="relative";
-    target.style.overflow="hidden";
 
-    target.appendChild(ripple);
+    card.appendChild(ripple);
 
-    setTimeout(()=>{
+
+    setTimeout(() => {
+
         ripple.remove();
-    },600);
 
-});
-
-
-/* =====================================================
-   NETWORK BACKGROUND
-===================================================== */
-
-const canvas =
-    document.getElementById("network");
-
-const ctx =
-    canvas.getContext("2d");
-
-let width;
-let height;
-let nodes=[];
-
-function resizeCanvas(){
-
-    const dpr =
-        Math.min(window.devicePixelRatio || 1,2);
-
-    width =
-        window.innerWidth;
-
-    height =
-        window.innerHeight;
-
-    canvas.width =
-        width * dpr;
-
-    canvas.height =
-        height * dpr;
-
-    canvas.style.width =
-        width+"px";
-
-    canvas.style.height =
-        height+"px";
-
-    ctx.setTransform(
-        dpr,0,0,dpr,0,0
-    );
-
-    createNodes();
+    }, 600);
 
 }
 
 
-function createNodes(){
+/*
+==================================================
+CARD CLICK
+==================================================
+*/
 
-    nodes=[];
+grid.addEventListener(
+    "click",
+    function(event) {
 
-    const count =
-        Math.min(
-            42,
-            Math.max(
-                20,
-                Math.floor(
-                    (width * height) / 30000
-                )
-            )
-        );
+        const card =
+            event.target.closest(
+                ".qris-card"
+            );
 
-    for(let i=0;i<count;i++){
+        if (!card) return;
 
-        nodes.push({
 
-            x:Math.random()*width,
-
-            y:Math.random()*height,
-
-            vx:(Math.random()-.5)*.22,
-
-            vy:(Math.random()-.5)*.22,
-
-            r:Math.random()*1.6+.6
-
+        createRipple({
+            currentTarget: card,
+            clientX: event.clientX,
+            clientY: event.clientY
         });
 
-    }
 
-}
-
-
-function drawNetwork(){
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-    for(const n of nodes){
-
-        n.x += n.vx;
-        n.y += n.vy;
-
-        if(n.x < -20) n.x = width+20;
-        if(n.x > width+20) n.x = -20;
-
-        if(n.y < -20) n.y = height+20;
-        if(n.y > height+20) n.y = -20;
-
-    }
+        const id =
+            card.dataset.id;
 
 
-    for(let i=0;i<nodes.length;i++){
+        setTimeout(() => {
 
-        for(let j=i+1;j<nodes.length;j++){
+            document.body.style.opacity =
+                "0";
 
-            const a=nodes[i];
-            const b=nodes[j];
+            document.body.style.transition =
+                "opacity .18s ease";
 
-            const dx=a.x-b.x;
-            const dy=a.y-b.y;
 
-            const distance =
-                Math.sqrt(dx*dx+dy*dy);
+            setTimeout(() => {
 
-            if(distance < 135){
+                window.location.href =
+                    "qris.html?id=" +
+                    encodeURIComponent(id);
 
-                const opacity =
-                    (1-distance/135)*.14;
+            }, 180);
 
-                ctx.beginPath();
-
-                ctx.moveTo(a.x,a.y);
-                ctx.lineTo(b.x,b.y);
-
-                ctx.strokeStyle =
-                    `rgba(150,110,255,${opacity})`;
-
-                ctx.lineWidth=.6;
-
-                ctx.stroke();
-
-            }
-
-        }
+        }, 80);
 
     }
-
-
-    for(const n of nodes){
-
-        ctx.beginPath();
-
-        ctx.arc(
-            n.x,
-            n.y,
-            n.r,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fillStyle =
-            "rgba(180,150,255,.35)";
-
-        ctx.fill();
-
-    }
-
-
-    requestAnimationFrame(drawNetwork);
-
-}
-
-
-window.addEventListener(
-    "resize",
-    resizeCanvas,
-    {passive:true}
 );
 
-resizeCanvas();
-drawNetwork();
+
+/*
+==================================================
+SEARCH REALTIME
+==================================================
+*/
+
+search.addEventListener(
+    "input",
+    function() {
+
+        renderQris(
+            search.value
+        );
+
+    }
+);
 
 
-/* =====================================================
-   PREFERS REDUCED MOTION
-===================================================== */
+/*
+==================================================
+PROFILE EFFECT
+==================================================
+*/
 
-if(
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches
-){
+document
+    .getElementById("profileButton")
+    .addEventListener(
+        "click",
+        function() {
 
-    document.body.style.animation="none";
-    document.body.style.opacity="1";
+            this.style.transform =
+                "scale(.88)";
 
-}
+            setTimeout(() => {
+
+                this.style.transform =
+                    "";
+
+            }, 180);
+
+        }
+    );
+
+
+/*
+==================================================
+INITIAL LOAD
+==================================================
+*/
+
+renderQris();
 
 </script>
 
