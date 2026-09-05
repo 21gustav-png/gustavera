@@ -1,740 +1,676 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050507">
-
-<title>QRIS GUSTAV</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    background: #050507;
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-    overflow-x: hidden;
-}
-
-/* BACKGROUND */
-
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    background:
-        radial-gradient(
-            circle at 50% 15%,
-            rgba(130, 80, 255, 0.16),
-            transparent 35%
-        ),
-        #050507;
-}
-
-.container {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    max-width: 650px;
-    margin: auto;
-    padding: 15px;
-}
-
-/* HEADER */
-
-.header {
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.back {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    text-decoration: none;
-    color: white;
-
-    border: 1px solid rgba(255,255,255,.12);
-    background: rgba(255,255,255,.04);
-
-    border-radius: 13px;
-
-    font-size: 25px;
-
-    transition: .2s;
-}
-
-.back:active {
-    transform: scale(.93);
-}
-
-.header-title {
-    text-align: center;
-}
-
-.header-title small {
-    display: block;
-    color: #777;
-    font-size: 8px;
-    letter-spacing: 2px;
-    margin-bottom: 3px;
-}
-
-.header-title strong {
-    font-size: 13px;
-}
-
-.header-space {
-    width: 42px;
-}
-
-/* HERO */
-
-.hero {
-    text-align: center;
-    padding: 25px 10px 15px;
-}
-
-.hero .label {
-    color: #a37cff;
-    font-size: 9px;
-    letter-spacing: 3px;
-}
-
-.hero h1 {
-    margin: 9px 0 5px;
-    font-size: 27px;
-}
-
-.hero p {
-    margin: 0;
-    color: #777;
-    font-size: 11px;
-}
-
-/* QR */
-
-.qr-wrapper {
-    width: min(340px, 88vw);
-    margin: 15px auto 18px;
-
-    padding: 15px;
-
-    background: white;
-
-    border-radius: 22px;
-
-    box-shadow:
-        0 20px 70px rgba(0,0,0,.5),
-        0 0 50px rgba(130,80,255,.12);
-}
-
-/*
-   PENTING:
-   QR ada di ROOT repository.
-
-   Struktur:
-   index.html
-   qris.html
-   qris-gustav.png
-*/
-
-.qr-wrapper img {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    border-radius: 10px;
-}
-
-/* STATUS */
-
-.status {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 18px;
-}
-
-.status span {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-
-    padding: 7px 12px;
-
-    border: 1px solid rgba(160,120,255,.3);
-
-    border-radius: 30px;
-
-    background: rgba(140,90,255,.08);
-
-    color: #c8b7ed;
-
-    font-size: 10px;
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background: #a982ff;
-
-    box-shadow: 0 0 10px #a982ff;
-}
-
-/* BUTTON */
-
-.buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    gap: 9px;
-
-    max-width: 430px;
-
-    margin: auto auto 22px;
-}
-
-button {
-    height: 45px;
-
-    border-radius: 13px;
-
-    border: 1px solid rgba(255,255,255,.12);
-
-    background: rgba(255,255,255,.045);
-
-    color: white;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-button.primary {
-    background: white;
-    color: #050507;
-}
-
-button:active {
-    transform: scale(.96);
-}
-
-/* PANEL */
-
-.panel {
-    margin-top: 12px;
-
-    padding: 17px;
-
-    border-radius: 18px;
-
-    border: 1px solid rgba(255,255,255,.08);
-
-    background: rgba(255,255,255,.025);
-}
-
-.panel-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 12px;
-}
-
-.panel-title h2 {
-    margin: 0;
-
-    font-size: 13px;
-}
-
-.panel-title span {
-    color: #6c6c73;
-
-    font-size: 9px;
-}
-
-.info-row {
-    display: flex;
-    justify-content: space-between;
-
-    padding: 11px 0;
-
-    border-bottom: 1px solid rgba(255,255,255,.05);
-
-    font-size: 11px;
-}
-
-.info-row:last-child {
-    border-bottom: none;
-}
-
-.info-row label {
-    color: #707078;
-}
-
-.info-row b {
-    color: #ddd;
-    font-weight: normal;
-    text-align: right;
-}
-
-/* PAYMENT INFO */
-
-.description {
-    color: #85858d;
-
-    font-size: 10px;
-
-    line-height: 1.8;
-
-    margin: 0;
-}
-
-/* TRANSACTIONS */
-
-.empty {
-    text-align: center;
-
-    padding: 25px 10px;
-
-    color: #666;
-}
-
-.empty strong {
-    display: block;
-
-    color: #aaa;
-
-    font-size: 12px;
-
-    margin-bottom: 5px;
-}
-
-.empty span {
-    font-size: 10px;
-}
-
-/* TOAST */
-
-.toast {
-    position: fixed;
-
-    z-index: 20;
-
-    left: 50%;
-    bottom: 25px;
-
-    transform: translate(-50%, 20px);
-
-    opacity: 0;
-
-    padding: 10px 15px;
-
-    background: white;
-    color: #050507;
-
-    border-radius: 12px;
-
-    font-size: 10px;
-
-    pointer-events: none;
-
-    transition: .25s;
-}
-
-.toast.show {
-    opacity: 1;
-
-    transform: translate(-50%, 0);
-}
-
-/* MOBILE */
-
-@media (max-width: 480px) {
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QRIS - Lionel Gustav</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #050507;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* BACKGROUND */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 500px;
+      height: 500px;
+      background: #8b5cf6;
+      filter: blur(180px);
+      opacity: 0.12;
+      top: -200px;
+      left: -150px;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      background: #a855f7;
+      filter: blur(180px);
+      opacity: 0.10;
+      bottom: -200px;
+      right: -150px;
+      pointer-events: none;
+      z-index: -1;
+    }
 
     .container {
-        padding: 12px;
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+      padding: 18px;
     }
 
-    .hero {
-        padding-top: 20px;
+    /* HEADER */
+    .top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
     }
 
-    .hero h1 {
-        font-size: 24px;
+    .back {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      border: 1px solid #29212f;
+      background: #0d0b10;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .back:active {
+      transform: scale(.92);
+    }
+
+    .title {
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      color: #9b93a5;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    /* QR CARD */
+    .qr-card {
+      background: rgba(13, 11, 16, .92);
+      border: 1px solid #29212f;
+      border-radius: 24px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 15px 50px rgba(0,0,0,.35);
+    }
+
+    .merchant {
+      font-size: 19px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .merchant-sub {
+      color: #aaa2b1;
+      font-size: 13px;
+      margin-bottom: 18px;
     }
 
     .qr-wrapper {
-        width: min(320px, 88vw);
+      background: white;
+      padding: 12px;
+      border-radius: 18px;
+      width: min(100%, 330px);
+      margin: auto;
     }
 
-    .panel {
+    .qr-wrapper img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    button.action {
+      border: 1px solid #32273d;
+      background: #17121d;
+      color: white;
+      border-radius: 14px;
+      padding: 13px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .18s;
+    }
+
+    button.action:active {
+      transform: scale(.96);
+    }
+
+    /* INFO */
+    .info {
+      margin-top: 15px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .info-box {
+      background: #0d0b10;
+      border: 1px solid #29212f;
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .info-label {
+      color: #8e8797;
+      font-size: 11px;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 14px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    /* INSTRUCTION */
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .instruction {
+      background: #0d0b10;
+      border: 1px solid #29212f;
+      border-radius: 18px;
+      padding: 15px;
+    }
+
+    .instruction div {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: #c4bdca;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .instruction div:last-child {
+      margin-bottom: 0;
+    }
+
+    .number {
+      min-width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #8b5cf6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: white;
+    }
+
+    /* TRANSACTIONS */
+    .transaction-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .transaction {
+      background: #0d0b10;
+      border: 1px solid #29212f;
+      border-radius: 17px;
+      padding: 14px;
+    }
+
+    .transaction-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .amount {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .paid {
+      background: rgba(34,197,94,.12);
+      color: #4ade80;
+      border: 1px solid rgba(74,222,128,.2);
+      border-radius: 8px;
+      padding: 5px 8px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .transaction-info {
+      margin-top: 9px;
+      color: #96909d;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .empty {
+      background: #0d0b10;
+      border: 1px dashed #302736;
+      border-radius: 17px;
+      padding: 25px 15px;
+      text-align: center;
+      color: #77707f;
+      font-size: 13px;
+    }
+
+    .loading {
+      text-align: center;
+      color: #8f8798;
+      font-size: 13px;
+      padding: 20px;
+    }
+
+    .error {
+      background: rgba(239,68,68,.08);
+      border: 1px solid rgba(239,68,68,.18);
+      border-radius: 15px;
+      padding: 14px;
+      color: #fca5a5;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .refresh {
+      margin-left: auto;
+      border: 0;
+      background: transparent;
+      color: #a78bfa;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .footer {
+      text-align: center;
+      color: #5f5965;
+      font-size: 10px;
+      padding: 25px 0 10px;
+    }
+
+    @media (max-width: 380px) {
+      .container {
+        padding: 13px;
+      }
+
+      .qr-card {
         padding: 15px;
+      }
     }
-
-}
-</style>
+  </style>
 </head>
 
 <body>
 
-<div class="background"></div>
-
-<main class="container">
+  <div class="container">
 
     <!-- HEADER -->
+    <div class="top">
+      <button class="back" onclick="history.back()">‹</button>
 
-    <header class="header">
-
-        <a href="index.html" class="back">
-            ‹
-        </a>
-
-        <div class="header-title">
-
-            <small>DETAIL QRIS</small>
-
-            <strong id="headerName">
-                QRIS GUSTAV
-            </strong>
-
-        </div>
-
-        <div class="header-space"></div>
-
-    </header>
-
-
-    <!-- HERO -->
-
-    <section class="hero">
-
-        <div class="label">
-            QRIS ALL PAYMENT
-        </div>
-
-        <h1 id="qrisName">
-            QRIS GUSTAV
-        </h1>
-
-        <p>
-            Scan QR untuk melakukan pembayaran
-        </p>
-
-    </section>
-
+      <div>
+        <div class="title">QRIS Payment</div>
+        <div class="subtitle">Lionel Gustav • Gustav Archive</div>
+      </div>
+    </div>
 
     <!-- QRIS -->
+    <div class="qr-card">
 
-    <section class="qr-wrapper">
+      <div class="merchant">
+        GUSTAV STORE
+      </div>
 
-        <!--
-        FILE QRIS HARUS BERNAMA:
+      <div class="merchant-sub">
+        Scan QRIS untuk melakukan pembayaran
+      </div>
 
-        qris-gustav.png
-
-        DAN HARUS BERADA SEJAJAR DENGAN
-        index.html DAN qris.html
-        -->
-
+      <div class="qr-wrapper">
         <img
-            src="qris-gustav.png"
-            alt="QRIS GUSTAV - GUSTAV STORE"
-            id="qrisImage"
+          src="qris-gustav.png"
+          alt="QRIS GUSTAV STORE"
         >
+      </div>
 
-    </section>
+      <div class="buttons">
+        <button class="action" onclick="downloadQR()">
+          Download QR
+        </button>
 
-
-    <!-- STATUS -->
-
-    <div class="status">
-
-        <span>
-            <i class="status-dot"></i>
-            QRIS READY
-        </span>
+        <button class="action" onclick="shareQR()">
+          Bagikan
+        </button>
+      </div>
 
     </div>
 
+    <!-- INFORMATION -->
+    <div class="info">
 
-    <!-- BUTTON -->
+      <div class="info-box">
+        <div class="info-label">MERCHANT</div>
+        <div class="info-value">GUSTAV STORE</div>
+      </div>
 
-    <div class="buttons">
+      <div class="info-box">
+        <div class="info-label">NMID</div>
+        <div class="info-value">ID1025398961082</div>
+      </div>
 
-        <button
-            class="primary"
-            onclick="downloadQR()"
-        >
-            DOWNLOAD QRIS
-        </button>
-
-        <button
-            onclick="shareQR()"
-        >
-            SHARE QRIS
-        </button>
+      <div class="info-box">
+        <div class="info-label">PAYMENT</div>
+        <div class="info-value">QRIS ALL PAYMENT</div>
+      </div>
 
     </div>
 
+    <!-- INSTRUCTION -->
+    <div class="section">
 
-    <!-- INFORMASI -->
+      <div class="section-title">
+        Cara Pembayaran
+      </div>
 
-    <section class="panel">
+      <div class="instruction">
 
-        <div class="panel-title">
-
-            <h2>
-                Informasi QRIS
-            </h2>
-
-            <span>
-                STATIC
-            </span>
-
+        <div>
+          <span class="number">1</span>
+          <span>Buka DANA atau aplikasi pembayaran yang mendukung QRIS.</span>
         </div>
 
-
-        <div class="info-row">
-
-            <label>
-                Nama
-            </label>
-
-            <b id="infoName">
-                QRIS GUSTAV
-            </b>
-
+        <div>
+          <span class="number">2</span>
+          <span>Scan QRIS yang tersedia di atas.</span>
         </div>
 
-
-        <div class="info-row">
-
-            <label>
-                Merchant
-            </label>
-
-            <b>
-                GUSTAV STORE
-            </b>
-
+        <div>
+          <span class="number">3</span>
+          <span>Masukkan nominal pembayaran yang kamu inginkan.</span>
         </div>
 
-
-        <div class="info-row">
-
-            <label>
-                Provider
-            </label>
-
-            <b>
-                DANA
-            </b>
-
+        <div>
+          <span class="number">4</span>
+          <span>Selesaikan pembayaran dan simpan bukti transaksi.</span>
         </div>
 
+      </div>
 
-        <div class="info-row">
+    </div>
 
-            <label>
-                Metode
-            </label>
+    <!-- TRANSACTIONS -->
+    <div class="section">
 
-            <b>
-                QRIS STATIC
-            </b>
-
+      <div style="display:flex;align-items:center;margin-bottom:10px;">
+        <div class="section-title" style="margin:0;">
+          Riwayat Transaksi
         </div>
 
+        <button
+          class="refresh"
+          onclick="loadTransactions()"
+        >
+          ↻ Refresh
+        </button>
+      </div>
 
-        <div class="info-row">
-
-            <label>
-                Status
-            </label>
-
-            <b>
-                ● READY
-            </b>
-
+      <div
+        id="transactionList"
+        class="transaction-list"
+      >
+        <div class="loading">
+          Memuat transaksi...
         </div>
+      </div>
 
+    </div>
 
-        <div class="info-row">
+    <div class="footer">
+      Lionel Gustav • Gustav Archive
+    </div>
 
-            <label>
-                Nominal
-            </label>
-
-            <b>
-                Bebas / Custom
-            </b>
-
-        </div>
-
-    </section>
-
-
-    <!-- CARA PEMBAYARAN -->
-
-    <section class="panel">
-
-        <div class="panel-title">
-
-            <h2>
-                Cara Pembayaran
-            </h2>
-
-            <span>
-                INFO
-            </span>
-
-        </div>
-
-        <p class="description">
-
-            Scan QR menggunakan DANA atau e-wallet
-            yang mendukung QRIS, kemudian masukkan
-            nominal pembayaran sendiri.
-
-            <br><br>
-
-            QRIS ini bersifat static sehingga nominal
-            pembayaran ditentukan oleh pembayar.
-
-        </p>
-
-    </section>
-
-
-    <!-- RIWAYAT -->
-
-    <section class="panel">
-
-        <div class="panel-title">
-
-            <h2>
-                Riwayat Transaksi
-            </h2>
-
-            <span>
-                0
-            </span>
-
-        </div>
-
-
-        <div class="empty">
-
-            <strong>
-                Belum ada transaksi
-            </strong>
-
-            <span>
-                Transaksi akan muncul di sini.
-            </span>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-<div id="toast" class="toast"></div>
+  </div>
 
 
 <script>
 
-/* =========================
-   NAMA QRIS
-========================= */
+  /*
+    BACKEND CASAKU
+    License Key TIDAK disimpan di sini.
+  */
 
-const names = {
-
-    gustav: "QRIS GUSTAV",
-
-    noir: "QRIS NOIR",
-
-    pido: "QRIS PIDO",
-
-    lea: "QRIS LEA",
-
-    abil: "QRIS ABIL",
-
-    gustav2: "QRIS GUSTAV"
-
-};
+  const BACKEND_URL =
+    "https://substitution-upright-zebra.abasthan.app";
 
 
-/* =========================
-   BACA ID DARI URL
-========================= */
+  /* =========================
+     FORMAT RUPIAH
+  ========================= */
 
-const params =
-    new URLSearchParams(window.location.search);
+  function rupiah(value) {
 
-const id =
-    params.get("id") || "gustav";
+    return Number(value || 0).toLocaleString(
+      "id-ID",
+      {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0
+      }
+    );
 
-const selectedName =
-    names[id] || "QRIS GUSTAV";
-
-
-/* =========================
-   TAMPILKAN NAMA
-========================= */
-
-document.title =
-    selectedName + " — Gustav Archive";
-
-document.getElementById("headerName")
-    .textContent = selectedName;
-
-document.getElementById("qrisName")
-    .textContent = selectedName;
-
-document.getElementById("infoName")
-    .textContent = selectedName;
+  }
 
 
-/* =========================
-   DOWNLOAD QR
-========================= */
+  /* =========================
+     FORMAT WAKTU
+  ========================= */
 
-function downloadQR() {
+  function formatDate(value) {
+
+    if (!value) return "-";
+
+    const date = new Date(value);
+
+    if (isNaN(date.getTime())) {
+      return value;
+    }
+
+    return date.toLocaleString(
+      "id-ID",
+      {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }
+    );
+
+  }
+
+
+  /* =========================
+     LOAD TRANSACTIONS
+  ========================= */
+
+  async function loadTransactions() {
+
+    const list =
+      document.getElementById("transactionList");
+
+    list.innerHTML = `
+      <div class="loading">
+        Memuat transaksi...
+      </div>
+    `;
+
+    try {
+
+      const response = await fetch(
+        BACKEND_URL + "/api/transaksi"
+      );
+
+      const result = await response.json();
+
+      console.log("Casaku:", result);
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          result.message ||
+          "Gagal mengambil transaksi"
+        );
+
+      }
+
+
+      /*
+        Response Casaku:
+        {
+          status: 200,
+          data: {
+            items: []
+          }
+        }
+      */
+
+      const items =
+        result?.data?.items || [];
+
+
+      if (items.length === 0) {
+
+        list.innerHTML = `
+          <div class="empty">
+            Belum ada transaksi berhasil.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      list.innerHTML =
+        items.map(tx => {
+
+          const amount =
+            tx.amount ??
+            tx.totalAmount ??
+            tx.originalAmount ??
+            0;
+
+          const status =
+            tx.status ||
+            "paid";
+
+          const appName =
+            tx.appName ||
+            tx.packageName ||
+            "QRIS";
+
+          const time =
+            tx.paidAt ||
+            tx.createdAt ||
+            tx.expiredAt ||
+            "";
+
+          const transactionId =
+            tx.transactionId ||
+            "-";
+
+
+          return `
+
+            <div class="transaction">
+
+              <div class="transaction-top">
+
+                <div class="amount">
+                  ${rupiah(amount)}
+                </div>
+
+                <div class="paid">
+                  ${String(status).toUpperCase()}
+                </div>
+
+              </div>
+
+              <div class="transaction-info">
+
+                <div>
+                  📱 ${appName}
+                </div>
+
+                <div>
+                  🕐 ${formatDate(time)}
+                </div>
+
+                <div>
+                  ID: ${transactionId}
+                </div>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }).join("");
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      list.innerHTML = `
+
+        <div class="error">
+          Gagal mengambil riwayat transaksi.<br>
+          Silakan coba refresh kembali.
+        </div>
+
+      `;
+
+    }
+
+  }
+
+
+  /* =========================
+     DOWNLOAD QR
+  ========================= */
+
+  function downloadQR() {
 
     const link =
-        document.createElement("a");
+      document.createElement("a");
 
     link.href =
-        "qris-gustav.png";
+      "qris-gustav.png";
 
     link.download =
-        "qris-gustav.png";
+      "QRIS-GUSTAV-STORE.png";
 
     document.body.appendChild(link);
 
@@ -742,92 +678,113 @@ function downloadQR() {
 
     link.remove();
 
-    showToast("QRIS siap diunduh");
-}
+  }
 
 
-/* =========================
-   SHARE
-========================= */
+  /* =========================
+     SHARE QR
+  ========================= */
 
-async function shareQR() {
+  async function shareQR() {
 
-    try {
+    const imageUrl =
+      new URL(
+        "qris-gustav.png",
+        window.location.href
+      ).href;
 
-        if (navigator.share) {
 
-            await navigator.share({
+    if (
+      navigator.share &&
+      navigator.canShare
+    ) {
 
-                title: selectedName,
+      try {
 
-                text:
-                    "QRIS " +
-                    selectedName +
-                    " — GUSTAV STORE",
+        const response =
+          await fetch(imageUrl);
 
-                url: window.location.href
+        const blob =
+          await response.blob();
 
-            });
+        const file =
+          new File(
+            [blob],
+            "QRIS-GUSTAV-STORE.png",
+            {
+              type: blob.type
+            }
+          );
 
-        } else {
 
-            await navigator.clipboard.writeText(
-                window.location.href
-            );
+        if (
+          navigator.canShare({
+            files: [file]
+          })
+        ) {
 
-            showToast("Link QRIS disalin");
+          await navigator.share({
+            title: "QRIS GUSTAV STORE",
+            text: "QRIS GUSTAV STORE",
+            files: [file]
+          });
+
+          return;
 
         }
 
-    } catch (error) {
+      } catch (error) {
 
-        // User membatalkan share.
+        console.log(error);
+
+      }
 
     }
 
-}
+
+    if (navigator.share) {
+
+      try {
+
+        await navigator.share({
+          title: "QRIS GUSTAV STORE",
+          text: "QRIS GUSTAV STORE",
+          url: window.location.href
+        });
+
+        return;
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    }
 
 
-/* =========================
-   TOAST
-========================= */
-
-function showToast(message) {
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.textContent =
-        message;
-
-    toast.classList.add("show");
-
-    clearTimeout(window.toastTimer);
-
-    window.toastTimer =
-        setTimeout(() => {
-
-            toast.classList.remove("show");
-
-        }, 1800);
-
-}
-
-
-/* =========================
-   CEK QR IMAGE
-========================= */
-
-const qrImage =
-    document.getElementById("qrisImage");
-
-qrImage.onerror = function() {
-
-    showToast(
-        "QR tidak ditemukan. Cek nama file qris-gustav.png"
+    alert(
+      "Fitur bagikan tidak tersedia di browser ini."
     );
 
-};
+  }
+
+
+  /* =========================
+     START
+  ========================= */
+
+  loadTransactions();
+
+
+  /*
+    Refresh otomatis setiap 10 detik
+  */
+
+  setInterval(
+    loadTransactions,
+    10000
+  );
 
 </script>
 
