@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const crypto = require("crypto");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,158 +7,128 @@ const PORT = process.env.PORT || 3000;
 const CLIENTS = new Set();
 
 app.use(cors());
+app.use(express.json());
 
-/*
-========================================
-WEBHOOK CASAKU
-========================================
-*/
+let lastTransactions = [];
 
-app.post(
-  "/webhook/casaku",
-  express.raw({ type: "application/json" }),
-  (req, res) => {
-    try {
-      const secret = process.env.WEBHOOK_SECRET;
-      const signature = req.headers["x-casaku-signature"];
+/* =========================
+   AMBIL TRANSAKSI DARI CASAKU
+========================= */
 
-      if (!secret) {
-        console.error("WEBHOOK_SECRET belum tersedia");
-        return res.status(500).json({
-          success: false,
-          message: "WEBHOOK_SECRET belum dikonfigurasi"
-        });
-      }
-
-      if (!signature) {
-        return res.status(401).json({
-          success: false,
-          message: "Signature tidak ditemukan"
-        });
-      }
-
-      const expected = crypto
-        .createHmac("sha256", secret)
-        .update(req.body)
-        .digest("hex");
-
-      const receivedBuffer = Buffer.from(signature, "hex");
-      const expectedBuffer = Buffer.from(expected, "hex");
-
-      if (
-        receivedBuffer.length !== expectedBuffer.length ||
-        !crypto.timingSafeEqual(
-          receivedBuffer,
-          expectedBuffer
-        )
-      ) {
-        return res.status(401).json({
-          success: false,
-          message: "Signature tidak valid"
-        });
-      }
-
-      const payload = JSON.parse(
-        req.body.toString("utf8")
-      );
-
-      console.log("Webhook Casaku:", payload);
-
-      if (
-        String(payload.status).toLowerCase() === "paid"
-      ) {
-        const message =
-          `data: ${JSON.stringify(payload)}\n\n`;
-
-        for (const client of CLIENTS) {
-          try {
-            client.write(message);
-          } catch (error) {
-            CLIENTS.delete(client);
-          }
-        }
-
-        console.log(
-          "Transaksi PAID dikirim realtime."
-        );
-      }
-
-      return res.status(200).json({
-        success: true
-      });
-
-    } catch (error) {
-      console.error("Webhook error:", error);
-
-      return res.status(500).json({
-        success: false,
-        message: "Webhook gagal diproses"
-      });
-    }
-  }
-);
-
-
-/*
-========================================
-TEST BACKEND
-========================================
-*/
-
-app.get("/", (req, res) => {
-  res.status(200).send(
-    "Backend Casaku Realtime aktif ✅"
-  );
-});
-
-
-/*
-========================================
-RIWAYAT TRANSAKSI CASAKU
-========================================
-*/
-
-app.get("/api/transaksi", async (req, res) => {
+async function getTransactions() {
   try {
     const response = await fetch(
       "https://api.casaku.id/api/generate/list?status=paid&page=1&limit=20&sort=newest",
       {
         headers: {
-          "x-license-key":
-            process.env.CASAKU_LICENSE_KEY
+          "x-license-key": process.env.CASAKU_LICENSE_KEY
         }
       }
     );
 
     const data = await response.json();
 
-    return res
-      .status(response.status)
-      .json(data);
+    if (!response.ok) {
+      console.error("Casaku Error:", data);
+      return null;
+    }
 
+    return data?.data?.items || [];
   } catch (error) {
-    console.error(
-      "Casaku API error:",
-      error
+    console.error("Gagal mengambil data Casaku:", error.message);
+    return null;
+  }
+}
+
+/* =========================
+   CEK PERUBAHAN TRANSAKSI
+========================= */
+
+async function checkTransactions() {
+  const transactions = await getTransactions();
+
+  if (!transactions) return;
+
+  const oldIds = new Set(
+    lastTransactions.map(tx => tx.transactionId)
+  );
+
+  const newTransactions = transactions.filter(
+    tx => !oldIds.has(tx.transactionId)
+  );
+
+  if (newTransactions.length > 0) {
+    console.log(
+      `Transaksi baru ditemukan: ${newTransactions.length}`
     );
 
+    const message =
+      `data: ${JSON.stringify({
+        type: "new_transactions",
+        transactions: newTransactions
+      })}\n\n`;
+
+    for (const client of CLIENTS) {
+      try {
+        client.write(message);
+      } catch (error) {
+        CLIENTS.delete(client);
+      }
+    }
+  }
+
+  lastTransactions = transactions;
+}
+
+/* =========================
+   HALAMAN UTAMA
+========================= */
+
+app.get("/", (req, res) => {
+  res.status(200).send(
+    "Backend Casaku Realtime Polling aktif ✅"
+  );
+});
+
+/* =========================
+   API TRANSAKSI
+========================= */
+
+app.get("/api/transaksi", async (req, res) => {
+  try {
+    const transactions = await getTransactions();
+
+    if (transactions === null) {
+      return res.status(500).json({
+        error: true,
+        message: "Gagal terhubung ke Casaku"
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      data: {
+        page: 1,
+        limit: 20,
+        total: transactions.length,
+        pages: 1,
+        items: transactions
+      }
+    });
+
+  } catch (error) {
     return res.status(500).json({
       error: true,
-      message: "Gagal terhubung ke Casaku",
-      detail: error.message
+      message: error.message
     });
   }
 });
 
-
-/*
-========================================
-REALTIME SSE
-========================================
-*/
+/* =========================
+   REALTIME SSE
+========================= */
 
 app.get("/api/events", (req, res) => {
-
   res.setHeader(
     "Content-Type",
     "text/event-stream"
@@ -189,13 +158,13 @@ app.get("/api/events", (req, res) => {
   CLIENTS.add(res);
 
   console.log(
-    `Realtime client terhubung. Total: ${CLIENTS.size}`
+    `Client realtime terhubung. Total: ${CLIENTS.size}`
   );
 
   const heartbeat = setInterval(() => {
     try {
       res.write(": heartbeat\n\n");
-    } catch (error) {
+    } catch {
       clearInterval(heartbeat);
       CLIENTS.delete(res);
     }
@@ -206,20 +175,28 @@ app.get("/api/events", (req, res) => {
     CLIENTS.delete(res);
 
     console.log(
-      `Realtime client terputus. Total: ${CLIENTS.size}`
+      `Client realtime terputus. Total: ${CLIENTS.size}`
     );
   });
 });
 
+/* =========================
+   POLLING CASAKU
+========================= */
 
-/*
-========================================
-START SERVER
-========================================
-*/
+setInterval(() => {
+  checkTransactions();
+}, 5000);
+
+/* =========================
+   START SERVER
+========================= */
 
 app.listen(PORT, () => {
   console.log(
-    `Backend Casaku Realtime berjalan di port ${PORT}`
+    `Backend Casaku Polling berjalan di port ${PORT}`
   );
+
+  // Ambil data pertama kali
+  checkTransactions();
 });
