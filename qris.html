@@ -2,1502 +2,832 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0,
-      maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050507">
 
 <title>QRIS GUSTAV</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #050507;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    min-height:100vh;
-    background:#050507;
-    color:#f5f5f7;
-    font-family:Arial,Helvetica,sans-serif;
-    overflow-x:hidden;
-    opacity:0;
-    animation:pageIn .55s ease forwards;
-}
-
-body.page-exit{
-    animation:pageOut .35s ease forwards;
-}
-
-@keyframes pageIn{
-    to{
-        opacity:1;
-    }
-}
-
-@keyframes pageOut{
-    to{
-        opacity:0;
-        transform:translateY(-12px);
-    }
+body {
+    overflow-x: hidden;
 }
 
 /* BACKGROUND */
 
-#network{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:-3;
-    background:#050507;
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(130, 80, 255, 0.16),
+            transparent 35%
+        ),
+        #050507;
 }
 
-.bg-glow{
-    position:fixed;
-    width:500px;
-    height:500px;
-    border-radius:50%;
-    background:rgba(125,70,255,.10);
-    filter:blur(100px);
-    top:15%;
-    left:50%;
-    transform:translateX(-50%);
-    z-index:-2;
-    pointer-events:none;
-}
-
-.bg-glow.two{
-    width:300px;
-    height:300px;
-    top:auto;
-    bottom:-100px;
-    left:10%;
-    background:rgba(170,90,255,.07);
+.container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 650px;
+    margin: auto;
+    padding: 15px;
 }
 
 /* HEADER */
 
-.header{
-    width:100%;
-    padding:18px 16px 0;
-    position:relative;
-    z-index:10;
+.header {
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.header-box{
-    width:100%;
-    max-width:900px;
-    margin:auto;
+.back {
+    width: 42px;
+    height: 42px;
 
-    display:flex;
-    align-items:center;
-    gap:12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    padding:12px 14px;
+    text-decoration: none;
+    color: white;
 
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:20px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.04);
 
-    background:rgba(13,13,18,.76);
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
+    border-radius: 13px;
 
-    box-shadow:
-        0 10px 40px rgba(0,0,0,.35),
-        inset 0 1px rgba(255,255,255,.04);
+    font-size: 25px;
+
+    transition: .2s;
 }
 
-.back{
-    width:44px;
-    height:44px;
-
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:14px;
-
-    background:#111116;
-    color:#fff;
-
-    font-size:22px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    cursor:pointer;
-
-    transition:
-        transform .2s ease,
-        background .2s ease;
+.back:active {
+    transform: scale(.93);
 }
 
-.back:active{
-    transform:scale(.92);
+.header-title {
+    text-align: center;
 }
 
-.header-title{
-    flex:1;
-    min-width:0;
+.header-title small {
+    display: block;
+    color: #777;
+    font-size: 8px;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
 }
 
-.header-title strong{
-    display:block;
-    font-size:16px;
-    letter-spacing:.3px;
+.header-title strong {
+    font-size: 13px;
 }
 
-.header-title span{
-    display:block;
-    margin-top:3px;
-    color:#85858f;
-    font-size:12px;
-}
-
-/* MAIN */
-
-main{
-    width:100%;
-    max-width:900px;
-    margin:auto;
-    padding:28px 16px 60px;
+.header-space {
+    width: 42px;
 }
 
 /* HERO */
 
-.hero{
-    text-align:center;
-    padding:15px 0 25px;
+.hero {
+    text-align: center;
+    padding: 25px 10px 15px;
 }
 
-.badge{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-
-    padding:8px 13px;
-
-    border:1px solid rgba(180,130,255,.20);
-    border-radius:999px;
-
-    background:rgba(115,65,255,.08);
-
-    color:#c9b4ff;
-
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
+.hero .label {
+    color: #a37cff;
+    font-size: 9px;
+    letter-spacing: 3px;
 }
 
-.badge-dot{
-    width:7px;
-    height:7px;
-    border-radius:50%;
-    background:#9b70ff;
-    box-shadow:0 0 12px #9b70ff;
+.hero h1 {
+    margin: 9px 0 5px;
+    font-size: 27px;
 }
 
-.hero h1{
-    margin-top:18px;
-
-    font-size:clamp(32px,8vw,58px);
-    line-height:1;
-
-    letter-spacing:-2px;
-}
-
-.hero p{
-    max-width:550px;
-    margin:13px auto 0;
-
-    color:#8e8e98;
-    font-size:14px;
-    line-height:1.7;
-}
-
-/* QR CARD */
-
-.qr-card{
-    width:100%;
-    max-width:520px;
-    margin:10px auto 0;
-
-    padding:18px;
-
-    border:1px solid rgba(255,255,255,.11);
-    border-radius:28px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.055),
-            rgba(255,255,255,.018)
-        );
-
-    box-shadow:
-        0 30px 80px rgba(0,0,0,.42),
-        inset 0 1px rgba(255,255,255,.04);
-
-    position:relative;
-    overflow:hidden;
-}
-
-.qr-card::before{
-    content:"";
-    position:absolute;
-    width:240px;
-    height:240px;
-    border-radius:50%;
-
-    background:rgba(130,75,255,.10);
-    filter:blur(70px);
-
-    top:-100px;
-    left:50%;
-    transform:translateX(-50%);
-}
-
-.store-name{
-    position:relative;
-    text-align:center;
-
-    font-size:21px;
-    font-weight:800;
-
-    letter-spacing:.5px;
-}
-
-.store-sub{
-    position:relative;
-    margin-top:5px;
-
-    text-align:center;
-
-    color:#777780;
-    font-size:12px;
+.hero p {
+    margin: 0;
+    color: #777;
+    font-size: 11px;
 }
 
 /* QR */
 
-.qr-wrapper{
-    position:relative;
+.qr-wrapper {
+    width: min(340px, 88vw);
+    margin: 15px auto 18px;
 
-    width:min(78vw,360px);
-    aspect-ratio:1;
+    padding: 15px;
 
-    margin:25px auto 18px;
+    background: white;
 
-    padding:13px;
-
-    background:#fff;
-    border-radius:18px;
+    border-radius: 22px;
 
     box-shadow:
-        0 0 0 1px rgba(255,255,255,.2),
-        0 20px 55px rgba(0,0,0,.45);
-}
-
-.qr-wrapper img{
-    display:block;
-
-    width:100%;
-    height:100%;
-
-    object-fit:contain;
-
-    border-radius:7px;
+        0 20px 70px rgba(0,0,0,.5),
+        0 0 50px rgba(130,80,255,.12);
 }
 
 /*
-    GANTI src QR DI BAWAH DENGAN FILE QRIS ASLI KAMU.
+   PENTING:
+   QR ada di ROOT repository.
 
-    Contoh:
-    qris-gustav.jpg
-
-    Letakkan file tersebut satu folder
-    dengan qris.html.
+   Struktur:
+   index.html
+   qris.html
+   qris-gustav.png
 */
 
-.qr-label{
-    text-align:center;
+.qr-wrapper img {
+    display: block;
 
-    color:#74747e;
+    width: 100%;
+    height: auto;
 
-    font-size:11px;
-    line-height:1.5;
+    border-radius: 10px;
 }
 
 /* STATUS */
 
-.status{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:8px;
-
-    margin-top:17px;
-
-    color:#c7b8ff;
-
-    font-size:12px;
-    font-weight:700;
+.status {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
 }
 
-.status-dot{
-    width:8px;
-    height:8px;
+.status span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
 
-    border-radius:50%;
+    padding: 7px 12px;
 
-    background:#9b70ff;
+    border: 1px solid rgba(160,120,255,.3);
 
-    box-shadow:
-        0 0 12px rgba(155,112,255,.9);
+    border-radius: 30px;
 
-    animation:pulse 1.7s infinite;
+    background: rgba(140,90,255,.08);
+
+    color: #c8b7ed;
+
+    font-size: 10px;
 }
 
-@keyframes pulse{
-    50%{
-        opacity:.35;
-        transform:scale(.7);
-    }
+.status-dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #a982ff;
+
+    box-shadow: 0 0 10px #a982ff;
 }
 
-/* BUTTONS */
+/* BUTTON */
 
-.actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
 
-    gap:10px;
+    gap: 9px;
 
-    margin-top:20px;
+    max-width: 430px;
+
+    margin: auto auto 22px;
 }
 
-.btn{
-    min-height:50px;
+button {
+    height: 45px;
 
-    border-radius:15px;
+    border-radius: 13px;
 
-    border:1px solid rgba(255,255,255,.11);
+    border: 1px solid rgba(255,255,255,.12);
 
-    background:#111116;
+    background: rgba(255,255,255,.045);
 
-    color:#f5f5f7;
+    color: white;
 
-    font-size:13px;
-    font-weight:700;
+    font-size: 11px;
+    font-weight: bold;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        border-color .2s ease;
+    transition: .2s;
 }
 
-.btn:active{
-    transform:scale(.96);
+button.primary {
+    background: white;
+    color: #050507;
 }
 
-.btn.primary{
-    background:#f5f5f7;
-    color:#09090b;
+button:active {
+    transform: scale(.96);
 }
 
-.btn:hover{
-    border-color:rgba(170,120,255,.4);
+/* PANEL */
+
+.panel {
+    margin-top: 12px;
+
+    padding: 17px;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    background: rgba(255,255,255,.025);
 }
 
-/* INFO */
+.panel-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.info{
-    width:100%;
-    max-width:720px;
-
-    margin:20px auto 0;
-
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-
-    gap:10px;
+    margin-bottom: 12px;
 }
 
-.info-box{
-    padding:17px;
+.panel-title h2 {
+    margin: 0;
 
-    border-radius:18px;
-
-    border:1px solid rgba(255,255,255,.08);
-
-    background:rgba(15,15,20,.72);
+    font-size: 13px;
 }
 
-.info-label{
-    color:#70707a;
+.panel-title span {
+    color: #6c6c73;
 
-    font-size:10px;
-    font-weight:800;
-
-    letter-spacing:1px;
-    text-transform:uppercase;
+    font-size: 9px;
 }
 
-.info-value{
-    margin-top:7px;
+.info-row {
+    display: flex;
+    justify-content: space-between;
 
-    font-size:14px;
-    font-weight:700;
+    padding: 11px 0;
+
+    border-bottom: 1px solid rgba(255,255,255,.05);
+
+    font-size: 11px;
 }
 
-/* HOW TO */
-
-.section{
-    margin-top:35px;
+.info-row:last-child {
+    border-bottom: none;
 }
 
-.section-title{
-    margin-bottom:13px;
-
-    font-size:17px;
-    font-weight:800;
+.info-row label {
+    color: #707078;
 }
 
-.steps{
-    display:grid;
-    gap:9px;
+.info-row b {
+    color: #ddd;
+    font-weight: normal;
+    text-align: right;
 }
 
-.step{
-    display:flex;
-    align-items:flex-start;
-    gap:13px;
+/* PAYMENT INFO */
 
-    padding:15px;
+.description {
+    color: #85858d;
 
-    border:1px solid rgba(255,255,255,.07);
-    border-radius:17px;
+    font-size: 10px;
 
-    background:rgba(14,14,19,.65);
-}
+    line-height: 1.8;
 
-.step-number{
-    flex:none;
-
-    width:31px;
-    height:31px;
-
-    border-radius:10px;
-
-    background:rgba(130,80,255,.13);
-
-    border:1px solid rgba(150,100,255,.18);
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#c9b4ff;
-
-    font-size:12px;
-    font-weight:800;
-}
-
-.step strong{
-    display:block;
-
-    font-size:13px;
-}
-
-.step p{
-    margin-top:4px;
-
-    color:#777781;
-
-    font-size:12px;
-    line-height:1.55;
+    margin: 0;
 }
 
 /* TRANSACTIONS */
 
-.transactions{
-    margin-top:35px;
+.empty {
+    text-align: center;
+
+    padding: 25px 10px;
+
+    color: #666;
 }
 
-.transaction-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+.empty strong {
+    display: block;
 
-    margin-bottom:13px;
+    color: #aaa;
+
+    font-size: 12px;
+
+    margin-bottom: 5px;
 }
 
-.transaction-count{
-    color:#777781;
-    font-size:12px;
+.empty span {
+    font-size: 10px;
 }
 
-.empty{
-    padding:28px 18px;
+/* TOAST */
 
-    text-align:center;
+.toast {
+    position: fixed;
 
-    border:1px dashed rgba(255,255,255,.11);
-    border-radius:20px;
+    z-index: 20;
 
-    background:rgba(15,15,20,.5);
+    left: 50%;
+    bottom: 25px;
+
+    transform: translate(-50%, 20px);
+
+    opacity: 0;
+
+    padding: 10px 15px;
+
+    background: white;
+    color: #050507;
+
+    border-radius: 12px;
+
+    font-size: 10px;
+
+    pointer-events: none;
+
+    transition: .25s;
 }
 
-.empty-icon{
-    width:45px;
-    height:45px;
+.toast.show {
+    opacity: 1;
 
-    margin:0 auto 12px;
-
-    border-radius:14px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    background:rgba(130,80,255,.08);
-
-    color:#bba1ff;
-
-    font-size:21px;
-}
-
-.empty strong{
-    display:block;
-    font-size:14px;
-}
-
-.empty p{
-    margin-top:5px;
-
-    color:#6e6e78;
-
-    font-size:12px;
-    line-height:1.5;
-}
-
-/* FOOTER */
-
-footer{
-    padding:20px 0 0;
-
-    text-align:center;
-
-    color:#55555e;
-
-    font-size:10px;
-    line-height:1.6;
-}
-
-/* RIPPLE */
-
-.ripple{
-    position:absolute;
-
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.18);
-
-    transform:scale(0);
-
-    animation:ripple .55s ease-out;
-
-    pointer-events:none;
-}
-
-@keyframes ripple{
-    to{
-        transform:scale(25);
-        opacity:0;
-    }
+    transform: translate(-50%, 0);
 }
 
 /* MOBILE */
 
-@media(max-width:600px){
+@media (max-width: 480px) {
 
-    main{
-        padding-left:13px;
-        padding-right:13px;
+    .container {
+        padding: 12px;
     }
 
-    .header{
-        padding-left:10px;
-        padding-right:10px;
+    .hero {
+        padding-top: 20px;
     }
 
-    .header-box{
-        border-radius:18px;
+    .hero h1 {
+        font-size: 24px;
     }
 
-    .hero h1{
-        font-size:38px;
+    .qr-wrapper {
+        width: min(320px, 88vw);
     }
 
-    .qr-card{
-        border-radius:24px;
-        padding:15px;
+    .panel {
+        padding: 15px;
     }
 
-    .qr-wrapper{
-        width:min(82vw,350px);
-    }
-
-    .info{
-        grid-template-columns:1fr 1fr;
-    }
-}
-
-@media(max-width:380px){
-
-    .actions{
-        grid-template-columns:1fr;
-    }
-
-    .info{
-        grid-template-columns:1fr;
-    }
-}
-
-@media(prefers-reduced-motion:reduce){
-
-    *,
-    *::before,
-    *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        scroll-behavior:auto !important;
-    }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="network"></canvas>
+<div class="background"></div>
 
-<div class="bg-glow"></div>
-<div class="bg-glow two"></div>
+<main class="container">
 
-<header class="header">
+    <!-- HEADER -->
 
-    <div class="header-box">
+    <header class="header">
 
-        <button
-            class="back"
-            id="backBtn"
-            aria-label="Kembali">
-            ←
-        </button>
+        <a href="index.html" class="back">
+            ‹
+        </a>
 
         <div class="header-title">
+
+            <small>DETAIL QRIS</small>
+
             <strong id="headerName">
                 QRIS GUSTAV
             </strong>
 
-            <span>
-                Qris All Payment
-            </span>
         </div>
 
-    </div>
+        <div class="header-space"></div>
 
-</header>
+    </header>
 
-
-<main>
 
     <!-- HERO -->
 
     <section class="hero">
 
-        <div class="badge">
-            <span class="badge-dot"></span>
-            QRIS AKTIF
+        <div class="label">
+            QRIS ALL PAYMENT
         </div>
 
-        <h1 id="pageTitle">
+        <h1 id="qrisName">
             QRIS GUSTAV
         </h1>
 
         <p>
-            Scan QRIS ini menggunakan DANA,
-            GoPay, OVO, ShopeePay, mobile banking,
-            atau aplikasi pembayaran lain yang mendukung QRIS.
+            Scan QR untuk melakukan pembayaran
         </p>
 
     </section>
 
 
-    <!-- QR -->
+    <!-- QRIS -->
 
-    <section class="qr-card">
+    <section class="qr-wrapper">
 
-        <div class="store-name" id="storeName">
-            GUSTAV STORE
-        </div>
+        <!--
+        FILE QRIS HARUS BERNAMA:
 
-        <div class="store-sub">
-            QRIS • ALL PAYMENT
-        </div>
+        qris-gustav.png
 
+        DAN HARUS BERADA SEJAJAR DENGAN
+        index.html DAN qris.html
+        -->
 
-        <div class="qr-wrapper">
+        <img
+            src="qris-gustav.png"
+            alt="QRIS GUSTAV - GUSTAV STORE"
+            id="qrisImage"
+        >
 
-            <!--
-                QRIS ASLI GUSTAV
-
-                Simpan gambar QRIS kamu sebagai:
-                qris-gustav.jpg
-
-                lalu pastikan satu folder dengan
-                qris.html.
-            -->
-
-            <img
-                id="qrImage"
-                src="qris-gustav.jpg"
-                alt="QRIS GUSTAV STORE"
-                draggable="false">
-
-        </div>
+    </section>
 
 
-        <div class="qr-label">
-            Satu QRIS untuk semua pembayaran
-        </div>
+    <!-- STATUS -->
 
+    <div class="status">
 
-        <div class="status">
-
-            <span class="status-dot"></span>
-
+        <span>
+            <i class="status-dot"></i>
             QRIS READY
+        </span>
+
+    </div>
+
+
+    <!-- BUTTON -->
+
+    <div class="buttons">
+
+        <button
+            class="primary"
+            onclick="downloadQR()"
+        >
+            DOWNLOAD QRIS
+        </button>
+
+        <button
+            onclick="shareQR()"
+        >
+            SHARE QRIS
+        </button>
+
+    </div>
+
+
+    <!-- INFORMASI -->
+
+    <section class="panel">
+
+        <div class="panel-title">
+
+            <h2>
+                Informasi QRIS
+            </h2>
+
+            <span>
+                STATIC
+            </span>
 
         </div>
 
 
-        <div class="actions">
+        <div class="info-row">
 
-            <button
-                class="btn primary"
-                id="downloadBtn">
+            <label>
+                Nama
+            </label>
 
-                ↓ &nbsp; SIMPAN QRIS
-
-            </button>
-
-            <button
-                class="btn"
-                id="shareBtn">
-
-                ↗ &nbsp; BAGIKAN
-
-            </button>
+            <b id="infoName">
+                QRIS GUSTAV
+            </b>
 
         </div>
 
-    </section>
 
+        <div class="info-row">
 
-    <!-- INFO -->
-
-    <section class="info">
-
-        <div class="info-box">
-
-            <div class="info-label">
+            <label>
                 Merchant
-            </div>
+            </label>
 
-            <div class="info-value">
+            <b>
                 GUSTAV STORE
-            </div>
+            </b>
 
         </div>
 
 
-        <div class="info-box">
+        <div class="info-row">
 
-            <div class="info-label">
+            <label>
                 Provider
-            </div>
+            </label>
 
-            <div class="info-value">
+            <b>
                 DANA
-            </div>
+            </b>
 
         </div>
 
 
-        <div class="info-box">
+        <div class="info-row">
 
-            <div class="info-label">
+            <label>
                 Metode
-            </div>
+            </label>
 
-            <div class="info-value">
-                QRIS
-            </div>
+            <b>
+                QRIS STATIC
+            </b>
 
         </div>
 
 
-        <div class="info-box">
+        <div class="info-row">
 
-            <div class="info-label">
+            <label>
+                Status
+            </label>
+
+            <b>
+                ● READY
+            </b>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <label>
                 Nominal
-            </div>
+            </label>
 
-            <div class="info-value">
-                Bebas
-            </div>
+            <b>
+                Bebas / Custom
+            </b>
 
         </div>
 
     </section>
 
 
-    <!-- CARA BAYAR -->
+    <!-- CARA PEMBAYARAN -->
 
-    <section class="section">
+    <section class="panel">
 
-        <div class="section-title">
-            Cara Pembayaran
-        </div>
+        <div class="panel-title">
 
+            <h2>
+                Cara Pembayaran
+            </h2>
 
-        <div class="steps">
-
-            <div class="step">
-
-                <div class="step-number">
-                    01
-                </div>
-
-                <div>
-
-                    <strong>
-                        Simpan atau screenshot QRIS
-                    </strong>
-
-                    <p>
-                        Kamu bisa menyimpan gambar QRIS
-                        kemudian membukanya dari galeri
-                        saat melakukan pembayaran.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    02
-                </div>
-
-                <div>
-
-                    <strong>
-                        Buka DANA / e-wallet / m-banking
-                    </strong>
-
-                    <p>
-                        Pilih fitur Scan atau QRIS
-                        pada aplikasi pembayaran kamu.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    03
-                </div>
-
-                <div>
-
-                    <strong>
-                        Scan QRIS GUSTAV STORE
-                    </strong>
-
-                    <p>
-                        Arahkan scanner ke QRIS
-                        yang ditampilkan di halaman ini.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    04
-                </div>
-
-                <div>
-
-                    <strong>
-                        Masukkan nominal sendiri
-                    </strong>
-
-                    <p>
-                        Masukkan nominal pembayaran
-                        sesuai jumlah yang ingin kamu transfer.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="step">
-
-                <div class="step-number">
-                    05
-                </div>
-
-                <div>
-
-                    <strong>
-                        Selesaikan pembayaran
-                    </strong>
-
-                    <p>
-                        Setelah pembayaran berhasil,
-                        sistem monitoring akan mendeteksi
-                        transaksi yang masuk.
-                    </p>
-
-                </div>
-
-            </div>
+            <span>
+                INFO
+            </span>
 
         </div>
+
+        <p class="description">
+
+            Scan QR menggunakan DANA atau e-wallet
+            yang mendukung QRIS, kemudian masukkan
+            nominal pembayaran sendiri.
+
+            <br><br>
+
+            QRIS ini bersifat static sehingga nominal
+            pembayaran ditentukan oleh pembayar.
+
+        </p>
 
     </section>
 
 
     <!-- RIWAYAT -->
 
-    <section class="transactions">
+    <section class="panel">
 
-        <div class="transaction-header">
+        <div class="panel-title">
 
-            <div class="section-title">
+            <h2>
                 Riwayat Transaksi
-            </div>
+            </h2>
 
-            <div
-                class="transaction-count"
-                id="transactionCount">
-
-                0 transaksi
-
-            </div>
+            <span>
+                0
+            </span>
 
         </div>
 
 
-        <div class="empty" id="emptyTransaction">
-
-            <div class="empty-icon">
-                ₿
-            </div>
+        <div class="empty">
 
             <strong>
                 Belum ada transaksi
             </strong>
 
-            <p>
-                Transaksi yang sudah terdeteksi
-                akan muncul di sini.
-            </p>
+            <span>
+                Transaksi akan muncul di sini.
+            </span>
 
         </div>
 
     </section>
 
-
-    <footer>
-
-        GUSTAV STORE • QRIS ALL PAYMENT<br>
-
-        Sistem monitoring pembayaran
-
-    </footer>
-
 </main>
+
+
+<div id="toast" class="toast"></div>
 
 
 <script>
 
-/* =====================================================
-   DATA QRIS
-===================================================== */
+/* =========================
+   NAMA QRIS
+========================= */
 
-const qrisData = {
+const names = {
 
-    gustav:{
-        name:"QRIS GUSTAV",
-        store:"GUSTAV STORE",
-        provider:"DANA",
-        image:"qris-gustav.jpg"
-    },
+    gustav: "QRIS GUSTAV",
 
-    noir:{
-        name:"QRIS NOIR",
-        store:"NOIR STORE",
-        provider:"DANA",
-        image:"qris-noir.jpg"
-    },
+    noir: "QRIS NOIR",
 
-    pido:{
-        name:"QRIS PIDO",
-        store:"PIDO STORE",
-        provider:"DANA",
-        image:"qris-pido.jpg"
-    },
+    pido: "QRIS PIDO",
 
-    lea:{
-        name:"QRIS LEA",
-        store:"LEA STORE",
-        provider:"DANA",
-        image:"qris-lea.jpg"
-    },
+    lea: "QRIS LEA",
 
-    abil:{
-        name:"QRIS ABIL",
-        store:"ABIL STORE",
-        provider:"DANA",
-        image:"qris-abil.jpg"
-    }
+    abil: "QRIS ABIL",
+
+    gustav2: "QRIS GUSTAV"
 
 };
 
 
-/* =====================================================
-   BACA ?id=...
-===================================================== */
+/* =========================
+   BACA ID DARI URL
+========================= */
 
-const params = new URLSearchParams(
-    window.location.search
-);
+const params =
+    new URLSearchParams(window.location.search);
 
-const id = params.get("id") || "gustav";
+const id =
+    params.get("id") || "gustav";
 
-const current =
-    qrisData[id] || qrisData.gustav;
+const selectedName =
+    names[id] || "QRIS GUSTAV";
 
 
-/* =====================================================
-   UPDATE HALAMAN
-===================================================== */
+/* =========================
+   TAMPILKAN NAMA
+========================= */
 
 document.title =
-    current.name + " — Gustav Archive";
+    selectedName + " — Gustav Archive";
 
 document.getElementById("headerName")
-    .textContent = current.name;
+    .textContent = selectedName;
 
-document.getElementById("pageTitle")
-    .textContent = current.name;
+document.getElementById("qrisName")
+    .textContent = selectedName;
 
-document.getElementById("storeName")
-    .textContent = current.store;
-
-document.querySelector(".info-box:nth-child(2) .info-value")
-    .textContent = current.provider;
-
-document.getElementById("qrImage")
-    .src = current.image;
-
-document.getElementById("qrImage")
-    .alt = current.name;
+document.getElementById("infoName")
+    .textContent = selectedName;
 
 
-/* =====================================================
-   BACK
-===================================================== */
-
-document.getElementById("backBtn")
-.addEventListener("click",()=>{
-
-    document.body.classList.add("page-exit");
-
-    setTimeout(()=>{
-
-        window.location.href = "index.html";
-
-    },350);
-
-});
-
-
-/* =====================================================
+/* =========================
    DOWNLOAD QR
-===================================================== */
+========================= */
 
-document.getElementById("downloadBtn")
-.addEventListener("click",async()=>{
+function downloadQR() {
 
-    const image =
-        document.getElementById("qrImage");
+    const link =
+        document.createElement("a");
 
-    try{
+    link.href =
+        "qris-gustav.png";
 
-        const response =
-            await fetch(image.src);
+    link.download =
+        "qris-gustav.png";
 
-        const blob =
-            await response.blob();
+    document.body.appendChild(link);
 
-        const url =
-            URL.createObjectURL(blob);
+    link.click();
 
-        const a =
-            document.createElement("a");
+    link.remove();
 
-        a.href = url;
-
-        a.download =
-            current.name
-            .toLowerCase()
-            .replaceAll(" ","-")
-            + ".jpg";
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        a.remove();
-
-        URL.revokeObjectURL(url);
-
-    }catch(error){
-
-        /*
-            Jika browser memblokir download,
-            buka gambar langsung.
-        */
-
-        window.open(image.src,"_blank");
-
-    }
-
-});
+    showToast("QRIS siap diunduh");
+}
 
 
-/* =====================================================
+/* =========================
    SHARE
-===================================================== */
+========================= */
 
-document.getElementById("shareBtn")
-.addEventListener("click",async()=>{
+async function shareQR() {
 
-    const shareData = {
+    try {
 
-        title:current.name,
+        if (navigator.share) {
 
-        text:
-            "QRIS " +
-            current.store,
+            await navigator.share({
 
-        url:window.location.href
+                title: selectedName,
 
-    };
+                text:
+                    "QRIS " +
+                    selectedName +
+                    " — GUSTAV STORE",
 
-    if(
-        navigator.share &&
-        navigator.canShare &&
-        navigator.canShare(shareData)
-    ){
+                url: window.location.href
 
-        try{
+            });
 
-            await navigator.share(shareData);
+        } else {
 
-        }catch(error){
-
-            // user membatalkan share
-
-        }
-
-    }else{
-
-        try{
-
-            await navigator.clipboard
-                .writeText(window.location.href);
-
-            alert(
-                "Link QRIS berhasil disalin."
-            );
-
-        }catch(error){
-
-            alert(
-                "Link halaman QRIS:\n" +
+            await navigator.clipboard.writeText(
                 window.location.href
             );
 
-        }
-
-    }
-
-});
-
-
-/* =====================================================
-   RIPPLE BUTTON
-===================================================== */
-
-document.addEventListener("click",(event)=>{
-
-    const target =
-        event.target.closest(
-            ".btn,.back"
-        );
-
-    if(!target)return;
-
-    const ripple =
-        document.createElement("span");
-
-    ripple.className="ripple";
-
-    const rect =
-        target.getBoundingClientRect();
-
-    ripple.style.left =
-        (event.clientX - rect.left) + "px";
-
-    ripple.style.top =
-        (event.clientY - rect.top) + "px";
-
-    target.style.position="relative";
-    target.style.overflow="hidden";
-
-    target.appendChild(ripple);
-
-    setTimeout(()=>{
-        ripple.remove();
-    },600);
-
-});
-
-
-/* =====================================================
-   NETWORK BACKGROUND
-===================================================== */
-
-const canvas =
-    document.getElementById("network");
-
-const ctx =
-    canvas.getContext("2d");
-
-let width;
-let height;
-let nodes=[];
-
-function resizeCanvas(){
-
-    const dpr =
-        Math.min(window.devicePixelRatio || 1,2);
-
-    width =
-        window.innerWidth;
-
-    height =
-        window.innerHeight;
-
-    canvas.width =
-        width * dpr;
-
-    canvas.height =
-        height * dpr;
-
-    canvas.style.width =
-        width+"px";
-
-    canvas.style.height =
-        height+"px";
-
-    ctx.setTransform(
-        dpr,0,0,dpr,0,0
-    );
-
-    createNodes();
-
-}
-
-
-function createNodes(){
-
-    nodes=[];
-
-    const count =
-        Math.min(
-            42,
-            Math.max(
-                20,
-                Math.floor(
-                    (width * height) / 30000
-                )
-            )
-        );
-
-    for(let i=0;i<count;i++){
-
-        nodes.push({
-
-            x:Math.random()*width,
-
-            y:Math.random()*height,
-
-            vx:(Math.random()-.5)*.22,
-
-            vy:(Math.random()-.5)*.22,
-
-            r:Math.random()*1.6+.6
-
-        });
-
-    }
-
-}
-
-
-function drawNetwork(){
-
-    ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
-
-    for(const n of nodes){
-
-        n.x += n.vx;
-        n.y += n.vy;
-
-        if(n.x < -20) n.x = width+20;
-        if(n.x > width+20) n.x = -20;
-
-        if(n.y < -20) n.y = height+20;
-        if(n.y > height+20) n.y = -20;
-
-    }
-
-
-    for(let i=0;i<nodes.length;i++){
-
-        for(let j=i+1;j<nodes.length;j++){
-
-            const a=nodes[i];
-            const b=nodes[j];
-
-            const dx=a.x-b.x;
-            const dy=a.y-b.y;
-
-            const distance =
-                Math.sqrt(dx*dx+dy*dy);
-
-            if(distance < 135){
-
-                const opacity =
-                    (1-distance/135)*.14;
-
-                ctx.beginPath();
-
-                ctx.moveTo(a.x,a.y);
-                ctx.lineTo(b.x,b.y);
-
-                ctx.strokeStyle =
-                    `rgba(150,110,255,${opacity})`;
-
-                ctx.lineWidth=.6;
-
-                ctx.stroke();
-
-            }
+            showToast("Link QRIS disalin");
 
         }
 
-    }
+    } catch (error) {
 
-
-    for(const n of nodes){
-
-        ctx.beginPath();
-
-        ctx.arc(
-            n.x,
-            n.y,
-            n.r,
-            0,
-            Math.PI*2
-        );
-
-        ctx.fillStyle =
-            "rgba(180,150,255,.35)";
-
-        ctx.fill();
+        // User membatalkan share.
 
     }
-
-
-    requestAnimationFrame(drawNetwork);
 
 }
 
 
-window.addEventListener(
-    "resize",
-    resizeCanvas,
-    {passive:true}
-);
+/* =========================
+   TOAST
+========================= */
 
-resizeCanvas();
-drawNetwork();
+function showToast(message) {
 
+    const toast =
+        document.getElementById("toast");
 
-/* =====================================================
-   PREFERS REDUCED MOTION
-===================================================== */
+    toast.textContent =
+        message;
 
-if(
-    window.matchMedia(
-        "(prefers-reduced-motion: reduce)"
-    ).matches
-){
+    toast.classList.add("show");
 
-    document.body.style.animation="none";
-    document.body.style.opacity="1";
+    clearTimeout(window.toastTimer);
+
+    window.toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 1800);
 
 }
+
+
+/* =========================
+   CEK QR IMAGE
+========================= */
+
+const qrImage =
+    document.getElementById("qrisImage");
+
+qrImage.onerror = function() {
+
+    showToast(
+        "QR tidak ditemukan. Cek nama file qris-gustav.png"
+    );
+
+};
 
 </script>
 
