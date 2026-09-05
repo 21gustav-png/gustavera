@@ -1,841 +1,688 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#09090b">
+<title>Lionel Gustav - Qris All Payment</title>
 
-  <title>QRIS HUB</title>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: #08080b;
+    color: #f5f5f7;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* BACKGROUND PREMIUM */
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    top: -250px;
+    left: -200px;
+    background: radial-gradient(
+        circle,
+        rgba(255, 174, 0, 0.10),
+        transparent 65%
+    );
+    filter: blur(20px);
+    animation: glow1 12s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 650px;
+    height: 650px;
+    right: -280px;
+    bottom: -250px;
+    background: radial-gradient(
+        circle,
+        rgba(255, 75, 75, 0.08),
+        transparent 65%
+    );
+    filter: blur(30px);
+    animation: glow2 15s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: -2;
+}
+
+@keyframes glow1 {
+    from {
+        transform: translate(0, 0) scale(1);
     }
-
-    body {
-      min-height: 100vh;
-      background: #07080b;
-      color: #ffffff;
-      font-family: Arial, Helvetica, sans-serif;
+    to {
+        transform: translate(130px, 100px) scale(1.2);
     }
+}
 
-    .container {
-      width: 100%;
-      max-width: 720px;
-      margin: auto;
-      padding: 18px 18px 110px;
-
-      background:
-        radial-gradient(
-          circle at 85% 20%,
-          rgba(25, 85, 170, 0.18),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 10% 45%,
-          rgba(90, 25, 110, 0.16),
-          transparent 30%
-        ),
-        #07080b;
-
-      min-height: 100vh;
+@keyframes glow2 {
+    from {
+        transform: translate(0, 0) scale(1);
     }
+    to {
+        transform: translate(-100px, -80px) scale(1.25);
+    }
+}
 
-    /* ================= HEADER ================= */
+/* HEADER */
+
+.header {
+    height: 112px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(17,17,21,0.82);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ffb300, #ff4d4d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    box-shadow: 0 10px 35px rgba(255, 120, 30, 0.22);
+}
+
+.brand-text h1 {
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.brand-text span {
+    display: block;
+    color: #888892;
+    font-size: 13px;
+    margin-top: 2px;
+}
+
+.header-tools {
+    height: 60px;
+    min-width: 150px;
+    padding: 0 20px;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.tool {
+    font-size: 23px;
+    color: #c9c9d0;
+}
+
+/* MAIN */
+
+.container {
+    width: min(100% - 48px, 1000px);
+    margin: auto;
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 76px 0 35px;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 24px;
+    border: 1px solid rgba(255, 179, 0, 0.28);
+    border-radius: 30px;
+    background: rgba(255, 179, 0, 0.04);
+    color: #ffc83d;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ffb000;
+    box-shadow: 0 0 15px rgba(255,176,0,.7);
+}
+
+.hero h2 {
+    margin-top: 34px;
+    font-size: clamp(45px, 8vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -4px;
+    font-weight: 850;
+}
+
+.hero h2 .gradient {
+    display: block;
+    background: linear-gradient(
+        90deg,
+        #ffb300,
+        #ff7a38,
+        #ff3f55
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.description {
+    max-width: 720px;
+    margin: 35px auto 0;
+    color: #9b9ba6;
+    font-size: 19px;
+    line-height: 1.65;
+}
+
+/* SEARCH */
+
+.search-box {
+    margin: 48px auto 24px;
+    height: 84px;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(25,25,29,0.82);
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    box-shadow: inset 0 1px rgba(255,255,255,0.025);
+}
+
+.search-icon {
+    font-size: 29px;
+    color: #858591;
+    margin-right: 20px;
+}
+
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 20px;
+}
+
+.search-box input::placeholder {
+    color: #8d8d97;
+}
+
+/* FEATURE BUTTONS */
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 58px;
+}
+
+.feature {
+    height: 58px;
+    padding: 0 25px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background: rgba(20,20,24,0.86);
+    color: #d6d6db;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    font-weight: 700;
+    letter-spacing: .5px;
+}
+
+.feature-icon {
+    font-size: 18px;
+}
+
+/* QRIS */
+
+.section-title {
+    margin-bottom: 24px;
+}
+
+.section-title h3 {
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.section-title p {
+    color: #777780;
+    margin-top: 7px;
+}
+
+.qris-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.qris-card {
+    position: relative;
+    min-height: 190px;
+    padding: 27px;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.09);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(32,32,37,.94),
+            rgba(17,17,20,.96)
+        );
+    overflow: hidden;
+    transition: .25s ease;
+}
+
+.qris-card::before {
+    content: "";
+    position: absolute;
+    width: 170px;
+    height: 170px;
+    right: -80px;
+    top: -80px;
+    background: radial-gradient(
+        circle,
+        rgba(255, 174, 0, .13),
+        transparent 70%
+    );
+}
+
+.qris-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,179,0,.30);
+    box-shadow: 0 18px 45px rgba(0,0,0,.35);
+}
+
+.qris-number {
+    color: #777780;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.qris-name {
+    margin-top: 13px;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.qris-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 25px;
+    padding: 8px 13px;
+    border-radius: 20px;
+    background: rgba(40, 200, 100, .08);
+    border: 1px solid rgba(40,200,100,.14);
+    color: #9ee9b8;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.green-dot {
+    width: 8px;
+    height: 8px;
+    background: #35d66d;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(53,214,109,.6);
+}
+
+.open-btn {
+    position: absolute;
+    right: 24px;
+    bottom: 25px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: #62626b;
+    font-size: 13px;
+    padding: 65px 0 35px;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
 
     .header {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      margin-bottom: 24px;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1;
+        height: 92px;
+        padding: 0 20px;
     }
 
     .logo {
-      width: 52px;
-      height: 52px;
-
-      border-radius: 18px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: linear-gradient(
-        145deg,
-        #15bce5,
-        #2879ff
-      );
-
-      font-size: 25px;
-      font-weight: 900;
-
-      box-shadow:
-        0 10px 30px rgba(20, 140, 255, 0.2);
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        font-size: 23px;
     }
 
-    .profile h1 {
-      font-size: 19px;
+    .brand-text h1 {
+        font-size: 21px;
     }
 
-    .profile p {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #858b98;
+    .brand-text span {
+        font-size: 11px;
     }
 
-    .user {
-      padding: 10px 17px;
-
-      border-radius: 20px;
-
-      background: #202126;
-      color: #c9cbd2;
-
-      font-size: 12px;
-      font-weight: bold;
+    .header-tools {
+        min-width: auto;
+        width: 92px;
+        height: 50px;
+        padding: 0 15px;
+        gap: 16px;
     }
 
-    .logout {
-      font-size: 28px;
-      color: #aeb2bd;
+    .tool {
+        font-size: 19px;
     }
 
-    /* ================= WELCOME ================= */
-
-    .welcome {
-      position: relative;
-
-      display: flex;
-      align-items: center;
-      gap: 17px;
-
-      padding: 20px;
-
-      margin-bottom: 17px;
-
-      border: 1px solid #303139;
-      border-radius: 27px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #191a20,
-          #121318
-        );
-
-      box-shadow:
-        0 18px 50px rgba(0, 0, 0, 0.15);
+    .container {
+        width: min(100% - 30px, 1000px);
     }
 
-    .welcome-icon {
-      width: 74px;
-      height: 74px;
-
-      flex-shrink: 0;
-
-      border-radius: 22px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: #3b176d;
-
-      font-size: 40px;
+    .hero {
+        padding-top: 55px;
     }
 
-    .welcome h2 {
-      font-size: 20px;
-      margin-bottom: 5px;
+    .status {
+        font-size: 11px;
+        padding: 10px 17px;
     }
 
-    .welcome p {
-      max-width: 470px;
-
-      color: #b0b3bd;
-
-      font-size: 13px;
-      line-height: 1.45;
+    .hero h2 {
+        font-size: 47px;
+        letter-spacing: -2.5px;
+        margin-top: 27px;
     }
 
-    .welcome button {
-      margin-top: 12px;
-
-      padding: 12px 24px;
-
-      border: none;
-      border-radius: 15px;
-
-      background: #ff3041;
-      color: white;
-
-      font-size: 14px;
-      font-weight: 800;
-
-      cursor: pointer;
+    .description {
+        font-size: 15px;
+        line-height: 1.65;
+        margin-top: 27px;
     }
 
-    .close {
-      position: absolute;
-
-      top: 9px;
-      right: 10px;
-
-      width: 30px;
-      height: 30px;
-
-      border: none;
-      border-radius: 50%;
-
-      background: #111217 !important;
-
-      color: #aaa;
-
-      font-size: 20px !important;
-
-      padding: 0 !important;
-      margin: 0 !important;
+    .search-box {
+        height: 66px;
+        margin-top: 35px;
+        padding: 0 20px;
+        border-radius: 20px;
     }
 
-    /* ================= TOTAL ================= */
-
-    .total-card {
-      padding: 25px;
-
-      border-radius: 28px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #126dff 0%,
-          #128ce9 48%,
-          #10c5d1 100%
-        );
-
-      box-shadow:
-        0 20px 50px rgba(0, 140, 255, 0.16);
+    .search-box input {
+        font-size: 16px;
     }
 
-    .label {
-      font-size: 13px;
-      letter-spacing: 1.7px;
-      font-weight: 800;
+    .search-icon {
+        font-size: 23px;
+        margin-right: 14px;
     }
 
-    .total {
-      margin: 8px 0;
-
-      font-size: 45px;
-      font-weight: 900;
-      letter-spacing: -2px;
+    .features {
+        gap: 10px;
+        margin-bottom: 45px;
     }
 
-    .total-card p {
-      color: #e4f7ff;
-      font-size: 13px;
-    }
-
-    .total-buttons {
-      display: flex;
-      gap: 10px;
-
-      margin-top: 18px;
-    }
-
-    .total-buttons a {
-      flex: 1;
-
-      padding: 14px;
-
-      border-radius: 17px;
-
-      border: 1px solid rgba(255,255,255,0.12);
-
-      background: rgba(255,255,255,0.12);
-
-      color: white;
-
-      text-align: center;
-      text-decoration: none;
-
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    /* ================= MENU ================= */
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      margin: 26px 2px 13px;
-    }
-
-    .section-title h2 {
-      font-size: 17px;
-    }
-
-    .section-title span {
-      color: #777e8c;
-      font-size: 11px;
+    .feature {
+        height: 52px;
+        padding: 0 17px;
+        font-size: 12px;
     }
 
     .qris-grid {
-      display: grid;
-
-      grid-template-columns: repeat(2, 1fr);
-
-      gap: 12px;
+        grid-template-columns: 1fr;
+        gap: 14px;
     }
 
     .qris-card {
-      position: relative;
-
-      min-height: 125px;
-
-      padding: 16px;
-
-      border: 1px solid #303139;
-      border-radius: 22px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #18191e,
-          #111216
-        );
-
-      color: white;
-
-      text-decoration: none;
-
-      transition: 0.2s;
+        min-height: 165px;
     }
 
-    .qris-card:hover {
-      transform: translateY(-2px);
-
-      border-color: #1596ff;
+    .qris-name {
+        font-size: 22px;
     }
-
-    .qris-icon {
-      width: 49px;
-      height: 49px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      margin-bottom: 13px;
-
-      border-radius: 16px;
-
-      background: #073d48;
-
-      color: #5ce9ff;
-
-      font-size: 27px;
-    }
-
-    .qris-card b {
-      font-size: 13px;
-    }
-
-    .qris-card small {
-      display: block;
-
-      margin-top: 5px;
-
-      color: #808694;
-
-      font-size: 10px;
-    }
-
-    .arrow {
-      position: absolute;
-
-      top: 54px;
-      right: 14px;
-
-      color: #707784;
-
-      font-size: 23px;
-    }
-
-    /* ================= STATISTICS ================= */
-
-    .stats {
-      display: grid;
-
-      grid-template-columns: 1fr 1fr;
-
-      gap: 12px;
-
-      margin-top: 12px;
-    }
-
-    .stat {
-      padding: 18px;
-
-      border: 1px solid #2c2e35;
-      border-radius: 21px;
-
-      background: #131419;
-    }
-
-    .stat-icon {
-      color: #56e7ff;
-      font-size: 20px;
-    }
-
-    .stat b {
-      display: block;
-
-      margin-top: 7px;
-
-      font-size: 25px;
-    }
-
-    .stat small {
-      color: #7e8491;
-    }
-
-    /* ================= BOTTOM NAV ================= */
-
-    .bottom-nav {
-      position: fixed;
-
-      z-index: 100;
-
-      bottom: 12px;
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      width: min(
-        calc(100% - 28px),
-        700px
-      );
-
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      padding: 8px;
-
-      border: 1px solid #303139;
-      border-radius: 25px;
-
-      background: rgba(17, 18, 24, 0.93);
-
-      backdrop-filter: blur(20px);
-
-      box-shadow:
-        0 16px 50px rgba(0,0,0,0.45);
-    }
-
-    .bottom-nav a {
-      padding: 6px;
-
-      color: #777e8c;
-
-      text-align: center;
-
-      text-decoration: none;
-
-      font-size: 10px;
-      font-weight: 800;
-    }
-
-    .bottom-nav span {
-      display: block;
-
-      margin-bottom: 3px;
-
-      font-size: 21px;
-    }
-
-    .bottom-nav .active {
-      color: #56e7ff;
-    }
-
-    /* ================= MOBILE ================= */
-
-    @media (max-width: 520px) {
-
-      .container {
-        padding: 15px 15px 105px;
-      }
-
-      .welcome {
-        padding: 18px;
-      }
-
-      .welcome-icon {
-        width: 65px;
-        height: 65px;
-      }
-
-      .total {
-        font-size: 40px;
-      }
-    }
-
-    @media (max-width: 390px) {
-
-      .qris-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .welcome p {
-        font-size: 12px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<header class="header">
 
-  <!-- HEADER -->
+    <div class="brand">
+        <div class="logo">⚡</div>
 
-  <header class="header">
+        <div class="brand-text">
+            <h1>Lionel Gustav</h1>
+            <span>Qris All Payment</span>
+        </div>
+    </div>
 
-    <div class="profile">
+    <div class="header-tools">
+        <div class="tool">⌕</div>
+        <div class="tool">◉</div>
+    </div>
 
-      <div class="logo">
-        Q
-      </div>
+</header>
 
-      <div>
-        <h1>QRIS HUB</h1>
-        <p>qris dashboard</p>
-      </div>
+
+<main class="container">
+
+    <section class="hero">
+
+        <div class="status">
+            <span class="status-dot"></span>
+            AUTO-PROSES 24 JAM
+        </div>
+
+        <h2>
+            Gustav Archive
+            <span class="gradient">Qris All Payment</span>
+        </h2>
+
+        <p class="description">
+            Web ini bertujuan untuk cek transaksi qris yang dipakai
+            own/asis gustav, menu cv saldo sedang dalam tahap pembuatan.
+        </p>
+
+    </section>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari Qris"
+            autocomplete="off"
+        >
+    </div>
+
+
+    <!-- FEATURES -->
+
+    <div class="features">
+
+        <div class="feature">
+            <span class="feature-icon">▦</span>
+            BAYAR QRIS
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">⚡</span>
+            BUKTI TF NO DELAY
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">♢</span>
+            TRANSAKSI NO FAKE
+        </div>
 
     </div>
 
-    <div class="user">
-      USER
-    </div>
 
-    <div class="logout">
-      ⇥
-    </div>
-
-  </header>
-
-
-  <!-- WELCOME -->
-
-  <section class="welcome">
-
-    <div class="welcome-icon">
-      ▷
-    </div>
-
-    <div>
-
-      <h2>
-        Selamat Datang
-      </h2>
-
-      <p>
-        Kelola beberapa QRIS dalam satu tempat
-        dan lihat transaksi terbaru.
-      </p>
-
-      <button
-        onclick="document
-        .getElementById('qris')
-        .scrollIntoView({behavior:'smooth'})">
-
-        Lihat QRIS
-
-      </button>
-
-    </div>
-
-    <button
-      class="close"
-      onclick="this.parentElement.style.display='none'">
-
-      ×
-
-    </button>
-
-  </section>
-
-
-  <!-- TOTAL TRANSAKSI -->
-
-  <section class="total-card">
-
-    <div class="label">
-      TOTAL TRANSAKSI
-    </div>
-
-    <div class="total">
-      Rp0
-    </div>
-
-    <p>
-      Semua QRIS • Hari ini
-    </p>
-
-    <div class="total-buttons">
-
-      <a href="qris.html?id=abil">
-        Lihat QRIS
-      </a>
-
-      <a href="qris.html?id=abil">
-        Riwayat
-      </a>
-
-    </div>
-
-  </section>
-
-
-  <!-- MENU QRIS -->
-
-  <section id="qris">
+    <!-- QRIS -->
 
     <div class="section-title">
+        <h3>Daftar QRIS</h3>
+        <p>Pilih QRIS yang ingin kamu cek</p>
+    </div>
 
-      <h2>
-        Menu QRIS
-      </h2>
 
-      <span>
-        5 QRIS
-      </span>
+    <div class="qris-grid" id="qrisGrid">
+
+        <div class="qris-card" data-name="QRIS GUSTAV">
+            <div class="qris-number">01 / QRIS</div>
+            <div class="qris-name">QRIS GUSTAV</div>
+
+            <div class="qris-status">
+                <span class="green-dot"></span>
+                READY
+            </div>
+
+            <div class="open-btn">›</div>
+        </div>
+
+
+        <div class="qris-card" data-name="QRIS LEA">
+            <div class="qris-number">02 / QRIS</div>
+            <div class="qris-name">QRIS LEA</div>
+
+            <div class="qris-status">
+                <span class="green-dot"></span>
+                READY
+            </div>
+
+            <div class="open-btn">›</div>
+        </div>
+
+
+        <div class="qris-card" data-name="QRIS NOIR">
+            <div class="qris-number">03 / QRIS</div>
+            <div class="qris-name">QRIS NOIR</div>
+
+            <div class="qris-status">
+                <span class="green-dot"></span>
+                READY
+            </div>
+
+            <div class="open-btn">›</div>
+        </div>
+
+
+        <div class="qris-card" data-name="QRIS ABIL">
+            <div class="qris-number">04 / QRIS</div>
+            <div class="qris-name">QRIS ABIL</div>
+
+            <div class="qris-status">
+                <span class="green-dot"></span>
+                READY
+            </div>
+
+            <div class="open-btn">›</div>
+        </div>
+
+
+        <div class="qris-card" data-name="QRIS PIDO">
+            <div class="qris-number">05 / QRIS</div>
+            <div class="qris-name">QRIS PIDO</div>
+
+            <div class="qris-status">
+                <span class="green-dot"></span>
+                READY
+            </div>
+
+            <div class="open-btn">›</div>
+        </div>
 
     </div>
 
 
-    <div class="qris-grid">
+    <footer class="footer">
+        © 2026 Lionel Gustav • Qris All Payment
+    </footer>
 
+</main>
 
-      <!-- ABIL -->
 
-      <a
-        class="qris-card"
-        href="qris.html?id=abil">
+<script>
 
-        <div class="qris-icon">
-          ⌁
-        </div>
+/* SEARCH QRIS */
 
-        <b>
-          QRIS ABIL
-        </b>
+const searchInput = document.getElementById("searchInput");
+const cards = document.querySelectorAll(".qris-card");
 
-        <small>
-          Lihat QRIS
-        </small>
+searchInput.addEventListener("input", function () {
 
-        <span class="arrow">
-          ›
-        </span>
+    const keyword = this.value.toLowerCase().trim();
 
-      </a>
+    cards.forEach(card => {
 
+        const name = card.dataset.name.toLowerCase();
 
-      <!-- GUSTAV -->
+        if (name.includes(keyword)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
 
-      <a
-        class="qris-card"
-        href="qris.html?id=gustav">
+    });
 
-        <div class="qris-icon">
-          ⌁
-        </div>
+});
 
-        <b>
-          QRIS GUSTAV
-        </b>
-
-        <small>
-          Lihat QRIS
-        </small>
-
-        <span class="arrow">
-          ›
-        </span>
-
-      </a>
-
-
-      <!-- NOIR -->
-
-      <a
-        class="qris-card"
-        href="qris.html?id=noir">
-
-        <div class="qris-icon">
-          ⌁
-        </div>
-
-        <b>
-          QRIS NOIR
-        </b>
-
-        <small>
-          Lihat QRIS
-        </small>
-
-        <span class="arrow">
-          ›
-        </span>
-
-      </a>
-
-
-      <!-- LEA -->
-
-      <a
-        class="qris-card"
-        href="qris.html?id=lea">
-
-        <div class="qris-icon">
-          ⌁
-        </div>
-
-        <b>
-          QRIS LEA
-        </b>
-
-        <small>
-          Lihat QRIS
-        </small>
-
-        <span class="arrow">
-          ›
-        </span>
-
-      </a>
-
-
-      <!-- GPHOK -->
-
-      <a
-        class="qris-card"
-        href="qris.html?id=gphok">
-
-        <div class="qris-icon">
-          ⌁
-        </div>
-
-        <b>
-          QRIS GPHOK
-        </b>
-
-        <small>
-          Lihat QRIS
-        </small>
-
-        <span class="arrow">
-          ›
-        </span>
-
-      </a>
-
-
-    </div>
-
-  </section>
-
-
-  <!-- STATISTIK -->
-
-  <section class="stats">
-
-    <div class="stat">
-
-      <span class="stat-icon">
-        ✓
-      </span>
-
-      <b>
-        0
-      </b>
-
-      <small>
-        Berhasil
-      </small>
-
-    </div>
-
-
-    <div class="stat">
-
-      <span class="stat-icon">
-        ◷
-      </span>
-
-      <b>
-        0
-      </b>
-
-      <small>
-        Pending
-      </small>
-
-    </div>
-
-  </section>
-
-
-  <!-- BOTTOM NAVIGATION -->
-
-  <nav class="bottom-nav">
-
-    <a
-      class="active"
-      href="index.html">
-
-      <span>⌂</span>
-      Home
-
-    </a>
-
-    <a
-      href="qris.html?id=abil">
-
-      <span>▣</span>
-      QRIS
-
-    </a>
-
-    <a href="#">
-
-      <span>☷</span>
-      Riwayat
-
-    </a>
-
-    <a href="#">
-
-      <span>?</span>
-      Support
-
-    </a>
-
-  </nav>
-
-</div>
+</script>
 
 </body>
 </html>
